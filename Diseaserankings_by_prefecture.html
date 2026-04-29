@@ -1,10 +1,112 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { Search, ChevronRight, Activity, Map, AlertCircle, Loader2 } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>都道府県ランキング</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background-color: #94a3b8; }
+  </style>
+</head>
+<body class="bg-gray-100 flex flex-col font-sans text-gray-800 h-screen overflow-hidden">
 
-const CSV_FILE_NAME = '2022年傷病_都道府県分布_65歳以上.csv';
+  <!-- ローディング画面 -->
+  <div id="loading-screen" class="min-h-screen bg-gray-50 flex flex-col items-center justify-center font-sans absolute inset-0 z-50">
+    <i data-lucide="loader-2" class="w-12 h-12 animate-spin text-blue-600 mb-4"></i>
+    <p class="text-gray-600 font-medium">データを読み込み中...</p>
+  </div>
 
-// プレビュー環境等でCSVが読み込めなかった場合のデモ用フォールバックデータ
-const fallbackCSV = `,2022（令和４）年,国民生活基礎調査,,,
+  <!-- メインアプリケーション (初期状態は非表示) -->
+  <div id="app-content" class="flex flex-col h-full hidden">
+    <!-- Header -->
+    <header class="bg-white shadow-sm px-6 py-4 flex items-center justify-between shrink-0 z-10">
+      <div class="flex items-center gap-4">
+        <div class="bg-blue-100 p-2.5 rounded-xl">
+          <i data-lucide="activity" class="text-blue-600 w-6 h-6"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-gray-800 leading-tight">2022年 65歳以上 傷病別都道府県ランキング</h1>
+          <p class="text-xs text-gray-500 mt-1">国民生活基礎調査 データ基準</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col md:flex-row gap-6 min-h-0">
+      
+      <!-- Sidebar: 疾病リスト -->
+      <div class="w-full md:w-80 bg-white rounded-2xl shadow-sm flex flex-col h-full overflow-hidden border border-gray-100 shrink-0">
+        <div class="p-5 border-b border-gray-100 bg-gray-50/50">
+          <h2 class="font-bold text-gray-700 mb-3 flex items-center gap-2">
+            <i data-lucide="map" class="w-4 h-4 text-blue-500"></i> 対象の傷病を選択
+          </h2>
+          <div class="relative">
+            <i data-lucide="search" class="absolute left-3 top-2.5 text-gray-400 w-4 h-4"></i>
+            <input 
+              type="text" 
+              id="search-input"
+              placeholder="傷病名で絞り込み..." 
+              class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
+            />
+          </div>
+          <div id="disease-count" class="mt-3 text-xs text-gray-500 text-right">
+            全 0 件
+          </div>
+        </div>
+        
+        <div id="disease-list" class="flex-1 overflow-y-auto p-2">
+          <!-- リストはJSで生成 -->
+        </div>
+      </div>
+
+      <!-- Content: ランキングエリア -->
+      <div class="flex-1 bg-white rounded-2xl shadow-sm flex flex-col h-full overflow-hidden border border-gray-100 min-w-0">
+        
+        <!-- デモデータ表示時の警告バナー -->
+        <div id="demo-warning" class="bg-amber-50 border-b border-amber-200 p-4 shrink-0 hidden">
+          <div class="flex items-start gap-3">
+            <i data-lucide="alert-circle" class="text-amber-500 shrink-0 mt-0.5 w-5 h-5"></i>
+            <div>
+              <h3 class="text-sm font-bold text-amber-800">プレビュー用デモデータを表示しています</h3>
+              <p class="text-xs text-amber-700 mt-1 leading-relaxed">
+                <code id="csv-file-name-display" class="bg-amber-100 px-1 rounded"></code> の読み込みに失敗しました。アプリケーションと同じディレクトリに本番のCSVファイルが配置されているかご確認ください。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 選択中の疾病情報ヘッダー -->
+        <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50/50 to-white shrink-0">
+          <h2 id="selected-disease-title" class="text-2xl font-extrabold text-gray-800 mb-3">-</h2>
+          <div class="flex items-baseline gap-2">
+            <span class="text-sm font-medium text-gray-500">全国平均</span>
+            <span id="selected-disease-rate" class="text-2xl font-bold text-blue-600">0.0%</span>
+            <span class="text-xs text-gray-400 ml-1">（65歳以上人口に対する割合）</span>
+          </div>
+        </div>
+        
+        <!-- ランキングリスト -->
+        <div id="ranking-list" class="flex-1 overflow-y-auto p-2 sm:p-6">
+          <!-- ランキングはJSで生成 -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // アイコンの初期化
+    lucide.createIcons();
+
+    const CSV_FILE_NAME = '2022年傷病_都道府県分布_65歳以上.csv';
+    document.getElementById('csv-file-name-display').textContent = CSV_FILE_NAME;
+
+    // プレビュー環境等でCSVが読み込めなかった場合のデモ用フォールバックデータ
+    const fallbackCSV = `,2022（令和４）年,国民生活基礎調査,,,
 ,２健康票,第137表　総傷病数，性・年齢（３区分階級）・傷病（複数回答）・都道府県－21大都市（再掲）別,,,
 ,注：通院者には、入院者は含まない。,,,,
 ,傷病（複数回答）,総　　数,65歳以上,65歳以上人口数,65歳以上の傷病数と人口の割合
@@ -46,325 +148,252 @@ const fallbackCSV = `,2022（令和４）年,国民生活基礎調査,,,
 （再掲）熊　本　市,糖尿病,45,32,"229",14.0%
 `;
 
-const parseCSV = (text) => {
-  const result = [];
-  let row = [];
-  let val = '';
-  let inQuotes = false;
-  for (let i = 0; i < text.length; i++) {
-    const char = text[i];
-    if (inQuotes) {
-      if (char === '"') {
-        if (i + 1 < text.length && text[i + 1] === '"') {
-          val += '"';
-          i++;
+    // アプリケーションの状態
+    const state = {
+      rawData: [],
+      nationalData: {},
+      diseases: [],
+      selectedDisease: null,
+      searchQuery: '',
+      isDemoData: false
+    };
+
+    // CSVのパース処理
+    const parseCSV = (text) => {
+      const result = [];
+      let row = [];
+      let val = '';
+      let inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        if (inQuotes) {
+          if (char === '"') {
+            if (i + 1 < text.length && text[i + 1] === '"') {
+              val += '"';
+              i++;
+            } else {
+              inQuotes = false;
+            }
+          } else {
+            val += char;
+          }
         } else {
-          inQuotes = false;
+          if (char === '"') {
+            inQuotes = true;
+          } else if (char === ',') {
+            row.push(val);
+            val = '';
+          } else if (char === '\n') {
+            row.push(val);
+            result.push(row);
+            row = [];
+            val = '';
+          } else if (char !== '\r') {
+            val += char;
+          }
         }
-      } else {
-        val += char;
       }
-    } else {
-      if (char === '"') {
-        inQuotes = true;
-      } else if (char === ',') {
-        row.push(val);
-        val = '';
-      } else if (char === '\n') {
+      if (row.length > 0 || val !== '') {
         row.push(val);
         result.push(row);
-        row = [];
-        val = '';
-      } else if (char !== '\r') {
-        val += char;
       }
-    }
-  }
-  if (row.length > 0 || val !== '') {
-    row.push(val);
-    result.push(row);
-  }
-  return result;
-};
+      return result;
+    };
 
-const processData = (parsed) => {
-  const processed = [];
-  const nationalData = {};
-  const diseasesSet = new Set();
-  
-  for (let i = 0; i < parsed.length; i++) {
-    const row = parsed[i];
-    // 必要なカラムが存在しない行はスキップ
-    if (row.length < 6) continue;
-    
-    const rawRegion = row[0];
-    const rawDisease = row[1];
-    if (!rawRegion || !rawDisease) continue;
-    
-    // 地域名から全角・半角スペースを除去して統一
-    const region = rawRegion.replace(/[\s　]/g, '');
-    const disease = rawDisease.trim();
-    
-    // ヘッダーや不要な行を除外
-    if (disease === '全　　　国' || disease.includes('傷病')) continue;
-    
-    const rateStr = row[5] ? row[5].trim() : '0%';
-    let rate = parseFloat(rateStr.replace('%', ''));
-    if (isNaN(rate)) rate = 0;
-    
-    if (region === '全国') {
-      nationalData[disease] = rate;
-      diseasesSet.add(disease);
-    } else if (!region.includes('再掲') && !region.includes('地域') && region.length > 0) {
-      // 再掲（指定都市）などを除外し、都道府県のみを抽出
-      processed.push({ region, disease, rate });
-      diseasesSet.add(disease);
-    }
-  }
-  
-  return {
-    data: processed,
-    nationalData,
-    diseases: Array.from(diseasesSet)
-  };
-};
+    // データの整形処理
+    const processData = (parsed) => {
+      const processed = [];
+      const nationalData = {};
+      const diseasesSet = new Set();
+      
+      for (let i = 0; i < parsed.length; i++) {
+        const row = parsed[i];
+        if (row.length < 6) continue;
+        
+        const rawRegion = row[0];
+        const rawDisease = row[1];
+        if (!rawRegion || !rawDisease) continue;
+        
+        const region = rawRegion.replace(/[\s　]/g, '');
+        const disease = rawDisease.trim();
+        
+        if (disease === '全　　　国' || disease.includes('傷病')) continue;
+        
+        const rateStr = row[5] ? row[5].trim() : '0%';
+        let rate = parseFloat(rateStr.replace('%', ''));
+        if (isNaN(rate)) rate = 0;
+        
+        if (region === '全国') {
+          nationalData[disease] = rate;
+          diseasesSet.add(disease);
+        } else if (!region.includes('再掲') && !region.includes('地域') && region.length > 0) {
+          processed.push({ region, disease, rate });
+          diseasesSet.add(disease);
+        }
+      }
+      
+      return {
+        data: processed,
+        nationalData,
+        diseases: Array.from(diseasesSet)
+      };
+    };
 
-export default function App() {
-  const [rawData, setRawData] = useState([]);
-  const [nationalData, setNationalData] = useState({});
-  const [diseases, setDiseases] = useState([]);
-  const [selectedDisease, setSelectedDisease] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [isDemoData, setIsDemoData] = useState(false);
-  
-  const scrollRef = useRef(null);
+    // UIの描画更新
+    const renderSidebar = () => {
+      const filteredDiseases = state.diseases.filter(d => 
+        d.toLowerCase().includes(state.searchQuery.toLowerCase())
+      );
 
-  useEffect(() => {
-    const fetchData = async () => {
+      document.getElementById('disease-count').textContent = `全 ${filteredDiseases.length} 件`;
+      const listContainer = document.getElementById('disease-list');
+
+      if (filteredDiseases.length === 0) {
+        listContainer.innerHTML = '<div class="p-4 text-center text-sm text-gray-500">見つかりませんでした</div>';
+      } else {
+        listContainer.innerHTML = filteredDiseases.map(disease => {
+          const isSelected = state.selectedDisease === disease;
+          const activeClass = isSelected 
+            ? 'bg-blue-50 text-blue-700 font-bold shadow-sm' 
+            : 'hover:bg-gray-50 text-gray-600 font-medium';
+          
+          // onclick の引数として渡せるようにエスケープ処理
+          const safeDisease = disease.replace(/'/g, "\\'");
+
+          return `
+            <button onclick="selectDisease('${safeDisease}')" class="w-full text-left px-4 py-3 rounded-xl mb-1 flex justify-between items-center transition-all duration-200 ${activeClass}">
+              <span class="truncate pr-2 text-sm" title="${disease}">${disease}</span>
+              ${isSelected ? '<i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 shrink-0"></i>' : ''}
+            </button>
+          `;
+        }).join('');
+      }
+      lucide.createIcons();
+    };
+
+    const renderMainArea = () => {
+      if (!state.selectedDisease) return;
+
+      // ヘッダー情報更新
+      document.getElementById('selected-disease-title').textContent = state.selectedDisease;
+      const natRate = state.nationalData[state.selectedDisease] || 0;
+      document.getElementById('selected-disease-rate').textContent = natRate.toFixed(1) + '%';
+
+      // ランキングデータ取得
+      const currentRanking = state.rawData
+        .filter(d => d.disease === state.selectedDisease)
+        .sort((a, b) => b.rate - a.rate);
+
+      const container = document.getElementById('ranking-list');
+
+      if (currentRanking.length === 0) {
+        container.innerHTML = `
+          <div class="flex flex-col items-center justify-center h-full text-gray-400">
+            <i data-lucide="activity" class="w-12 h-12 mb-4 opacity-20"></i>
+            <p>この傷病の都道府県データはありません</p>
+          </div>
+        `;
+      } else {
+        const maxRate = currentRanking[0]?.rate || 1; 
+
+        container.innerHTML = '<div class="space-y-3">' + currentRanking.map((item, index) => {
+          const rank = index + 1;
+          const percentage = (item.rate / maxRate) * 100;
+          
+          let rankClass = 'bg-white text-gray-500 border border-gray-200 group-hover:bg-gray-100';
+          let barClass = 'bg-blue-300';
+
+          if (rank === 1) {
+            rankClass = 'bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-700 border border-yellow-300';
+            barClass = 'bg-blue-500';
+          } else if (rank === 2) {
+            rankClass = 'bg-gradient-to-br from-gray-100 to-gray-200 text-gray-700 border border-gray-300';
+            barClass = 'bg-blue-400';
+          } else if (rank === 3) {
+            rankClass = 'bg-gradient-to-br from-orange-100 to-orange-200 text-orange-800 border border-orange-300';
+            barClass = 'bg-blue-400';
+          }
+
+          return `
+            <div class="group flex items-center gap-3 sm:gap-4 p-3 rounded-xl hover:bg-gray-50 transition-colors">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shrink-0 shadow-sm ${rankClass}">
+                ${rank}
+              </div>
+              <div class="w-16 sm:w-24 font-bold text-gray-700 shrink-0 text-sm sm:text-base">
+                ${item.region}
+              </div>
+              <div class="flex-1 flex items-center gap-3 sm:gap-4">
+                <div class="flex-1 bg-gray-100 rounded-full h-3 sm:h-4 overflow-hidden shadow-inner relative">
+                  <div class="absolute top-0 left-0 h-full rounded-full transition-all duration-700 ease-out ${barClass}" style="width: ${percentage}%;"></div>
+                </div>
+                <div class="w-14 sm:w-16 text-right font-mono font-bold text-gray-600 text-sm sm:text-base">
+                  ${item.rate.toFixed(1)}<span class="text-xs text-gray-400 font-sans">%</span>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('') + '</div>';
+      }
+      lucide.createIcons();
+    };
+
+    // イベントハンドラ
+    window.selectDisease = (disease) => {
+      state.selectedDisease = disease;
+      renderSidebar();
+      renderMainArea();
+      document.getElementById('ranking-list').scrollTop = 0;
+    };
+
+    document.getElementById('search-input').addEventListener('input', (e) => {
+      state.searchQuery = e.target.value;
+      renderSidebar();
+    });
+
+    // 初期化処理
+    const init = async () => {
       let textToParse;
       try {
         const response = await fetch(CSV_FILE_NAME);
-        if (!response.ok) {
-          throw new Error('File not found');
-        }
+        if (!response.ok) throw new Error('File not found');
         const buffer = await response.arrayBuffer();
         
-        // UTF-8でデコードし、文字化けしていればShift_JISでデコード
         let decoded = new TextDecoder('utf-8').decode(buffer);
         if (decoded.includes('')) {
           decoded = new TextDecoder('shift_jis').decode(buffer);
         }
         textToParse = decoded;
       } catch (err) {
-        // ファイルが見つからない（CORSやプレビュー環境）場合はフォールバック
         console.warn(`[Fallback] ${CSV_FILE_NAME} を読み込めませんでした。デモデータを使用します。`);
         textToParse = fallbackCSV;
-        setIsDemoData(true);
+        state.isDemoData = true;
       }
 
       const parsed = parseCSV(textToParse);
       const { data, nationalData, diseases } = processData(parsed);
       
-      setRawData(data);
-      setNationalData(nationalData);
-      setDiseases(diseases);
+      state.rawData = data;
+      state.nationalData = nationalData;
+      state.diseases = diseases;
       
       if (diseases.length > 0) {
-        // 初期選択は「通院者数」があればそれ、なければ一番最初のもの
-        const defaultDisease = diseases.includes('通院者数') ? '通院者数' : diseases[0];
-        setSelectedDisease(defaultDisease);
+        state.selectedDisease = diseases.includes('通院者数') ? '通院者数' : diseases[0];
       }
-      setLoading(false);
+
+      // UIの切り替え
+      document.getElementById('loading-screen').classList.add('hidden');
+      document.getElementById('app-content').classList.remove('hidden');
+      if (state.isDemoData) {
+        document.getElementById('demo-warning').classList.remove('hidden');
+      }
+
+      renderSidebar();
+      renderMainArea();
     };
-    
-    fetchData();
-  }, []);
 
-  // 選択された疾病が変更されたらスクロールを一番上に戻す
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = 0;
-    }
-  }, [selectedDisease]);
+    // DOMロード後に実行
+    document.addEventListener('DOMContentLoaded', init);
 
-  const filteredDiseases = useMemo(() => {
-    return diseases.filter(d => d.toLowerCase().includes(searchQuery.toLowerCase()));
-  }, [diseases, searchQuery]);
-
-  const currentRanking = useMemo(() => {
-    if (!selectedDisease) return [];
-    return rawData
-      .filter(d => d.disease === selectedDisease)
-      .sort((a, b) => b.rate - a.rate); // F列（割合）の降順でソート
-  }, [rawData, selectedDisease]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center font-sans">
-        <Loader2 className="w-12 h-12 animate-spin text-blue-600 mb-4" />
-        <p className="text-gray-600 font-medium">データを読み込み中...</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="h-screen bg-gray-100 flex flex-col font-sans text-gray-800 overflow-hidden">
-      <style>{`
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background-color: #94a3b8; }
-      `}</style>
-
-      {/* Header */}
-      <header className="bg-white shadow-sm px-6 py-4 flex items-center justify-between shrink-0 z-10">
-        <div className="flex items-center gap-4">
-          <div className="bg-blue-100 p-2.5 rounded-xl">
-            <Activity className="text-blue-600" size={24} />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-gray-800 leading-tight">2022年 65歳以上 傷病別都道府県ランキング</h1>
-            <p className="text-xs text-gray-500 mt-1">国民生活基礎調査 データ基準</p>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Layout */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col md:flex-row gap-6 min-h-0">
-        
-        {/* Sidebar: 疾病リスト */}
-        <div className="w-full md:w-80 bg-white rounded-2xl shadow-sm flex flex-col h-full overflow-hidden border border-gray-100 shrink-0">
-          <div className="p-5 border-b border-gray-100 bg-gray-50/50">
-            <h2 className="font-bold text-gray-700 mb-3 flex items-center gap-2">
-              <Map size={18} className="text-blue-500" /> 対象の傷病を選択
-            </h2>
-            <div className="relative">
-              <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
-              <input 
-                type="text" 
-                placeholder="傷病名で絞り込み..." 
-                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-            <div className="mt-3 text-xs text-gray-500 text-right">
-              全 {filteredDiseases.length} 件
-            </div>
-          </div>
-          
-          <div className="flex-1 overflow-y-auto p-2">
-            {filteredDiseases.length === 0 ? (
-              <div className="p-4 text-center text-sm text-gray-500">見つかりませんでした</div>
-            ) : (
-              filteredDiseases.map(disease => (
-                <button
-                  key={disease}
-                  onClick={() => setSelectedDisease(disease)}
-                  className={`w-full text-left px-4 py-3 rounded-xl mb-1 flex justify-between items-center transition-all duration-200 ${
-                    selectedDisease === disease 
-                      ? 'bg-blue-50 text-blue-700 font-bold shadow-sm' 
-                      : 'hover:bg-gray-50 text-gray-600 font-medium'
-                  }`}
-                >
-                  <span className="truncate pr-2 text-sm" title={disease}>{disease}</span>
-                  {selectedDisease === disease && <ChevronRight size={16} className="text-blue-500 shrink-0" />}
-                </button>
-              ))
-            )}
-          </div>
-        </div>
-
-        {/* Content: ランキングエリア */}
-        <div className="flex-1 bg-white rounded-2xl shadow-sm flex flex-col h-full overflow-hidden border border-gray-100 min-w-0">
-          
-          {/* デモデータ表示時の警告バナー */}
-          {isDemoData && (
-            <div className="bg-amber-50 border-b border-amber-200 p-4 shrink-0">
-              <div className="flex items-start gap-3">
-                <AlertCircle className="text-amber-500 shrink-0 mt-0.5" size={20} />
-                <div>
-                  <h3 className="text-sm font-bold text-amber-800">プレビュー用デモデータを表示しています</h3>
-                  <p className="text-xs text-amber-700 mt-1 leading-relaxed">
-                    <code>{CSV_FILE_NAME}</code> の読み込みに失敗しました。アプリケーションと同じディレクトリに本番のCSVファイルが配置されているかご確認ください。
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* 選択中の疾病情報ヘッダー */}
-          <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50/50 to-white shrink-0">
-            <h2 className="text-2xl font-extrabold text-gray-800 mb-3">{selectedDisease}</h2>
-            <div className="flex items-baseline gap-2">
-              <span className="text-sm font-medium text-gray-500">全国平均</span>
-              <span className="text-2xl font-bold text-blue-600">
-                {nationalData[selectedDisease]?.toFixed(1) || '0.0'}%
-              </span>
-              <span className="text-xs text-gray-400 ml-1">（65歳以上人口に対する割合）</span>
-            </div>
-          </div>
-          
-          {/* ランキングリスト */}
-          <div className="flex-1 overflow-y-auto p-2 sm:p-6" ref={scrollRef}>
-            {currentRanking.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full text-gray-400">
-                <Activity size={48} className="mb-4 opacity-20" />
-                <p>この傷病の都道府県データはありません</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {currentRanking.map((item, index) => {
-                  const rank = index + 1;
-                  // グラフの長さを決めるため、トップの割合を基準にする
-                  const maxRate = currentRanking[0]?.rate || 1; 
-                  const percentage = (item.rate / maxRate) * 100;
-                  
-                  return (
-                    <div 
-                      key={item.region} 
-                      className="group flex items-center gap-3 sm:gap-4 p-3 rounded-xl hover:bg-gray-50 transition-colors"
-                    >
-                      {/* 順位バッジ */}
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shrink-0 shadow-sm ${
-                        rank === 1 ? 'bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-700 border border-yellow-300' :
-                        rank === 2 ? 'bg-gradient-to-br from-gray-100 to-gray-200 text-gray-700 border border-gray-300' :
-                        rank === 3 ? 'bg-gradient-to-br from-orange-100 to-orange-200 text-orange-800 border border-orange-300' :
-                        'bg-white text-gray-500 border border-gray-200 group-hover:bg-gray-100'
-                      }`}>
-                        {rank}
-                      </div>
-                      
-                      {/* 都道府県名 */}
-                      <div className="w-16 sm:w-24 font-bold text-gray-700 shrink-0 text-sm sm:text-base">
-                        {item.region}
-                      </div>
-                      
-                      {/* グラフと数値 */}
-                      <div className="flex-1 flex items-center gap-3 sm:gap-4">
-                        <div className="flex-1 bg-gray-100 rounded-full h-3 sm:h-4 overflow-hidden shadow-inner relative">
-                          <div 
-                            className={`absolute top-0 left-0 h-full rounded-full transition-all duration-700 ease-out ${
-                              rank === 1 ? 'bg-blue-500' :
-                              rank <= 3 ? 'bg-blue-400' :
-                              'bg-blue-300'
-                            }`}
-                            style={{ width: `${percentage}%` }}
-                          />
-                        </div>
-                        <div className="w-14 sm:w-16 text-right font-mono font-bold text-gray-600 text-sm sm:text-base">
-                          {item.rate.toFixed(1)}<span className="text-xs text-gray-400 font-sans">%</span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </div>
-      </main>
-    </div>
-  );
-}
+  </script>
+</body>
+</html>
