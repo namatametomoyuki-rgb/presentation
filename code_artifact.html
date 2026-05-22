@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>認知症の周辺症状・BPSD 分類マインドマップ</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
+        /* SVG接続線の滑らかな描画用 */
+        .connection-line {
+            stroke-dasharray: 4;
+            animation: dash 30s linear infinite;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -1000;
+            }
+        }
+        /* カスタムスクロールバー */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col">
+
+    <!-- ヘッダー -->
+    <header class="bg-white border-b border-slate-200 px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between shrink-0 shadow-sm z-10">
+        <div class="flex items-center space-x-3">
+            <div class="bg-indigo-100 text-indigo-600 p-2.5 rounded-xl">
+                <i class="fa-solid fa-brain text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold text-slate-800">認知症 症状分類＆ケア マインドマップ</h1>
+                <p class="text-xs text-slate-500">中核症状・周辺症状(BPSD)から繁田先生の共依存対策・ケア論まで体系化</p>
+            </div>
+        </div>
+        <div class="mt-4 md:mt-0 flex items-center space-x-2 text-xs">
+            <span class="flex items-center px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 font-medium">
+                <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-1.5"></span>中核症状
+            </span>
+            <span class="flex items-center px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 font-medium">
+                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5"></span>心理症状(BPSD)
+            </span>
+            <span class="flex items-center px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 font-medium">
+                <span class="w-1.5 h-1.5 bg-amber-500 rounded-full mr-1.5"></span>行動症状(BPSD)
+            </span>
+            <span class="flex items-center px-2.5 py-1 rounded-full bg-purple-100 text-purple-700 font-medium">
+                <span class="w-1.5 h-1.5 bg-purple-500 rounded-full mr-1.5"></span>ケアのあり方
+            </span>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <div class="flex-1 flex overflow-hidden relative">
+        
+        <!-- 左側：マインドマップエリア（スクロール可能） -->
+        <div class="flex-1 overflow-auto p-8 relative min-w-[320px]" id="canvas-container">
+            <!-- 接続線を描画する背後のSVG -->
+            <svg id="svg-connections" class="absolute top-0 left-0 w-full h-full pointer-events-none z-0" style="min-width: 1600px; min-height: 1200px;"></svg>
+            
+            <!-- マインドマップ構造 -->
+            <div class="relative z-10 flex flex-col items-center justify-center min-w-[1500px] py-12" id="mindmap-root">
+                
+                <!-- ルートノード (中心) -->
+                <div id="node-root" class="bg-slate-800 text-white px-8 py-5 rounded-2xl shadow-xl text-center border-4 border-slate-700 max-w-xs transition-all hover:scale-105 cursor-pointer z-20 mb-16" onclick="selectNode('root')">
+                    <span class="text-xs font-semibold tracking-wider text-slate-400 uppercase">THEME</span>
+                    <h2 class="text-lg font-extrabold mt-1">認知症の症状と<br>ケアの全体像</h2>
+                    <p class="text-[10px] text-slate-300 mt-2">クリックで詳細を表示</p>
+                </div>
+
+                <!-- 第1レイヤー：大分類 (横並び) -->
+                <div class="flex justify-between w-full max-w-[1600px] gap-8">
+                    
+                    <!-- 左翼：中核症状 -->
+                    <div class="flex-1 flex flex-col items-center">
+                        <div id="node-core" class="bg-blue-50 border-2 border-blue-400 text-blue-800 px-6 py-4 rounded-xl shadow-md text-center max-w-xs transition-all hover:shadow-lg cursor-pointer z-20 mb-8" onclick="selectNode('core')">
+                            <div class="flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-atom text-blue-500"></i>
+                                <span class="font-bold text-base">中核症状</span>
+                            </div>
+                            <p class="text-xs text-blue-600 mt-1">脳の神経細胞破壊による直接的な認知機能低下</p>
+                            <button onclick="toggleBranch(event, 'branch-core')" class="mt-2 text-xs text-blue-500 hover:underline"><i class="fa-solid fa-eye-slash mr-1"></i>開閉</button>
+                        </div>
+                        
+                        <!-- 中核症状のサブノード -->
+                        <div id="branch-core" class="flex flex-col space-y-4 w-full max-w-md transition-all duration-300">
+                            <!-- 記憶障害 -->
+                            <div id="node-memory" class="bg-white border-l-4 border-blue-500 p-3.5 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('memory')">
+                                <div>
+                                    <h4 class="font-bold text-sm text-slate-800">記憶障害</h4>
+                                    <p class="text-xs text-slate-500">物忘れ、直前の体験そのものを忘れる</p>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                            </div>
+                            <!-- 見当識障害 -->
+                            <div id="node-orientation" class="bg-white border-l-4 border-blue-500 p-3.5 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('orientation')">
+                                <div>
+                                    <h4 class="font-bold text-sm text-slate-800">見当識障害</h4>
+                                    <p class="text-xs text-slate-500">時間、場所、人物が判別できなくなる</p>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                            </div>
+                            <!-- 理解力・判断力の低下 -->
+                            <div id="node-judgment" class="bg-white border-l-4 border-blue-500 p-3.5 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('judgment')">
+                                <div>
+                                    <h4 class="font-bold text-sm text-slate-800">理解力・判断力の低下</h4>
+                                    <p class="text-xs text-slate-500">状況の推測や安全な行動が困難になる</p>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                            </div>
+                            <!-- 実行機能障害 -->
+                            <div id="node-execution" class="bg-white border-l-4 border-blue-500 p-3.5 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('execution')">
+                                <div>
+                                    <h4 class="font-bold text-sm text-slate-800">実行機能障害</h4>
+                                    <p class="text-xs text-slate-500">段取り良く計画を立てて行動できない</p>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 中央右：周辺症状（BPSD） -->
+                    <div class="flex-1 flex flex-col items-center border-l border-r border-slate-200 px-4">
+                        <div id="node-bpsd" class="bg-emerald-50 border-2 border-emerald-400 text-emerald-800 px-6 py-4 rounded-xl shadow-md text-center max-w-xs transition-all hover:shadow-lg cursor-pointer z-20 mb-8" onclick="selectNode('bpsd')">
+                            <div class="flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-head-side-virus text-emerald-600"></i>
+                                <span class="font-bold text-base">周辺症状 (BPSD)</span>
+                            </div>
+                            <p class="text-xs text-emerald-600 mt-1">環境や性格、関わり方がもたらす行動・心理症状</p>
+                            <button onclick="toggleBranch(event, 'branch-bpsd')" class="mt-2 text-xs text-emerald-500 hover:underline"><i class="fa-solid fa-eye-slash mr-1"></i>開閉</button>
+                        </div>
+
+                        <!-- BPSDの2大分類 -->
+                        <div id="branch-bpsd" class="flex flex-col md:flex-row gap-6 w-full max-w-2xl transition-all duration-300">
+                            <!-- 心理症状 (内面) -->
+                            <div class="flex-1 flex flex-col space-y-3">
+                                <div class="text-center font-bold text-xs text-emerald-700 bg-emerald-100/50 py-1 rounded">【 心理症状 (精神的な変調) 】</div>
+                                <!-- 妄想 -->
+                                <div id="node-delusion" class="bg-white border-l-4 border-emerald-500 p-3 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('delusion')">
+                                    <div>
+                                        <h4 class="font-bold text-xs text-slate-800">妄想</h4>
+                                        <p class="text-[11px] text-slate-500">もの盗られ妄想など</p>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+                                </div>
+                                <!-- 幻覚 -->
+                                <div id="node-hallucination" class="bg-white border-l-4 border-emerald-500 p-3 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('hallucination')">
+                                    <div>
+                                        <h4 class="font-bold text-xs text-slate-800">幻覚・錯覚</h4>
+                                        <p class="text-[11px] text-slate-500">実際にはないものが見える</p>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+                                </div>
+                                <!-- 不安・抑うつ -->
+                                <div id="node-anxiety" class="bg-white border-l-4 border-emerald-500 p-3 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('anxiety')">
+                                    <div>
+                                        <h4 class="font-bold text-xs text-slate-800">不安・抑うつ</h4>
+                                        <p class="text-[11px] text-slate-500">自己の変化に対する強い不安</p>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+                                </div>
+                                <!-- アパシー -->
+                                <div id="node-apathy" class="bg-white border-l-4 border-emerald-500 p-3 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('apathy')">
+                                    <div>
+                                        <h4 class="font-bold text-xs text-slate-800">アパシー</h4>
+                                        <p class="text-[11px] text-slate-500">意欲喪失、以前の趣味に関心を失う</p>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+                                </div>
+                            </div>
+
+                            <!-- 行動症状 (外面) -->
+                            <div class="flex-1 flex flex-col space-y-3">
+                                <div class="text-center font-bold text-xs text-amber-700 bg-amber-100/50 py-1 rounded">【 行動症状 (行動の変化) 】</div>
+                                <!-- 徘徊 -->
+                                <div id="node-wandering" class="bg-white border-l-4 border-amber-500 p-3 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('wandering')">
+                                    <div>
+                                        <h4 class="font-bold text-xs text-slate-800">徘徊</h4>
+                                        <p class="text-[11px] text-slate-500">目的を持って家中・外をウロウロする</p>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+                                </div>
+                                <!-- 暴言・暴力 -->
+                                <div id="node-violence" class="bg-white border-l-4 border-amber-500 p-3 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('violence')">
+                                    <div>
+                                        <h4 class="font-bold text-xs text-slate-800">暴言・暴力</h4>
+                                        <p class="text-[11px] text-slate-500">イライラが爆発し大声が出たりする</p>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+                                </div>
+                                <!-- 介護抵抗 -->
+                                <div id="node-resistance" class="bg-white border-l-4 border-amber-500 p-3 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('resistance')">
+                                    <div>
+                                        <h4 class="font-bold text-xs text-slate-800">介護抵抗</h4>
+                                        <p class="text-[11px] text-slate-500">入浴や着替えの拒絶</p>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+                                </div>
+                                <!-- 睡眠障害 -->
+                                <div id="node-insomnia" class="bg-white border-l-4 border-amber-500 p-3 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('insomnia')">
+                                    <div>
+                                        <h4 class="font-bold text-xs text-slate-800">睡眠障害</h4>
+                                        <p class="text-[11px] text-slate-500">昼夜逆転、夜間の中途覚醒</p>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右翼：繁田先生の提言・ケア論 -->
+                    <div class="flex-1 flex flex-col items-center">
+                        <div id="node-care" class="bg-purple-50 border-2 border-purple-400 text-purple-800 px-6 py-4 rounded-xl shadow-md text-center max-w-xs transition-all hover:shadow-lg cursor-pointer z-20 mb-8" onclick="selectNode('care')">
+                            <div class="flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-hand-holding-heart text-purple-600"></i>
+                                <span class="font-bold text-base">ケアのあり方</span>
+                            </div>
+                            <p class="text-xs text-purple-600 mt-1">「症状」と決めつけない理解と、共依存から抜け出す姿勢</p>
+                            <button onclick="toggleBranch(event, 'branch-care')" class="mt-2 text-xs text-purple-500 hover:underline"><i class="fa-solid fa-eye-slash mr-1"></i>開閉</button>
+                        </div>
+
+                        <!-- ケア論のサブノード -->
+                        <div id="branch-care" class="flex flex-col space-y-4 w-full max-w-md transition-all duration-300">
+                            <!-- 尊厳を守る行動 -->
+                            <div id="node-dignity" class="bg-white border-l-4 border-purple-500 p-3.5 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('dignity')">
+                                <div>
+                                    <h4 class="font-bold text-sm text-slate-800">自尊心を必死に守る行動</h4>
+                                    <p class="text-xs text-slate-500">「物盗られ」は病的な妄想だけではない</p>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                            </div>
+                            <!-- 共依存の回避 -->
+                            <div id="node-codependency" class="bg-white border-l-4 border-purple-500 p-3.5 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('codependency')">
+                                <div>
+                                    <h4 class="font-bold text-sm text-slate-800">共依存の危険性を知る</h4>
+                                    <p class="text-xs text-slate-500">過保護・過干渉が本人と家族を追いつめる</p>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                            </div>
+                            <!-- ケアを手放す -->
+                            <div id="node-letgo" class="bg-white border-l-4 border-purple-500 p-3.5 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center" onclick="selectNode('letgo')">
+                                <div>
+                                    <h4 class="font-bold text-sm text-slate-800">「ケアを手放す」勇気</h4>
+                                    <p class="text-xs text-slate-500">外部サービスに頼り、家族が外でリフレッシュする</p>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 右側：詳細表示・編集サイドバー -->
+        <aside class="w-96 border-l border-slate-200 bg-white shrink-0 flex flex-col h-full shadow-lg z-10 transition-transform duration-300" id="sidebar">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 class="font-bold text-slate-700 flex items-center space-x-2">
+                    <i class="fa-solid fa-circle-info text-indigo-500"></i>
+                    <span>詳細データ・介護アドバイス</span>
+                </h3>
+                <span class="text-xs text-slate-400 font-mono" id="node-tag">SELECT A NODE</span>
+            </div>
+
+            <!-- ノード未選択時の画面 -->
+            <div id="unselected-state" class="flex-1 flex flex-col items-center justify-center p-8 text-center text-slate-400">
+                <i class="fa-solid fa-diagram-project text-5xl mb-4 text-slate-300"></i>
+                <p class="text-sm">マインドマップの各項目（ノード）をクリックすると、詳細な分類定義、対応のアドバイス、繁田先生からの言葉を読むことができます。</p>
+            </div>
+
+            <!-- 詳細表示画面（初期非表示） -->
+            <div id="selected-state" class="hidden flex-1 overflow-y-auto p-6 space-y-6">
+                <div>
+                    <span id="detail-category" class="inline-block px-2 py-1 rounded text-[10px] font-bold tracking-wider uppercase mb-2">CATEGORY</span>
+                    <h2 id="detail-title" class="text-xl font-bold text-slate-800">項目タイトル</h2>
+                </div>
+
+                <!-- 定義 / 概要 -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">基本的な定義・意味</h4>
+                    <p id="detail-desc" class="text-sm text-slate-600 leading-relaxed">ここには定義が表示されます。</p>
+                </div>
+
+                <!-- 具体例 -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center">
+                        <i class="fa-solid fa-list-ul mr-1.5 text-indigo-500"></i>よくある具体例
+                    </h4>
+                    <ul id="detail-examples" class="list-disc list-inside text-sm text-slate-600 space-y-2 pl-1">
+                        <!-- 動的に追加 -->
+                    </ul>
+                </div>
+
+                <!-- 関わり方・ケアのヒント -->
+                <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100/50">
+                    <h4 class="text-xs font-bold text-indigo-700 uppercase tracking-wider mb-2 flex items-center">
+                        <i class="fa-solid fa-lightbulb mr-1.5"></i>関わり方のヒント・対応策
+                    </h4>
+                    <p id="detail-tips" class="text-sm text-indigo-900 leading-relaxed">ここに対応のアドバイスが表示されます。</p>
+                </div>
+
+                <!-- 参考記事より（繁田先生の言葉） -->
+                <div id="section-shigeta" class="bg-purple-50 p-4 rounded-xl border border-purple-100">
+                    <h4 class="text-xs font-bold text-purple-700 uppercase tracking-wider mb-2 flex items-center">
+                        <i class="fa-solid fa-comment-dots mr-1.5"></i>参考記事・専門医の視点
+                    </h4>
+                    <blockquote id="detail-shigeta" class="text-xs italic text-purple-900 border-l-2 border-purple-300 pl-3 py-1 leading-relaxed">
+                        「〜〜〜〜」
+                    </blockquote>
+                </div>
+            </div>
+            
+            <!-- サイドバー下部：編集メモ -->
+            <div class="p-4 border-t border-slate-100 bg-slate-50 text-xs text-slate-500 flex justify-between items-center shrink-0">
+                <span>作成: なかまぁる公開講座 繁田先生講義参考</span>
+                <button onclick="openMemoModal()" class="text-indigo-600 hover:underline font-bold flex items-center"><i class="fa-solid fa-pen-to-square mr-1"></i>個別メモを追加</button>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- メモ追加モーダル -->
+    <div id="memo-modal" class="hidden fixed inset-0 bg-slate-900/60 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                <h3 class="font-bold text-slate-800 flex items-center space-x-2">
+                    <i class="fa-solid fa-clipboard text-indigo-500"></i>
+                    <span>症状・ケアのオリジナルメモを追加</span>
+                </h3>
+                <button onclick="closeMemoModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">分類の選択</label>
+                    <select id="memo-category" class="w-full border border-slate-200 rounded-lg p-2.5 text-sm">
+                        <option value="core">中核症状に追加</option>
+                        <option value="psychological">周辺症状（心理症状）に追加</option>
+                        <option value="behavioral">周辺症状（行動症状）に追加</option>
+                        <option value="care">ケアのあり方に追加</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">項目名</label>
+                    <input type="text" id="memo-title" placeholder="（例：夕暮れ症候群、食事の有無を忘れる など）" class="w-full border border-slate-200 rounded-lg p-2.5 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">説明・個人的なメモ</label>
+                    <textarea id="memo-desc" rows="3" placeholder="具体的な状況や、我が家での対策など自由にメモしてください" class="w-full border border-slate-200 rounded-lg p-2.5 text-sm"></textarea>
+                </div>
+            </div>
+            <div class="p-6 bg-slate-50 border-t border-slate-100 flex justify-end space-x-2">
+                <button onclick="closeMemoModal()" class="px-4 py-2 border border-slate-200 text-slate-500 rounded-lg text-sm hover:bg-slate-100">キャンセル</button>
+                <button onclick="addCustomMemo()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold shadow">マインドマップに反映</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript ロジック -->
+    <script>
+        // --- 1. 詳細データ定義 ---
+        const nodeData = {
+            root: {
+                category: "THEME",
+                title: "認知症の症状とケアの全体像",
+                desc: "認知症は、脳の病変から生じる共通の「中核症状」と、その人が置かれた環境や人間関係、本人の性格などが絡み合って生じる「周辺症状（BPSD）」に大別されます。何よりも、これらを単なる記号的な病気と捉えるのではなく、本人の内面的な葛藤を理解する姿勢が穏やかな毎日に繋がります。",
+                examples: [
+                    "中核症状：記憶障害、見当識障害など（神経の破壊による直接症状）",
+                    "周辺症状（BPSD）：妄想、不安、アパシー、徘徊、抵抗など（反応としての症状）",
+                    "ケアの本質：本人の尊厳の維持と、家族の自尊心の確保（共依存の防止）"
+                ],
+                tips: "認知症をフィルターとして見るのではなく、「なぜ今、この行動を取ったのか？」と当人なりの理由やストーリーに耳を傾けることが、症状の改善、およびご家族の負担軽減への近道です。",
+                shigeta: "「この人は認知症だから仕方ない」と決めつけて思考停止にならないでほしい。認知症というフィルターをかけて向き合うと、当人は理解されない『孤独』を感じるようになります。"
+            },
+            core: {
+                category: "CORE",
+                title: "中核症状",
+                desc: "脳の神経細胞が壊れることによって、直接引き起こされる認知機能の低下症状です。脳のどの部分がダメージを受けたかによって変わりますが、基本的には認知症を患うすべての人に共通して現れます。",
+                examples: [
+                    "新しい情報を覚えられない（記憶障害）",
+                    "今がいつか、ここがどこか分からない（見当識障害）",
+                    "物事の優先順位を決められない（実行機能障害）",
+                    "言葉がうまく出ない（失語）や、道具をうまく使えない（失行）"
+                ],
+                tips: "中核症状そのものは、脳の直接的な損傷によるものなので周囲の関わりだけで完全に消失させることは困難です。しかし、中核症状を理解して適切にサポートすれば、本人の失敗体験が減り、二次災害である「周辺症状（BPSD）」の発生を劇的に抑えることができます。",
+                shigeta: "中核症状の代表的なものには、物忘れが増える、会話がスムーズにできない、時間や場所の感覚があいまいになる、理解力・判断力が低下する、などがあります。"
+            },
+            memory: {
+                category: "CORE_SUB",
+                title: "記憶障害",
+                desc: "脳の海馬などの記憶を司る部位が萎縮・損傷することで発生します。加齢による「物忘れ（体験の一部を忘れる）」とは異なり、「体験したこと自体をそっくり忘れてしまう」のが特徴です。",
+                examples: [
+                    "さっき朝ごはんを食べたばかりなのに「ご飯はまだ？」と聞く",
+                    "同じことを何度も繰り返し尋ねる",
+                    "約束したこと自体を忘れてしまい、すっぽかしてしまう"
+                ],
+                tips: "「さっき言ったでしょ！」「また忘れたの？」と責め立てるのは逆効果です。本人は責められた不快感や不安な感情だけを蓄積し、それがBPSDの引き金になります。「そうだったね」と毎回優しく答えたり、紙に書いて目の届く場所に置く工夫が有効です。",
+                shigeta: "記憶があいまいになっていく不安を、本人は誰よりも感じています。自尊感情を保てる声かけや、安心感を与えるようなアプローチがとても重要です。"
+            },
+            orientation: {
+                category: "CORE_SUB",
+                title: "見当識障害",
+                desc: "時間、場所、周囲の人々、さらには自分自身の年齢や状況など、周囲の環境を正しく把握する機能が失われる障害です。通常は「時間」から始まり、次いで「場所」、最後に「人」の見当識が失われていきます。",
+                examples: [
+                    "真夜中に「仕事に行く」と支度をし始める（時間の障害）",
+                    "自分の家の中にいるのに「家に帰りたい」と訴える（場所の障害）",
+                    "自分の子どもを、自分の親や夫と勘違いしてしまう（人の障害）"
+                ],
+                tips: "頭ごなしに「今は夜の3時です！」「ここがあなたの家ですよ！」と否定すると、本人はさらに大混乱に陥ります。夜中の外出には「今から行っても会社は閉まっているから、少しお茶を飲んでから行きましょう」と話を合わせ、落ち着くのを待ってから寝室へ誘導するのがコツです。",
+                shigeta: "時間の感覚や場所の感覚があいまいになり、生活の秩序が乱れていくことへの「不快」を、本人は必死に耐えているのだという背景を忘れないでください。"
+            },
+            judgment: {
+                category: "CORE_SUB",
+                title: "理解力・判断力の低下",
+                desc: "物事の関係性を分析したり、良し悪しを判断したりする能力が失われます。詐欺被害に遭いやすくなったり、危険なものを食べようとしてしまうのはこの症状が影響しています。",
+                examples: [
+                    "テレビのCMを自分への直接の呼びかけと思い込んでしまう",
+                    "夏なのに冬物のセーターを着込んで外出する",
+                    "怪しい電話や強引なセールスを断れず、契約してしまう"
+                ],
+                tips: "何気ない生活の中に多くのトラップが存在します。クレジットカードや銀行通帳は家族が管理し、電話には防犯機能付きの留守番録音装置を導入するなど、周囲が環境をセーフティネット化しておくことが大切です。",
+                shigeta: "失敗や不合理な行動に対し、「なぜそんなことをしたのか」と認知症という先入観だけで決めつけず、本人なりの辻褄が合うロジックがあったかを考えてみてください。"
+            },
+            execution: {
+                category: "CORE_SUB",
+                title: "実行機能障害",
+                desc: "何か目的を達成するために「手順を立てる」「計画通りに実行する」「状況に応じて臨機応変に変更する」というステップを踏むことができなくなる症状です。",
+                examples: [
+                    "ベテラン主婦だった人が、料理の段取りが分からなくなっておかずを1品しか作れなくなる",
+                    "自動券売機やスマートフォンの操作順序が分からなくなる",
+                    "季節に合わせた家電（扇風機・暖房機）の操作や準備ができない"
+                ],
+                tips: "すべてを代わりにやるのではなく、行程をシンプルに細分化してあげましょう。料理なら「じゃがいもの皮だけ剥いてね」「次はこれを切ってね」とステップを小分けに伝えることで、自信を取り戻す機会を作れます。",
+                shigeta: "今までは当たり前にできていた家事や仕事などが順序良くできなくなることは、本人に非常な喪失感とプライドの傷付きをもたらします。"
+            },
+            bpsd: {
+                category: "BPSD",
+                title: "周辺症状 (BPSD)",
+                desc: "中核症状に、本人の性格、身体状態（痛み、不快感）、置かれている環境、および介護者の言葉遣いや関わり方などの「反応」として生じる、多彩な精神症状や行動障害です。適切な対応によって予防や改善が可能です。",
+                examples: [
+                    "妄想・幻覚・不安・うつ状態（心理的な変調）",
+                    "徘徊・暴力・抵抗・不眠（目に見える行動としての変化）",
+                    "介護拒否や過激な言い返し（人間関係の摩擦）"
+                ],
+                tips: "「周辺症状は、本人から家族への不安やSOSのサイン」と捉えましょう。本人の周囲の環境を整え、穏やかな声かけを意識するだけで、BPSDの多くは落ち着き、薬物療法を減らせることも多いです。",
+                shigeta: "周辺症状が現れるか否かは、「本人の性格」「環境」「周囲の対応」などが影響することがわかっています。約120もの症状があると言われますが、その中には普通の親子げんかも含まれています。"
+            },
+            delusion: {
+                category: "BPSD_PSYCH",
+                title: "妄想 (心理症状)",
+                desc: "事実ではないことを強く信じ込んでしまい、周囲が説得しても訂正が困難な思考障害です。認知症においては「もの盗られ妄想」が特に多く発生します。",
+                examples: [
+                    "大事な財布がない時に「あなたが盗ったんでしょ」と身近な家族を疑う（もの盗られ妄想）",
+                    "家族が自分をのけ者にして老人ホームに捨てようとしていると思い込む（見捨てられ妄想）",
+                    "配偶者が浮気をしていると思い込む（嫉妬妄想）"
+                ],
+                tips: "「私は盗っていません！」と激しく弁明するほど、「隠そうとしている」と相手の疑心暗鬼が強まります。まずは「それは一大事ね。一緒に探しましょう」と不安に寄り添い、本人が自分で見つけられるように誘導し、見つかったら「あって良かった、安心したね」と自尊心を支えます。",
+                shigeta: "もの盗られ妄想があったとき、ご本人には「大切な家族を疑うのは本当につらいことですね」「失くしたものは、それだけ大切だったのですね」と自尊感情を守る声かけを行います。これが専門医のアプローチです。"
+            },
+            hallucination: {
+                category: "BPSD_PSYCH",
+                title: "幻覚・錯覚 (心理症状)",
+                desc: "存在しないものを存在するように知覚する症状です。レビー小体型認知症で「幻視」が特によく現れますが、壁の染みを虫と見間違えるなどの「錯覚」も多く見られます。",
+                examples: [
+                    "「そこに知らない子どもが座っている」「蛇が部屋にいる」と真顔で言う（幻視）",
+                    "誰もいない廊下から「誰かの話し声が聞こえる」と言う（幻聴）",
+                    "ハンガーにかかっている服を見て「泥棒が潜んでいる」と怯える"
+                ],
+                tips: "「そんなのいないよ、気のせいだ」と否定すると、本人は「この人は信じてくれない」と孤立を深めます。「そこに子どもが見えるんですね。でも私には見えないし、悪さはしないから、あっちに行ってもらいましょうね」と、不快感を取り除くようにアプローチしましょう。",
+                shigeta: "本人にとっては完全に『現実』として見えています。まずはその見えている世界を否定せず、受容する姿勢から安心感が生まれます。"
+            },
+            anxiety: {
+                category: "BPSD_PSYCH",
+                title: "不安・抑うつ (心理症状)",
+                desc: "自身の心身の変化（記憶が抜けていく、家事ができない）に気付き、言い知れぬ不安や焦燥感、哀しみ、絶望を感じてふさぎ込んでしまう状態です。",
+                examples: [
+                    "「私はダメになってしまった」と自責し、一日中涙ぐんでいる",
+                    "些細なことに対して過剰にオロオロし、パニックになる",
+                    "一人にされることを極端に嫌がり、家族の後をずっと追いかける（追従）"
+                ],
+                tips: "無理に励ましたり「頑張ろう」と声をかけるのはプレッシャーになります。「ここにいるから大丈夫だよ」「今までたくさん頑張ってくれたから、少しゆっくりしましょう」と存在そのものを全肯定してあげてください。",
+                shigeta: "認知症の方はただでさえ、自分の記憶があいまいになる『不安』、生活の乱れの『不快』、自分らしさが崩れる『恐れ』を感じて生きています。"
+            },
+            apathy: {
+                category: "BPSD_PSYCH",
+                title: "アパシー (心理症状)",
+                desc: "自発的な意欲、関心、感情が極端に低下し、何もやりたがらなくなる状態です。うつ病に似ていますが、うつと違って本人自身がそれを『苦しい・悲しい』とも思わない無関心さが特徴です。",
+                examples: [
+                    "一日中ベッドやテレビの前でボーッと過ごす",
+                    "大好きだった料理やガーデニング、お喋りに全く興味を示さない",
+                    "お風呂や着替え、身だしなみを整えるのが面倒になり放置する"
+                ],
+                tips: "無理やり「散歩に行こう！」と引きずり出すのは本人の負担になります。かつての習慣の中で、極めてハードルの低い行動（「庭の花にジョウロで水をかけるのだけ手伝って」「このチラシを一緒に見て」）を、感謝を伝えながら促しましょう。",
+                shigeta: "家族は症状を改善させようとして、ついついドリルや訓練的なことを強制しがちですが、本人の自発性と心地よい感情を刺激することが本当の意味でのアプローチです。"
+            },
+            wandering: {
+                category: "BPSD_BEHAV",
+                title: "徘徊 (行動症状)",
+                desc: "あてもなく歩き回るように見えますが、本人にとっては「元いた職場に仕事に行こうとする」「かつての自宅へ帰ろうとする」「失くしたものを見つけようとする」など、明確な目的がある行動です。",
+                examples: [
+                    "「もう帰ります」と夕方に突然靴を履いて外出しようとする",
+                    "家中をウロウロし、引き出しや棚をすべて開けて回る",
+                    "同じ道をぐるぐると何度もパトロールするように歩く"
+                ],
+                tips: "無理に腕を掴んで制止したり鍵をかけて閉じ込めると、恐怖から暴力などに発展します。「どこに行かれますか？」「会社ですね、お疲れ様です。途中で美味しいお茶でも飲みませんか」と一度同行し、歩く欲求を満たしながら自然に誘導します。",
+                shigeta: "「目を離すと外に行く」などの行動の裏には、自尊心を守ろうとしたり、本人の記憶世界での義務を果たそうとしたりする経緯があるのです。"
+            },
+            violence: {
+                category: "BPSD_BEHAV",
+                title: "暴言・暴力 (行動症状)",
+                desc: "不満や不安、肉体的な不快感があるものの、中核症状（失語など）のせいで自分の感情をうまく言葉で表現できない苛立ちから、衝動的に乱暴な態度になってしまうことです。",
+                examples: [
+                    "介護者の手助けに対し「余計なことをするな！」と怒鳴る",
+                    "思うようにいかないときに机を叩いたり、お皿を投げる",
+                    "近づいた介護者の手や顔を叩いたり、つねったりする"
+                ],
+                tips: "怒鳴り返す、力で抑え込むのは最悪の結果を招きます。手が出そうになったら一度、物理的に2メートルほど距離を置きましょう。興奮のピークは数分です。落ち着いた頃に、静かな低いトーンの声で「痛かったですよね、驚かせてごめんなさい」と穏やかに接します。",
+                shigeta: "これは性格の破綻ではなく、周囲の『イライラ』や『否定されたことへの防衛反応』として、思わず出てしまった親子喧嘩の延長線上のケースも多いのです。"
+            },
+            resistance: {
+                category: "BPSD_BEHAV",
+                title: "介護抵抗 (行動症状)",
+                desc: "なぜお風呂に入る必要があるのか、なぜおむつを替えるのかが理解できず、恥ずかしさや自尊心の傷つきから、介護のすべてのプロセスを拒絶する行為です。",
+                examples: [
+                    "お風呂に入りましょうと言っても「さっき入った！」と絶対に動かない",
+                    "着替えをさせようとすると、介護者の手を振り払って拒否する",
+                    "用意した食事を「毒が入っている」などと言って食べない"
+                ],
+                tips: "本人のプライドに最大の配慮が必要です。例えば入浴なら「私がお背中を流すのを手伝ってくれませんか？」とお願いする形にしたり、温泉旅行のパンフレットを見せて雰囲気を盛り上げるなど、「やりたくなるストーリー」を演出します。",
+                shigeta: "介護をする側はつい過保護・過干渉になり、先回りして何でもかんでも手を出してしまうことで、本人の意欲を奪い抵抗を生み出してしまっている一面もあります。"
+            },
+            insomnia: {
+                category: "BPSD_BEHAV",
+                title: "睡眠障害 (行動症状)",
+                desc: "脳の体内時計（視交叉上核）の障害や日中の活動量低下により、昼夜のサイクルが逆転し、夜中に目が冴えて騒いだり家事を始めたりしてしまう症状です。",
+                examples: [
+                    "昼間にほとんど居眠りをして過ごしている",
+                    "夜中の2時にパジャマのまま電気をつけ、「朝ですよ」と家族を起こす",
+                    "夜間にそわそわして布団から何度も出て徘徊する"
+                ],
+                tips: "日中の覚醒レベルを上げることが最も重要です。昼間にデイサービスを利用して適度に疲れる活動をする、午前中に日光を浴びてセロトニンの分泌を促す、夜間は寝室を静かで暗いリラックス空間に保ちます。",
+                shigeta: "日中の適切な疲労と、安心できる環境、そして夜間に活動が始まってもパニックにならずに対応できる見守り環境が家族を救います。"
+            },
+            care: {
+                category: "CARE",
+                title: "ケアのあり方",
+                desc: "認知症ケアで最も重要なのは、「本人が主役であること」と「家族が燃え尽きないこと」のバランスです。専門医が警鐘を鳴らす『家族の共依存』を打破し、適切に手を引く技術が求められます。",
+                examples: [
+                    "本人の尊厳とプライドを傷つけないアプローチの工夫",
+                    "家族の「私しか面倒を見る人がいない」という思い込みを捨てる",
+                    "外部サービスを活用し、お互いに一人の時間を作る（ケアを手放す）"
+                ],
+                tips: "認知症ケアは長期戦です。完璧な介護を目指すのではなく、本人が自分でできることはあえて手を出さず見守り、できない部分をさりげなく、かつプロの力（ケアマネジャーやヘルパー）を最大限借りてチームで支えましょう。",
+                shigeta: "繁田先生の講演タイトル「認知症の行動心理症状ってご存じですか？」より。介護に疲れた家族に先生は『外に出かけたらどうですか』『遊んできてください』と必ず伝えています。"
+            },
+            dignity: {
+                category: "CARE_SUB",
+                title: "自尊心を必死に守る行動",
+                desc: "不可解に見える「もの盗られ妄想」や奇妙な行動も、本人がプライドを保つため、辻褄の合わなくなった世界で自分を守るために必死に考えた「結果」としての行動である、という視点です。",
+                examples: [
+                    "物を失くした恥ずかしさを、「誰かが盗んだ」ということにすることで納得させようとする",
+                    "何かしなきゃという責任感から、昔の書類をかき集めて仕事のふりをする"
+                ],
+                tips: "周囲がこのメカニズムを理解していれば、「またボケてそんなこと言って！」と怒るのではなく、「大切なものをきちんと管理しようとする立派な心があるんだな」と本人の真意を褒め、敬意を払った声かけが可能になります。",
+                shigeta: "認知症の診断を受けたからといって『この人は認知症だから仕方ない』と決めつけて思考停止にならないでほしい。本人が自分の尊厳を必死に守ろうとした結果の行動なのです。"
+            },
+            codependency: {
+                category: "CARE_SUB",
+                title: "共依存の危険性を知る",
+                desc: "「私がいなければこの人は生きていけない」「生きていくためには家族に頼るしかない」と互いに依存しきってしまい、自他の境界があいまいになった閉塞的な家族関係のことです。介護の現場で非常に多く発生します。",
+                examples: [
+                    "家族だけで介護を抱え込み、外部のヘルパーなどを家に入れるのを拒絶する",
+                    "本人のためを思い、まだ自分でできることまで過保護・過言に世話してしまう",
+                    "本人の症状が悪化・改善しないことを自分の努力不足のせいにして自分を責める"
+                ],
+                tips: "共依存は、介護者の「燃え尽き」や「孤立」、最悪の場合は「介護虐待」を招きます。また、先回りの世話は本人の生活能力（ADL）の低下を早めます。他者を頼ることは、本人と家族の双方を守るための最もポジティブな防衛策です。",
+                shigeta: "家族は大切に思うからこそ過保護・過干渉になりがちです。これにより本人は意欲を失い、さらに依存していきます。共依存の関係は、家族の燃え尽きや孤立を生みます。"
+            },
+            letgo: {
+                category: "CARE_SUB",
+                title: "「ケアを手放す」勇気",
+                desc: "介護において「自分がすべて面倒を見ること」が愛情ではありません。適切なタイミングで専門職（ショートステイ、デイサービス、訪問看護など）にバトンタッチし、自分の人生の時間を取り戻す決断のことです。",
+                examples: [
+                    "罪悪感を感じつつも、ショートステイ（短期入所）の定期利用を開始する",
+                    "週末は介護から一切離れ、自分の趣味や旅行を楽しむ時間を作る",
+                    "「大変だ」と限界を迎える前に、ケアマネジャーにSOSを出す"
+                ],
+                tips: "「私がいなくなったら本人がかわいそう」というのは、多くの場合思い込みです。プロのスタッフは介護の技術があり、本人の居場所を作るのが得意です。リフレッシュした明るい笑顔で戻ってきた家族に会えることの方が、本人にとっても最大の癒しになります。",
+                shigeta: "家族が『ケアを手放すこと』は、認知症との大切な向き合い方の一つ。私は『外に出かけたらどうですか』『遊んできてください』と必ずアドバイスします。"
+            }
+        };
+
+        let customMemoIdCounter = 1;
+
+        // --- 2. ノードの選択と詳細パネルの更新 ---
+        function selectNode(nodeId) {
+            const data = nodeData[nodeId];
+            if (!data) return;
+
+            // 選択中のノードの見た目を強調
+            document.querySelectorAll('[id^="node-"]').forEach(el => {
+                el.classList.remove('ring-4', 'ring-indigo-400', 'scale-105');
+            });
+            const selectedEl = document.getElementById(`node-${nodeId}`);
+            if (selectedEl) {
+                selectedEl.classList.add('ring-4', 'ring-indigo-400', 'scale-105');
+            }
+
+            // サイドバーの表示切り替え
+            document.getElementById('unselected-state').classList.add('hidden');
+            const selectedState = document.getElementById('selected-state');
+            selectedState.classList.remove('hidden');
+
+            // データ反映
+            document.getElementById('node-tag').innerText = data.category;
+            document.getElementById('detail-title').innerText = data.title;
+            document.getElementById('detail-desc').innerText = data.desc;
+            document.getElementById('detail-tips').innerText = data.tips;
+
+            // カテゴリによるバッジの色変更
+            const catBadge = document.getElementById('detail-category');
+            catBadge.innerText = data.category;
+            catBadge.className = "inline-block px-2 py-1 rounded text-[10px] font-bold tracking-wider uppercase mb-2";
+            if (data.category.startsWith('CORE')) {
+                catBadge.classList.add('bg-blue-100', 'text-blue-700');
+            } else if (data.category.startsWith('BPSD_PSYCH')) {
+                catBadge.classList.add('bg-emerald-100', 'text-emerald-700');
+            } else if (data.category.startsWith('BPSD_BEHAV')) {
+                catBadge.classList.add('bg-amber-100', 'text-amber-700');
+            } else if (data.category === 'BPSD') {
+                catBadge.classList.add('bg-teal-100', 'text-teal-700');
+            } else {
+                catBadge.classList.add('bg-purple-100', 'text-purple-700');
+            }
+
+            // 具体例リストの生成
+            const listContainer = document.getElementById('detail-examples');
+            listContainer.innerHTML = '';
+            data.examples.forEach(ex => {
+                const li = document.createElement('li');
+                li.className = "pl-1";
+                li.innerText = ex;
+                listContainer.appendChild(li);
+            });
+
+            // 繁田先生セクション
+            const shigetaSec = document.getElementById('section-shigeta');
+            if (data.shigeta) {
+                shigetaSec.classList.remove('hidden');
+                document.getElementById('detail-shigeta').innerText = `“${data.shigeta}”`;
+            } else {
+                shigetaSec.classList.add('hidden');
+            }
+
+            // ラインの再描画
+            drawConnections();
+        }
+
+        // --- 3. ブランチの折りたたみ・開閉 ---
+        function toggleBranch(event, branchId) {
+            event.stopPropagation(); // ノードクリックイベントの伝播を防止
+            const branch = document.getElementById(branchId);
+            if (branch) {
+                branch.classList.toggle('hidden');
+                // アニメーションのため少し待ってから線を描画
+                setTimeout(drawConnections, 100);
+            }
+        }
+
+        // --- 4. モーダル操作 ---
+        function openMemoModal() {
+            document.getElementById('memo-modal').classList.remove('hidden');
+        }
+
+        function closeMemoModal() {
+            document.getElementById('memo-modal').classList.add('hidden');
+            // 入力リセット
+            document.getElementById('memo-title').value = '';
+            document.getElementById('memo-desc').value = '';
+        }
+
+        // オリジナルメモの追加
+        function addCustomMemo() {
+            const category = document.getElementById('memo-category').value;
+            const title = document.getElementById('memo-title').value.trim();
+            const desc = document.getElementById('memo-desc').value.trim();
+
+            if (!title) {
+                alert('項目名を入力してください。');
+                return;
+            }
+
+            const uniqueId = `custom-${customMemoIdCounter++}`;
+            
+            // データ登録
+            nodeData[uniqueId] = {
+                category: category === 'core' ? 'CORE_CUSTOM' : (category === 'care' ? 'CARE_CUSTOM' : 'BPSD_CUSTOM'),
+                title: title,
+                desc: desc || "ユーザーによって登録された個別メモです。",
+                examples: ["登録されたカスタムメモ・記録"],
+                tips: "日常の中で気づいた変化や、その時うまくいったアプローチなどをどんどん書き足して、自分だけのケアマップにしていきましょう。",
+                shigeta: "本人の状態は日々変化します。変化を記録し、客観的に見つめることで、介護の『共依存』を防ぐ視点に繋がります。"
+            };
+
+            // DOMへ追加する親要素の決定
+            let parentBranchId = '';
+            let borderStyle = 'border-purple-500';
+            let icon = 'fa-tag';
+
+            if (category === 'core') {
+                parentBranchId = 'branch-core';
+                borderStyle = 'border-blue-500';
+                icon = 'fa-brain';
+            } else if (category === 'psychological' || category === 'behavioral') {
+                parentBranchId = 'branch-bpsd';
+                borderStyle = category === 'psychological' ? 'border-emerald-500' : 'border-amber-500';
+                icon = 'fa-heart-pulse';
+            } else {
+                parentBranchId = 'branch-care';
+                borderStyle = 'border-purple-500';
+                icon = 'fa-hand-holding-heart';
+            }
+
+            const parentBranch = document.getElementById(parentBranchId);
+            if (parentBranch) {
+                // ブランチが表示されていない場合は表示する
+                parentBranch.classList.remove('hidden');
+
+                // 新しいノードのHTML作成
+                const div = document.createElement('div');
+                div.id = `node-${uniqueId}`;
+                div.className = `bg-white border-l-4 ${borderStyle} p-3.5 rounded-r-lg shadow-sm hover:shadow-md cursor-pointer transition-all flex justify-between items-center z-20`;
+                div.setAttribute('onclick', `selectNode('${uniqueId}')`);
+                div.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid ${icon} text-slate-400 text-xs"></i>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800">${title}</h4>
+                            <p class="text-xs text-slate-500 truncate max-w-[200px]">${desc || 'メモ内容'}</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                `;
+                parentBranch.appendChild(div);
+            }
+
+            closeMemoModal();
+            
+            // 接続線リマッピングと自動選択
+            setTimeout(() => {
+                drawConnections();
+                selectNode(uniqueId);
+            }, 100);
+        }
+
+        // --- 5. SVG 接続線の描画ロジック ---
+        function drawConnections() {
+            const svg = document.getElementById('svg-connections');
+            svg.innerHTML = ''; // 以前の線をクリア
+
+            const canvas = document.getElementById('canvas-container');
+            const canvasRect = canvas.getBoundingClientRect();
+
+            const rootNode = document.getElementById('node-root');
+            if (!rootNode) return;
+
+            const rootRect = rootNode.getBoundingClientRect();
+            // 親座標系(canvas)におけるrootの中心座標
+            const rx = (rootRect.left + rootRect.width / 2) - canvasRect.left + canvas.scrollLeft;
+            const ry = (rootRect.top + rootRect.height) - canvasRect.top + canvas.scrollTop;
+
+            // 大分類ターゲット
+            const targets = ['core', 'bpsd', 'care'];
+            targets.forEach(targetId => {
+                const targetNode = document.getElementById(`node-${targetId}`);
+                if (!targetNode) return;
+
+                const targetRect = targetNode.getBoundingClientRect();
+                const tx = (targetRect.left + targetRect.width / 2) - canvasRect.left + canvas.scrollLeft;
+                const ty = (targetRect.top) - canvasRect.top + canvas.scrollTop;
+
+                // ルートから第1レイヤーへの滑らかな曲線を描画
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                const controlY = ry + (ty - ry) / 2;
+                const d = `M ${rx} ${ry} C ${rx} ${controlY}, ${tx} ${controlY}, ${tx} ${ty}`;
+                
+                path.setAttribute('d', d);
+                path.setAttribute('fill', 'none');
+                
+                // 色分け
+                if (targetId === 'core') {
+                    path.setAttribute('stroke', '#93c5fd');
+                } else if (targetId === 'bpsd') {
+                    path.setAttribute('stroke', '#a7f3d0');
+                } else {
+                    path.setAttribute('stroke', '#e9d5ff');
+                }
+                
+                path.setAttribute('stroke-width', '4');
+                path.classList.add('connection-line');
+                svg.appendChild(path);
+
+                // 各ブランチ内のサブノードへの接続
+                const branchId = `branch-${targetId}`;
+                const branch = document.getElementById(branchId);
+                if (branch && !branch.classList.contains('hidden')) {
+                    const children = branch.querySelectorAll('[id^="node-"]');
+                    const px = (targetRect.left + targetRect.width / 2) - canvasRect.left + canvas.scrollLeft;
+                    const py = (targetRect.top + targetRect.height) - canvasRect.top + canvas.scrollTop;
+
+                    children.forEach(child => {
+                        const childRect = child.getBoundingClientRect();
+                        const cx = (childRect.left + childRect.width / 2) - canvasRect.left + canvas.scrollLeft;
+                        const cy = (childRect.top + childRect.height / 2) - canvasRect.top + canvas.scrollTop;
+
+                        const subPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                        const cY = py + (cy - py) / 2;
+                        const sd = `M ${px} ${py} C ${px} ${cY}, ${cx} ${cY}, ${cx} ${cy}`;
+
+                        subPath.setAttribute('d', sd);
+                        subPath.setAttribute('fill', 'none');
+                        
+                        if (targetId === 'core') {
+                            subPath.setAttribute('stroke', '#cbd5e1');
+                        } else if (targetId === 'bpsd') {
+                            subPath.setAttribute('stroke', '#cbd5e1');
+                        } else {
+                            subPath.setAttribute('stroke', '#cbd5e1');
+                        }
+                        
+                        subPath.setAttribute('stroke-width', '2');
+                        svg.appendChild(subPath);
+                    });
+                }
+            });
+        }
+
+        // --- 6. イベントリスナー ---
+        window.addEventListener('load', () => {
+            // 初期線の描画
+            drawConnections();
+            // 初期状態はルートを選択
+            selectNode('root');
+        });
+
+        window.addEventListener('resize', drawConnections);
+        
+        // 折りたたみのスクロール時やドラッグなどの位置ずれ防止用
+        document.getElementById('canvas-container').addEventListener('scroll', drawConnections);
+
+    </script>
+</body>
+</html>
