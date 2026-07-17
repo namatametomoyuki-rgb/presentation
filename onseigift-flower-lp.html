@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONSEIGIFT flower ｜ お花と一緒に、「安心」を贈る</title>
+<meta name="description" content="AIによる高精度な脳の健康チェックを贈る、新しい見守りギフト。お花をきっかけに、声で答えるだけ。結果は、あなたのスマホへ。遠くにいても、そばにいても。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Klee+One:wght@400;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#FBF5EE;
+    --ivory-2:#F5EBE0;
+    --paper:#FFFCF8;
+    --rose:#D98A86;
+    --rose-deep:#BE6C67;
+    --blush:#F3D9D2;
+    --green:#33503F;
+    --green-2:#4E6B57;
+    --sage:#9DB39C;
+    --gold:#E4A85B;
+    --gold-soft:#F0C88A;
+    --ink:#39312B;
+    --ink-soft:#726757;
+    --line:#E7D9C9;
+    --maxw:1120px;
+    --r:22px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif;
+    color:var(--ink);
+    background:var(--ivory);
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+  h1,h2,h3{font-family:"Shippori Mincho",serif;font-weight:700;line-height:1.5;letter-spacing:.02em}
+  .mincho{font-family:"Shippori Mincho",serif}
+  .hand{font-family:"Klee One",cursive}
+  .latin{font-family:"Fraunces",serif}
+  a{color:inherit}
+
+  /* ---------- eyebrow / labels ---------- */
+  .eyebrow{
+    font-family:"Klee One",cursive;
+    color:var(--rose-deep);
+    font-size:.98rem;
+    letter-spacing:.14em;
+    display:inline-flex;align-items:center;gap:.6em;
+    margin-bottom:1.1rem;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--rose);display:inline-block}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:.7em;
+    font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700;
+    font-size:1.02rem;letter-spacing:.04em;
+    padding:.95em 2.1em;border-radius:999px;
+    background:var(--green);color:#fff;text-decoration:none;
+    box-shadow:0 12px 26px -12px rgba(51,80,63,.6);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,background .35s;
+    border:none;cursor:pointer;
+  }
+  .btn:hover{transform:translateY(-3px);box-shadow:0 20px 34px -14px rgba(51,80,63,.7);background:var(--green-2)}
+  .btn .ico{font-size:1.15em;line-height:0}
+  .btn-ghost{background:transparent;color:var(--green);border:1.5px solid var(--green);box-shadow:none}
+  .btn-ghost:hover{background:var(--green);color:#fff}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(10px);
+    background:rgba(251,245,238,.82);
+    border-bottom:1px solid transparent;
+    transition:border-color .4s,background .4s;
+  }
+  header.scrolled{border-color:var(--line)}
+  .navbar{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+  .brand .mark{width:34px;height:34px;flex:none}
+  .brand .name{font-family:"Fraunces",serif;font-weight:600;font-size:1.22rem;color:var(--green);letter-spacing:.01em}
+  .brand .name b{color:var(--rose-deep);font-weight:600}
+  .brand .sub{font-family:"Klee One",cursive;font-size:.7rem;color:var(--ink-soft);letter-spacing:.24em;display:block;margin-top:-3px}
+  .nav-cta{display:flex;align-items:center;gap:1.4rem}
+  .nav-link{text-decoration:none;font-size:.95rem;font-weight:500;color:var(--ink-soft);transition:color .3s}
+  .nav-link:hover{color:var(--green)}
+  .nav-links{display:flex;gap:1.6rem}
+  @media(max-width:820px){.nav-links{display:none}}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;padding:clamp(48px,7vw,92px) 0 clamp(60px,8vw,110px);overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0;
+    background:
+      radial-gradient(120% 90% at 82% 8%, rgba(240,200,138,.42), transparent 55%),
+      radial-gradient(90% 80% at 12% 30%, rgba(243,217,210,.55), transparent 60%),
+      linear-gradient(180deg,#FDF7F0 0%, var(--ivory) 60%, var(--ivory-2) 100%);
+  }
+  .hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,60px);align-items:center}
+  .hero-copy h1{font-size:clamp(2.15rem,5.2vw,3.5rem);font-weight:800;letter-spacing:.03em}
+  .hero-copy h1 .accent{color:var(--rose-deep);position:relative}
+  .hero-copy h1 .accent::after{content:"";position:absolute;left:-2%;right:-2%;bottom:.08em;height:.32em;background:var(--gold-soft);opacity:.5;z-index:-1;border-radius:4px}
+  .hero-copy .lead{margin-top:1.5rem;font-size:1.08rem;color:var(--ink-soft);max-width:30em}
+  .hero-actions{margin-top:2.2rem;display:flex;flex-wrap:wrap;gap:.9rem;align-items:center}
+  .hero-note{margin-top:1.3rem;font-size:.86rem;color:var(--ink-soft);display:flex;align-items:center;gap:.5em}
+  .hero-note svg{flex:none}
+  .hero-art{position:relative;display:flex;justify-content:center}
+  .hero-art svg{width:100%;max-width:440px;height:auto;filter:drop-shadow(0 30px 46px rgba(120,90,70,.22))}
+  @media(max-width:860px){
+    .hero-inner{grid-template-columns:1fr;text-align:center}
+    .hero-copy .lead{margin-left:auto;margin-right:auto}
+    .hero-actions{justify-content:center}
+    .hero-note{justify-content:center}
+    .hero-art{order:-1;max-width:360px;margin:0 auto 8px}
+    .eyebrow{justify-content:center}
+  }
+
+  /* ---------- floating petals ---------- */
+  .petal{position:absolute;z-index:1;opacity:.55;animation:drift linear infinite}
+  @keyframes drift{
+    0%{transform:translateY(-8px) rotate(0deg)}
+    50%{transform:translateY(14px) rotate(18deg)}
+    100%{transform:translateY(-8px) rotate(0deg)}
+  }
+
+  /* ---------- section base ---------- */
+  section{position:relative}
+  .band{padding:clamp(64px,9vw,120px) 0}
+  .band-alt{background:var(--ivory-2)}
+  .band-green{background:var(--green);color:#F3EDE2}
+  .center{text-align:center}
+  .sec-head{max-width:40rem;margin:0 auto}
+  .sec-head.left{margin:0}
+  h2.sec-title{font-size:clamp(1.7rem,3.6vw,2.5rem);letter-spacing:.03em}
+  .sec-title .soft{color:var(--rose-deep)}
+  .sec-sub{margin-top:1.1rem;color:var(--ink-soft);font-size:1.04rem}
+  .band-green .sec-sub{color:#D9CFBF}
+  .band-green .eyebrow{color:var(--gold-soft)}
+  .band-green .eyebrow::before{background:var(--gold)}
+
+  /* ---------- fact / hook ---------- */
+  .fact{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,64px);align-items:center}
+  .fact-visual{position:relative;display:flex;justify-content:center}
+  .fact-visual svg{width:100%;max-width:340px;height:auto}
+  .fact-badge{
+    position:absolute;bottom:6%;left:50%;transform:translateX(-50%);
+    background:var(--paper);border-radius:16px;padding:.7rem 1.2rem;
+    box-shadow:0 16px 30px -18px rgba(120,90,70,.5);border:1px solid var(--line);
+    font-family:"Klee One",cursive;color:var(--rose-deep);font-size:.9rem;white-space:nowrap;
+  }
+  .fact-body h2{font-size:clamp(1.55rem,3.4vw,2.3rem)}
+  .fact-date{font-family:"Fraunces",serif;font-size:clamp(2.6rem,6vw,4rem);color:var(--rose);line-height:1;display:block;margin:.3rem 0 1rem}
+  .fact-body p{color:var(--ink-soft);font-size:1.05rem;margin-top:1rem}
+  @media(max-width:820px){.fact{grid-template-columns:1fr;text-align:center}.fact-visual{max-width:300px;margin:0 auto}}
+
+  /* ---------- steps ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:clamp(40px,5vw,64px)}
+  .step{
+    background:var(--paper);border-radius:var(--r);padding:38px 30px 34px;
+    border:1px solid var(--line);position:relative;
+    box-shadow:0 20px 40px -32px rgba(120,90,70,.55);
+    transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s;
+  }
+  .step:hover{transform:translateY(-6px);box-shadow:0 30px 50px -30px rgba(120,90,70,.5)}
+  .step .num{font-family:"Fraunces",serif;font-size:.92rem;color:var(--rose-deep);letter-spacing:.2em;display:block;margin-bottom:1rem}
+  .step .icon{width:74px;height:74px;margin-bottom:1.2rem}
+  .step h3{font-size:1.28rem;margin-bottom:.7rem}
+  .step p{color:var(--ink-soft);font-size:.98rem}
+  .step .thread{position:absolute;top:52px;right:-13px;color:var(--sage);z-index:3}
+  @media(max-width:820px){.steps{grid-template-columns:1fr;max-width:420px;margin-left:auto;margin-right:auto}.step .thread{display:none}}
+
+  /* ---------- stories ---------- */
+  .stories{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:clamp(40px,5vw,60px)}
+  .story{
+    border-radius:var(--r);overflow:hidden;background:var(--paper);
+    border:1px solid var(--line);display:flex;flex-direction:column;
+    box-shadow:0 24px 50px -36px rgba(120,90,70,.6);
+    transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s;
+  }
+  .story:hover{transform:translateY(-6px);box-shadow:0 34px 60px -34px rgba(120,90,70,.55)}
+  .story-top{position:relative;height:180px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .story-top svg{width:100%;height:100%}
+  .story-tag{position:absolute;top:16px;left:16px;background:rgba(255,252,248,.92);color:var(--green);font-weight:700;font-size:.82rem;letter-spacing:.08em;padding:.4em 1em;border-radius:999px;backdrop-filter:blur(4px)}
+  .story-body{padding:30px 30px 34px}
+  .story .persona{font-family:"Klee One",cursive;color:var(--rose-deep);font-size:.92rem;margin-bottom:.6rem}
+  .story h3{font-size:1.34rem;line-height:1.6;margin-bottom:.9rem}
+  .story .quote{font-family:"Shippori Mincho",serif;color:var(--green);font-size:1.06rem;font-weight:600;border-left:3px solid var(--gold);padding-left:.9rem;margin:0 0 1rem}
+  .story p{color:var(--ink-soft);font-size:.97rem}
+  @media(max-width:820px){.stories{grid-template-columns:1fr;max-width:440px;margin-left:auto;margin-right:auto}}
+
+  /* ---------- reassurance ---------- */
+  .assure{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:clamp(40px,5vw,58px)}
+  .assure-item{text-align:center;padding:8px}
+  .assure-item .ic{width:56px;height:56px;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(228,168,91,.16)}
+  .assure-item h4{font-family:"Shippori Mincho",serif;color:#fff;font-size:1.1rem;margin-bottom:.4rem;letter-spacing:.02em}
+  .assure-item p{color:#D9CFBF;font-size:.9rem;line-height:1.7}
+  @media(max-width:820px){.assure{grid-template-columns:1fr 1fr;gap:28px 18px}}
+
+  /* ---------- closing cta ---------- */
+  .closing{position:relative;text-align:center;padding:clamp(70px,10vw,130px) 0;overflow:hidden}
+  .closing-bg{position:absolute;inset:0;z-index:0;
+    background:
+      radial-gradient(80% 70% at 50% 120%, rgba(228,168,91,.35), transparent 60%),
+      radial-gradient(70% 60% at 50% -10%, rgba(243,217,210,.6), transparent 60%),
+      linear-gradient(180deg,var(--ivory) 0%, #FBEFE6 100%);
+  }
+  .closing .inner{position:relative;z-index:2}
+  .closing h2{font-size:clamp(1.9rem,4.4vw,3rem);letter-spacing:.03em;font-weight:800}
+  .closing .quote-lg{font-family:"Shippori Mincho",serif;color:var(--rose-deep);font-size:clamp(1.3rem,3vw,1.9rem);margin-bottom:1rem;font-weight:600}
+  .closing p{color:var(--ink-soft);font-size:1.06rem;max-width:34rem;margin:1.2rem auto 2.3rem}
+
+  /* ---------- footer ---------- */
+  footer{background:#2C4335;color:#B9C7BB;padding:52px 0 40px;font-size:.9rem}
+  .foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:30px;flex-wrap:wrap;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.12)}
+  .foot-brand .name{font-family:"Fraunces",serif;font-size:1.3rem;color:#fff;font-weight:600}
+  .foot-brand .name b{color:var(--gold-soft);font-weight:600}
+  .foot-brand p{margin-top:.6rem;max-width:26em;color:#9FB1A2}
+  .foot-links{display:flex;gap:2rem;flex-wrap:wrap}
+  .foot-links a{text-decoration:none;color:#B9C7BB;transition:color .3s}
+  .foot-links a:hover{color:#fff}
+  .foot-bottom{padding-top:22px;font-size:.8rem;color:#7E9284;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  /* ---------- reveal animation ---------- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.12s}
+  .reveal.d2{transition-delay:.24s}
+  .reveal.d3{transition-delay:.36s}
+
+  /* ---------- hero signature animation ---------- */
+  .wavebar{transform-origin:center bottom;animation:rise 1s cubic-bezier(.2,.9,.3,1) both}
+  .bloom{transform-origin:center;animation:bloomin 1s cubic-bezier(.2,.9,.3,1) both;transform-box:fill-box}
+  .leaf-anim{transform-origin:bottom center;animation:bloomin 1s cubic-bezier(.2,.9,.3,1) both;transform-box:fill-box}
+  @keyframes rise{from{transform:scaleY(.12)}to{transform:scaleY(1)}}
+  @keyframes bloomin{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
+  .sway{transform-origin:bottom center;animation:sway 6s ease-in-out infinite;transform-box:fill-box}
+  @keyframes sway{0%,100%{transform:rotate(-2.2deg)}50%{transform:rotate(2.2deg)}}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+    html{scroll-behavior:auto}
+  }
+  :focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header id="top">
+  <div class="wrap navbar">
+    <a href="#top" class="brand" aria-label="ONSEIGIFT flower ホーム">
+      <svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <circle cx="20" cy="20" r="19" fill="#F3D9D2"/>
+        <path d="M20 11c2.2 1.6 3.4 4 3.4 6.6 0 2-.9 3.6-2.1 4.9 1.6-.4 3.2-.2 4.7.7 2.3 1.3 3.5 3.6 3.6 6.1-2.5.1-4.9-1-6.2-3.2-.7-1.2-1-2.6-.9-3.9-.7 1-1.6 1.9-2.5 2.4-.9-.5-1.8-1.4-2.5-2.4.1 1.3-.2 2.7-.9 3.9-1.3 2.2-3.7 3.3-6.2 3.2.1-2.5 1.3-4.8 3.6-6.1 1.5-.9 3.1-1.1 4.7-.7-1.2-1.3-2.1-2.9-2.1-4.9 0-2.6 1.2-5 3.4-6.6z" fill="#D98A86"/>
+        <circle cx="20" cy="20.5" r="2.4" fill="#E4A85B"/>
+      </svg>
+      <span>
+        <span class="name">ONSEI<b>GIFT</b> <span class="latin" style="font-weight:500">flower</span></span>
+        <span class="sub">VOICE × FLOWER</span>
+      </span>
+    </a>
+    <div class="nav-cta">
+      <nav class="nav-links" aria-label="セクション">
+        <a class="nav-link" href="#why">贈る理由</a>
+        <a class="nav-link" href="#how">仕組み</a>
+        <a class="nav-link" href="#story">2つの物語</a>
+      </nav>
+      <a class="btn" href="#order"><span class="ico">✿</span>贈りものを選ぶ</a>
+    </div>
+  </div>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <!-- floating petals -->
+  <svg class="petal" style="top:12%;left:6%;width:26px;animation-duration:9s" viewBox="0 0 30 30" aria-hidden="true"><path d="M15 2c4 4 6 8 4 13-1 3-5 5-9 3-3-1.5-4-6-2-10 1.6-3.2 4-5 7-6z" fill="#F0C5BD"/></svg>
+  <svg class="petal" style="top:64%;left:9%;width:20px;animation-duration:11s;animation-delay:1.5s" viewBox="0 0 30 30" aria-hidden="true"><path d="M15 2c4 4 6 8 4 13-1 3-5 5-9 3-3-1.5-4-6-2-10 1.6-3.2 4-5 7-6z" fill="#F0C88A"/></svg>
+  <svg class="petal" style="top:20%;right:8%;width:22px;animation-duration:10s;animation-delay:.8s" viewBox="0 0 30 30" aria-hidden="true"><path d="M15 2c4 4 6 8 4 13-1 3-5 5-9 3-3-1.5-4-6-2-10 1.6-3.2 4-5 7-6z" fill="#EFC7BF"/></svg>
+
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow">遠くにいても、そばにいても。</span>
+      <h1>お花と一緒に、<br><span class="accent">「安心」</span>を贈る。</h1>
+      <p class="lead">AIによる高精度な脳の健康チェックを贈る、新しい見守りギフト。親御さんは<strong>スマホに向かって声で答えるだけ</strong>。その結果が、あなたのスマホに届きます。</p>
+      <div class="hero-actions">
+        <a class="btn" href="#order"><span class="ico">✿</span>お花と安心を贈る</a>
+        <a class="btn btn-ghost" href="#how">仕組みを見る</a>
+      </div>
+      <p class="hero-note">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.2 6.8H21l-5.5 4 2.1 6.8L12 15.6 6.4 19.6l2.1-6.8L3 8.8h6.8z" fill="#E4A85B"/></svg>
+        声だけでOK。5段階でわかる、脳の健康チェック。
+      </p>
+    </div>
+
+    <!-- SIGNATURE: 声が、花になる -->
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 460 500" xmlns="http://www.w3.org/2000/svg">
+        <!-- soft glow -->
+        <ellipse cx="230" cy="250" rx="200" ry="230" fill="#FBEBDF"/>
+        <ellipse cx="230" cy="200" rx="150" ry="150" fill="#F7E0D6" opacity=".7"/>
+
+        <!-- stems -->
+        <g stroke="#4E6B57" stroke-width="6" fill="none" stroke-linecap="round">
+          <path class="sway" style="animation-delay:.2s" d="M230 470 C 226 380 210 300 200 210"/>
+          <path class="sway" style="animation-delay:.9s" d="M230 470 C 250 380 286 320 300 240"/>
+          <path class="sway" style="animation-delay:.5s" d="M230 470 C 214 390 150 340 132 268"/>
+          <path class="sway" style="animation-delay:1.3s" d="M230 470 C 240 400 262 370 270 330"/>
+          <path class="sway" style="animation-delay:.1s" d="M230 470 C 220 400 186 372 176 336"/>
+        </g>
+
+        <!-- leaves -->
+        <g fill="#8FA98D">
+          <path class="leaf-anim" style="animation-delay:.6s" d="M198 300 c-18-6-30 4-34 20 16 4 30-4 34-20z"/>
+          <path class="leaf-anim" style="animation-delay:1s" d="M276 300 c18-6 30 4 34 20-16 4-30-4-34-20z"/>
+          <path class="leaf-anim" style="animation-delay:1.4s" d="M212 372 c-14-4-24 3-27 15 12 3 24-3 27-15z"/>
+        </g>
+
+        <!-- flower helper blooms -->
+        <!-- bloom 1 (top center, rose) -->
+        <g class="bloom" style="animation-delay:1.2s;transform-origin:200px 200px">
+          <g transform="translate(200,200)">
+            <g fill="#D98A86">
+              <ellipse cx="0" cy="-20" rx="13" ry="21"/>
+              <ellipse cx="0" cy="-20" rx="13" ry="21" transform="rotate(72)"/>
+              <ellipse cx="0" cy="-20" rx="13" ry="21" transform="rotate(144)"/>
+              <ellipse cx="0" cy="-20" rx="13" ry="21" transform="rotate(216)"/>
+              <ellipse cx="0" cy="-20" rx="13" ry="21" transform="rotate(288)"/>
+            </g>
+            <circle r="11" fill="#E4A85B"/>
+          </g>
+        </g>
+        <!-- bloom 2 (right, gold) -->
+        <g class="bloom" style="animation-delay:1.5s;transform-origin:300px 240px">
+          <g transform="translate(300,240)">
+            <g fill="#EFC0B7">
+              <ellipse cx="0" cy="-17" rx="11" ry="18"/>
+              <ellipse cx="0" cy="-17" rx="11" ry="18" transform="rotate(60)"/>
+              <ellipse cx="0" cy="-17" rx="11" ry="18" transform="rotate(120)"/>
+              <ellipse cx="0" cy="-17" rx="11" ry="18" transform="rotate(180)"/>
+              <ellipse cx="0" cy="-17" rx="11" ry="18" transform="rotate(240)"/>
+              <ellipse cx="0" cy="-17" rx="11" ry="18" transform="rotate(300)"/>
+            </g>
+            <circle r="9" fill="#E4A85B"/>
+          </g>
+        </g>
+        <!-- bloom 3 (left, blush) -->
+        <g class="bloom" style="animation-delay:1.35s;transform-origin:132px 268px">
+          <g transform="translate(132,268)">
+            <g fill="#D98A86">
+              <ellipse cx="0" cy="-16" rx="10" ry="17"/>
+              <ellipse cx="0" cy="-16" rx="10" ry="17" transform="rotate(72)"/>
+              <ellipse cx="0" cy="-16" rx="10" ry="17" transform="rotate(144)"/>
+              <ellipse cx="0" cy="-16" rx="10" ry="17" transform="rotate(216)"/>
+              <ellipse cx="0" cy="-16" rx="10" ry="17" transform="rotate(288)"/>
+            </g>
+            <circle r="8" fill="#F0C88A"/>
+          </g>
+        </g>
+        <!-- buds -->
+        <g class="bloom" style="animation-delay:1.6s;transform-origin:270px 330px">
+          <circle cx="270" cy="330" r="10" fill="#EFC0B7"/><circle cx="270" cy="330" r="4.5" fill="#E4A85B"/>
+        </g>
+        <g class="bloom" style="animation-delay:1.7s;transform-origin:176px 336px">
+          <circle cx="176" cy="336" r="9" fill="#F0C88A"/><circle cx="176" cy="336" r="4" fill="#D98A86"/>
+        </g>
+
+        <!-- VOICE waveform rising from the base -->
+        <g>
+          <rect class="wavebar" style="animation-delay:.05s" x="178" y="430" width="9" height="30" rx="4.5" fill="#BE6C67"/>
+          <rect class="wavebar" style="animation-delay:.15s" x="194" y="418" width="9" height="42" rx="4.5" fill="#D98A86"/>
+          <rect class="wavebar" style="animation-delay:.25s" x="210" y="400" width="9" height="60" rx="4.5" fill="#BE6C67"/>
+          <rect class="wavebar" style="animation-delay:.35s" x="226" y="388" width="9" height="72" rx="4.5" fill="#D98A86"/>
+          <rect class="wavebar" style="animation-delay:.45s" x="242" y="404" width="9" height="56" rx="4.5" fill="#BE6C67"/>
+          <rect class="wavebar" style="animation-delay:.55s" x="258" y="416" width="9" height="44" rx="4.5" fill="#D98A86"/>
+          <rect class="wavebar" style="animation-delay:.65s" x="274" y="432" width="9" height="28" rx="4.5" fill="#BE6C67"/>
+        </g>
+        <!-- caption ribbon -->
+        <text x="230" y="490" text-anchor="middle" font-family="Klee One, cursive" font-size="17" fill="#726757">声が、花になる。</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHY / FACT HOOK ========== -->
+<section class="band band-alt" id="why">
+  <div class="wrap fact">
+    <div class="fact-visual reveal">
+      <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="160" cy="160" r="150" fill="#FBF5EE"/>
+        <circle cx="160" cy="160" r="118" fill="none" stroke="#E7D9C9" stroke-width="2" stroke-dasharray="4 8"/>
+        <!-- calendar -->
+        <rect x="96" y="92" width="128" height="140" rx="16" fill="#fff" stroke="#E7D9C9" stroke-width="2"/>
+        <rect x="96" y="92" width="128" height="40" rx="16" fill="#33503F"/>
+        <rect x="96" y="118" width="128" height="14" fill="#33503F"/>
+        <rect x="120" y="80" width="10" height="26" rx="5" fill="#4E6B57"/>
+        <rect x="190" y="80" width="10" height="26" rx="5" fill="#4E6B57"/>
+        <text x="160" y="120" text-anchor="middle" font-family="Fraunces, serif" font-size="17" fill="#F3EDE2">SEPTEMBER</text>
+        <text x="160" y="192" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="52" fill="#BE6C67">21</text>
+        <!-- little flower on the corner -->
+        <g transform="translate(214,214)">
+          <g fill="#D98A86"><ellipse cx="0" cy="-11" rx="7" ry="12"/><ellipse cx="0" cy="-11" rx="7" ry="12" transform="rotate(72)"/><ellipse cx="0" cy="-11" rx="7" ry="12" transform="rotate(144)"/><ellipse cx="0" cy="-11" rx="7" ry="12" transform="rotate(216)"/><ellipse cx="0" cy="-11" rx="7" ry="12" transform="rotate(288)"/></g>
+          <circle r="6" fill="#E4A85B"/>
+        </g>
+      </svg>
+      <span class="fact-badge">敬老の日 = 世界アルツハイマーデー</span>
+    </div>
+    <div class="fact-body reveal d1">
+      <span class="eyebrow">なぜ、いま贈るのか</span>
+      <h2>毎年の「敬老の日」は、<br>実は<span style="color:var(--rose-deep)">世界アルツハイマーデー</span>。</h2>
+      <span class="fact-date latin">9 / 21</span>
+      <p>お花を贈る定番の日は、世界が“脳の健康”に目を向ける日でもあります。いつものお花で笑顔になったら、それが<strong>はじまりの合図</strong>。</p>
+      <p>「元気そうでよかった」を、科学的なデータで確かめ合える——今年いちばん意味のある贈りものを。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW IT WORKS ========== -->
+<section class="band" id="how">
+  <div class="wrap center sec-head reveal">
+    <span class="eyebrow" style="justify-content:center">たった3ステップ</span>
+    <h2 class="sec-title">贈られた親も、贈るあなたも、<br><span class="soft">かんたん</span>。</h2>
+    <p class="sec-sub">難しい操作はいりません。お花が届いてから、結果が共有されるまで。</p>
+  </div>
+
+  <div class="wrap steps">
+    <!-- step 1 -->
+    <div class="step reveal">
+      <span class="num latin">STEP 01</span>
+      <svg class="icon" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+        <path d="M40 20c4 3 6 7 6 11 0 3-1.5 6-3.5 8 2.6-.7 5.3-.4 7.7 1 3.7 2.2 5.7 6 5.9 10.1-4.1.2-8-1.6-10.2-5.2-1.1-1.9-1.6-4-1.5-6.2-1.2 1.6-2.6 3-4.4 4-1.8-1-3.2-2.4-4.4-4 .1 2.2-.4 4.3-1.5 6.2-2.2 3.6-6.1 5.4-10.2 5.2.2-4.1 2.2-7.9 5.9-10.1 2.4-1.4 5.1-1.7 7.7-1-2-2-3.5-5-3.5-8 0-4 2-8 6-11z" fill="#D98A86"/>
+        <circle cx="40" cy="40.5" r="4.2" fill="#E4A85B"/>
+        <path d="M40 55v10" stroke="#4E6B57" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M40 60c-4-1-7 1-8 4 3 1 6-1 8-4z" fill="#8FA98D"/>
+      </svg>
+      <h3>お花が届く</h3>
+      <p>季節のお花が、親御さんのもとへ。いつものように、笑顔になる。それが会話のきっかけになります。</p>
+      <svg class="thread" width="26" height="20" viewBox="0 0 26 20" fill="none" aria-hidden="true"><path d="M1 10h20m0 0l-6-6m6 6l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <!-- step 2 -->
+    <div class="step reveal d1">
+      <span class="num latin">STEP 02</span>
+      <svg class="icon" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+        <rect x="27" y="14" width="26" height="46" rx="8" fill="#33503F"/>
+        <rect x="31" y="19" width="18" height="32" rx="3" fill="#F3EDE2"/>
+        <circle cx="40" cy="55" r="2.6" fill="#F3EDE2"/>
+        <g stroke="#E4A85B" stroke-width="3" stroke-linecap="round">
+          <path d="M55 30c3 3 3 17 0 20"/>
+          <path d="M61 25c5 6 5 24 0 30"/>
+        </g>
+        <g fill="#D98A86"><rect x="35" y="30" width="3.4" height="10" rx="1.7"/><rect x="40" y="26" width="3.4" height="18" rx="1.7"/><rect x="45" y="32" width="3.4" height="6" rx="1.7"/></g>
+      </svg>
+      <h3>声で答えるだけ</h3>
+      <p>スマホに向かって話すだけ。いくつかの簡単な質問に、声で答えていただきます。ボタン操作はほとんどありません。</p>
+      <svg class="thread" width="26" height="20" viewBox="0 0 26 20" fill="none" aria-hidden="true"><path d="M1 10h20m0 0l-6-6m6 6l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <!-- step 3 -->
+    <div class="step reveal d2">
+      <span class="num latin">STEP 03</span>
+      <svg class="icon" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+        <rect x="14" y="20" width="52" height="40" rx="8" fill="#fff" stroke="#E7D9C9" stroke-width="2"/>
+        <path d="M22 50l8-10 6 6 8-12 8 14" stroke="#4E6B57" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="30" cy="34" r="4" fill="#E4A85B"/>
+        <g transform="translate(56,26)"><g fill="#D98A86"><ellipse cx="0" cy="-6" rx="4" ry="7"/><ellipse cx="0" cy="-6" rx="4" ry="7" transform="rotate(72)"/><ellipse cx="0" cy="-6" rx="4" ry="7" transform="rotate(144)"/><ellipse cx="0" cy="-6" rx="4" ry="7" transform="rotate(216)"/><ellipse cx="0" cy="-6" rx="4" ry="7" transform="rotate(288)"/></g><circle r="3" fill="#F0C88A"/></g>
+      </svg>
+      <h3>結果が、あなたに届く</h3>
+      <p>脳の健康度を<strong>5段階</strong>で。結果はあなたのスマホに共有され、これからの予防や健康管理の目安になります。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TWO STORIES ========== -->
+<section class="band band-alt" id="story">
+  <div class="wrap center sec-head reveal">
+    <span class="eyebrow" style="justify-content:center">あなたは、どちらですか？</span>
+    <h2 class="sec-title">2つの、贈りかたの物語。</h2>
+    <p class="sec-sub">離れて暮らす親へ。近くにいるけれど、言い出せない親へ。<br>どちらの想いにも、お花が寄り添います。</p>
+  </div>
+
+  <div class="wrap stories">
+    <!-- story A: 遠距離 -->
+    <article class="story reveal">
+      <div class="story-top" style="background:linear-gradient(135deg,#F3D9D2,#F7E7D0)">
+        <span class="story-tag">遠くに暮らす親へ</span>
+        <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <!-- two houses connected by a dotted arc + envelope -->
+          <path d="M60 130 Q160 40 260 130" stroke="#BE6C67" stroke-width="2.5" fill="none" stroke-dasharray="3 8" stroke-linecap="round"/>
+          <g><rect x="34" y="112" width="48" height="40" rx="4" fill="#fff"/><path d="M30 114l28-20 28 20z" fill="#33503F"/><rect x="52" y="128" width="12" height="24" fill="#D98A86"/></g>
+          <g><rect x="238" y="112" width="48" height="40" rx="4" fill="#fff"/><path d="M234 114l28-20 28 20z" fill="#33503F"/><rect x="256" y="128" width="12" height="24" fill="#E4A85B"/></g>
+          <!-- envelope at arc peak -->
+          <g transform="translate(140,58)"><rect width="40" height="28" rx="4" fill="#fff" stroke="#BE6C67" stroke-width="2"/><path d="M0 2l20 15 20-15" stroke="#BE6C67" stroke-width="2" fill="none"/><g transform="translate(20,6)"><g fill="#D98A86"><ellipse cx="0" cy="-5" rx="3.4" ry="6"/><ellipse cx="0" cy="-5" rx="3.4" ry="6" transform="rotate(90)"/><ellipse cx="0" cy="-5" rx="3.4" ry="6" transform="rotate(180)"/><ellipse cx="0" cy="-5" rx="3.4" ry="6" transform="rotate(270)"/></g><circle r="2.6" fill="#E4A85B"/></g></g>
+        </svg>
+      </div>
+      <div class="story-body">
+        <p class="persona">40〜50代・離れて暮らす息子／娘</p>
+        <h3>いつもとは違う、<br>遠距離の敬老ギフト。</h3>
+        <p class="quote">「元気そうでよかった」を、<br>科学的なデータで確かめ合える。</p>
+        <p>毎年お花は郵送しているけれど、今年はもっと意味のあるものを。会えない距離も、声とお花が、そっとつないでくれます。結果があなたのスマホに届くから、離れていても安心して見守れます。</p>
+      </div>
+    </article>
+
+    <!-- story B: 近距離 -->
+    <article class="story reveal d1">
+      <div class="story-top" style="background:linear-gradient(135deg,#E7EEE4,#F7E7D0)">
+        <span class="story-tag">近くにいる親へ</span>
+        <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <!-- speech bubble "今流行り" + phone + sparkle -->
+          <g transform="translate(150,44)"><rect width="120" height="52" rx="14" fill="#fff"/><path d="M24 52l-6 16 22-16z" fill="#fff"/><text x="60" y="26" text-anchor="middle" font-family="Klee One, cursive" font-size="14" fill="#BE6C67">今、話題の</text><text x="60" y="44" text-anchor="middle" font-family="Klee One, cursive" font-size="14" fill="#BE6C67">AIなんだって！</text></g>
+          <g transform="translate(48,96)"><rect width="46" height="70" rx="9" fill="#33503F"/><rect x="5" y="7" width="36" height="48" rx="3" fill="#F3EDE2"/><circle cx="23" cy="62" r="3.2" fill="#F3EDE2"/><g fill="#D98A86"><rect x="13" y="26" width="4" height="16" rx="2"/><rect x="21" y="20" width="4" height="28" rx="2"/><rect x="29" y="30" width="4" height="12" rx="2"/></g></g>
+          <path d="M258 108l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#E4A85B"/>
+          <path d="M236 138l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#F0C88A"/>
+        </svg>
+      </div>
+      <div class="story-body">
+        <p class="persona">40〜50代・近くに住む／同居する息子／娘</p>
+        <h3>「検査して」とは、<br>言えないあなたへ。</h3>
+        <p class="quote">「今、ネットで話題の<br>AIサービスがあるんだって！」</p>
+        <p>あからさまに検査を勧めるのは、気が引けるもの。だからこそ“今流行りの最先端AI”という楽しさをきっかけに。素敵なお花で場を和ませたら、「一緒にやってみよう」と声をかけるだけ。親を傷つけない、一歩進んだ見守りかたです。</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ========== REASSURANCE ========== -->
+<section class="band band-green">
+  <div class="wrap center sec-head reveal">
+    <span class="eyebrow" style="justify-content:center">選ばれる、4つの理由</span>
+    <h2 class="sec-title" style="color:#fff">お花のやさしさと、<br>AIのたしかさを、ひとつに。</h2>
+  </div>
+  <div class="wrap assure">
+    <div class="assure-item reveal">
+      <div class="ic"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M10 5h8v10a4 4 0 01-8 0z" fill="#F0C88A"/><path d="M14 19v4M9 23h10" stroke="#F0C88A" stroke-width="2.4" stroke-linecap="round"/><path d="M18 8h3a3 3 0 010 6h-1" stroke="#F0C88A" stroke-width="2.2" fill="none"/></svg></div>
+      <h4>声だけでOK</h4>
+      <p>スマホに話すだけ。難しい操作は不要で、親御さんにやさしい設計。</p>
+    </div>
+    <div class="assure-item reveal d1">
+      <div class="ic"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect x="5" y="16" width="4" height="7" rx="2" fill="#F0C88A"/><rect x="11" y="12" width="4" height="11" rx="2" fill="#F0C88A"/><rect x="17" y="8" width="4" height="15" rx="2" fill="#F0C88A"/><path d="M4 6l6-1 6 2 8-2" stroke="#F0C88A" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
+      <h4>5段階でわかる</h4>
+      <p>脳の健康度をわかりやすく5段階で可視化。今の状態がひと目で。</p>
+    </div>
+    <div class="assure-item reveal d2">
+      <div class="ic"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="4" fill="#F0C88A"/><circle cx="19" cy="9" r="4" fill="#F0C88A"/><path d="M3 22c0-3.3 2.7-6 6-6s6 2.7 6 6M13 22c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#F0C88A" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
+      <h4>結果を共有</h4>
+      <p>チェック結果は子世代のスマホへ。離れていても、一緒に見守れる。</p>
+    </div>
+    <div class="assure-item reveal d3">
+      <div class="ic"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M14 24s-9-5.5-9-12a5 5 0 019-3 5 5 0 019 3c0 6.5-9 12-9 12z" fill="#F0C88A"/></svg></div>
+      <h4>予防の目安に</h4>
+      <p>これからの健康管理や予防の、具体的な目安が手に入ります。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CLOSING CTA ========== -->
+<section class="closing" id="order">
+  <div class="closing-bg" aria-hidden="true"></div>
+  <div class="wrap inner reveal">
+    <p class="quote-lg hand">大切な親の、明日を守る。</p>
+    <h2>今年いちばん、<br>意味のある贈りもの。</h2>
+    <p>お花で笑顔になったら、声で答えるだけ。「元気そうでよかった」を、確かめ合える贈りものを、あの人へ。</p>
+    <a class="btn" href="#" style="font-size:1.1rem;padding:1.1em 2.6em"><span class="ico">✿</span>お花と安心を贈る</a>
+    <p style="margin-top:1.4rem;font-size:.86rem;color:var(--ink-soft)">※お申し込み・料金・配送に関する詳細はお問い合わせください。</p>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <span class="name">ONSEI<b>GIFT</b> flower</span>
+        <p>お花をきっかけに、声で脳の健康チェックを贈る、新しい見守りギフト。遠くにいても、そばにいても、想いをつなぎます。</p>
+      </div>
+      <nav class="foot-links" aria-label="フッター">
+        <a href="#why">贈る理由</a>
+        <a href="#how">仕組み</a>
+        <a href="#story">2つの物語</a>
+        <a href="#order">贈りものを選ぶ</a>
+      </nav>
+    </div>
+    <div class="foot-bottom">
+      <span>Powered by ONSEI ｜ 日本テクトシステムズ株式会社</span>
+      <span>© 2026 ONSEIGIFT flower</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // sticky header shadow
+  const header = document.getElementById('top');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  // scroll reveal
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, {threshold:0.16, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
