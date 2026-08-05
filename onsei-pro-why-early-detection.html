@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>なぜ今、認知機能の早期チェックなのか｜新薬時代の医療体制と「空白の9.5ヶ月」｜日本テクトシステムズ株式会社</title>
+<meta name="description" content="専門医3,500人に対し潜在対象者1,000万人。受診までの遅延は平均9.5ヶ月。新薬時代の認知症医療が抱える構造的課題と、生活の場で行う早期検知の役割を、公的データと研究に基づいて解説します。">
+<!--
+  ============================================================
+  日本テクトシステムズ株式会社
+  ONSEI Pro 特設ページ「なぜ今、認知機能の早期チェックなのか」
+  ------------------------------------------------------------
+  HubSpot 実装メモ:
+  ・本ファイルは <body> 内コンテンツ（<main class="ntx-why"> 以下）を
+    HubSpot の「カスタムHTMLモジュール」1つに貼り付けて利用できます。
+    <style> ブロックも同モジュール内にそのまま含めてください。
+  ・CSSはすべて .ntx-why 配下にスコープしており、既存テーマの
+    ヘッダー / フッター / グローバルCSSと干渉しません。
+  ・title / meta description は HubSpot のページ設定側で設定してください。
+  ・CTAリンク（資料請求 / お問い合わせ）は既存URLを指定済みです。
+    hsLang パラメータが必要な場合は適宜付与してください。
+  ・Google Fonts（Noto Sans JP / Zen Old Mincho）を読み込みます。
+    テーマ側で既に読み込み済みの場合は <link> を削除して構いません。
+  ============================================================
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Old+Mincho:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Scoped styles — すべて .ntx-why 配下
+   ============================================================ */
+.ntx-why{
+  /* tokens */
+  --ntx-ink:#22303A;         /* 本文 */
+  --ntx-navy:#14344F;        /* 見出し・基調 */
+  --ntx-teal:#0E8C8D;        /* 解決・ONSEI系 */
+  --ntx-teal-soft:#E3F2F2;
+  --ntx-alert:#C0492F;       /* 課題データの強調 */
+  --ntx-alert-soft:#FAEDE9;
+  --ntx-paper:#FFFFFF;
+  --ntx-mist:#F2F7F8;        /* 交互セクション背景 */
+  --ntx-line:#D8E2E6;
+  --ntx-serif:"Zen Old Mincho","Hiragino Mincho ProN",serif;
+  --ntx-sans:"Noto Sans JP","Hiragino Kaku Gothic ProN",sans-serif;
+
+  font-family:var(--ntx-sans);
+  color:var(--ntx-ink);
+  background:var(--ntx-paper);
+  line-height:1.9;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.ntx-why *,
+.ntx-why *::before,
+.ntx-why *::after{box-sizing:border-box;margin:0;padding:0;}
+.ntx-why img{max-width:100%;display:block;}
+.ntx-why a{color:var(--ntx-teal);}
+.ntx-why a:focus-visible,
+.ntx-why button:focus-visible{outline:3px solid var(--ntx-teal);outline-offset:2px;}
+
+.ntx-why .ntx-container{max-width:960px;margin:0 auto;padding:0 24px;}
+.ntx-why section{padding:72px 0;}
+
+/* ---------- 見出し体系 ---------- */
+.ntx-why .ntx-eyebrow{
+  display:inline-block;font-size:13px;font-weight:700;letter-spacing:.22em;
+  color:var(--ntx-teal);text-transform:uppercase;margin-bottom:14px;
+}
+.ntx-why h1,.ntx-why h2{font-family:var(--ntx-serif);color:var(--ntx-navy);font-weight:700;}
+.ntx-why h1{font-size:clamp(26px,4.6vw,40px);line-height:1.5;letter-spacing:.02em;}
+.ntx-why h2{font-size:clamp(22px,3.4vw,30px);line-height:1.55;margin-bottom:8px;}
+.ntx-why h3{font-size:18px;font-weight:700;color:var(--ntx-navy);margin-bottom:8px;}
+.ntx-why .ntx-chapter{
+  display:flex;align-items:baseline;gap:16px;margin-bottom:28px;
+  border-bottom:2px solid var(--ntx-navy);padding-bottom:16px;
+}
+.ntx-why .ntx-chapter .ntx-no{
+  font-family:var(--ntx-serif);font-weight:900;font-size:15px;color:var(--ntx-teal);
+  letter-spacing:.14em;white-space:nowrap;
+}
+.ntx-why .ntx-lead{font-size:17px;max-width:46em;}
+.ntx-why p + p{margin-top:1.1em;}
+
+/* ---------- ヒーロー ---------- */
+.ntx-why .ntx-hero{
+  background:linear-gradient(180deg,#FBFDFD 0%,var(--ntx-mist) 100%);
+  border-bottom:1px solid var(--ntx-line);
+  padding:88px 0 64px;
+}
+.ntx-why .ntx-hero .ntx-sub{
+  font-family:var(--ntx-serif);font-size:clamp(16px,2.4vw,20px);
+  color:var(--ntx-navy);margin-top:18px;letter-spacing:.04em;
+}
+.ntx-why .ntx-hero .ntx-intro{margin-top:26px;max-width:44em;}
+.ntx-why .ntx-note-chip{
+  display:inline-block;margin-top:22px;padding:8px 14px;border:1px solid var(--ntx-line);
+  border-radius:4px;background:#fff;font-size:13px;color:#5A6B75;line-height:1.7;
+}
+
+/* ---------- CTAボタン ---------- */
+.ntx-why .ntx-cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px;}
+.ntx-why .ntx-btn{
+  display:inline-block;text-decoration:none;font-weight:700;font-size:15px;
+  padding:15px 34px;border-radius:999px;transition:opacity .2s ease;letter-spacing:.06em;
+}
+.ntx-why .ntx-btn:hover{opacity:.85;}
+.ntx-why .ntx-btn--primary{background:var(--ntx-teal);color:#fff;}
+.ntx-why .ntx-btn--ghost{background:#fff;color:var(--ntx-navy);border:2px solid var(--ntx-navy);}
+
+/* ---------- キーナンバー ---------- */
+.ntx-why .ntx-figures{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:36px 0;
+}
+.ntx-why .ntx-figure{
+  background:#fff;border:1px solid var(--ntx-line);border-top:4px solid var(--ntx-navy);
+  border-radius:6px;padding:26px 22px;
+}
+.ntx-why .ntx-figure--alert{border-top-color:var(--ntx-alert);}
+.ntx-why .ntx-figure--teal{border-top-color:var(--ntx-teal);}
+.ntx-why .ntx-figure .ntx-num{
+  font-family:var(--ntx-serif);font-weight:900;font-size:clamp(30px,4vw,40px);
+  color:var(--ntx-navy);line-height:1.2;letter-spacing:.01em;
+}
+.ntx-why .ntx-figure--alert .ntx-num{color:var(--ntx-alert);}
+.ntx-why .ntx-figure--teal .ntx-num{color:var(--ntx-teal);}
+.ntx-why .ntx-figure .ntx-num small{font-size:.5em;font-weight:700;margin-left:2px;}
+.ntx-why .ntx-figure .ntx-cap{font-size:13px;font-weight:700;color:#5A6B75;margin-top:6px;letter-spacing:.04em;}
+.ntx-why .ntx-figure .ntx-desc{font-size:14px;margin-top:12px;line-height:1.8;}
+.ntx-why .ntx-src{font-size:12px;color:#7B8A93;margin-top:10px;}
+
+/* ---------- 需給ギャップバー（シグネチャ） ---------- */
+.ntx-why .ntx-gap{
+  background:#fff;border:1px solid var(--ntx-line);border-radius:6px;
+  padding:30px 26px;margin:36px 0;
+}
+.ntx-why .ntx-gap-title{font-weight:700;color:var(--ntx-navy);margin-bottom:20px;font-size:15px;letter-spacing:.04em;}
+.ntx-why .ntx-gap-row{margin-bottom:22px;}
+.ntx-why .ntx-gap-row:last-child{margin-bottom:0;}
+.ntx-why .ntx-gap-label{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:8px;}
+.ntx-why .ntx-gap-label .ntx-val{font-family:var(--ntx-serif);font-size:16px;}
+.ntx-why .ntx-gap-track{height:26px;border-radius:4px;background:#EDF2F4;position:relative;overflow:hidden;}
+.ntx-why .ntx-gap-fill{height:100%;border-radius:4px 0 0 4px;}
+.ntx-why .ntx-gap-fill--doctor{width:0.35%;min-width:3px;background:var(--ntx-navy);}
+.ntx-why .ntx-gap-fill--people{width:100%;background:var(--ntx-alert);border-radius:4px;}
+.ntx-why .ntx-gap-foot{font-size:13px;color:#5A6B75;margin-top:16px;line-height:1.8;}
+
+/* ---------- 限界シミュレーション（積み上げバー） ---------- */
+.ntx-why .ntx-sim{background:#fff;border:1px solid var(--ntx-line);border-radius:6px;padding:30px 26px;margin:36px 0;}
+.ntx-why .ntx-sim-bar{display:flex;height:52px;border-radius:6px;overflow:hidden;margin:18px 0 10px;}
+.ntx-why .ntx-sim-seg{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;letter-spacing:.04em;text-align:center;line-height:1.4;padding:0 6px;}
+.ntx-why .ntx-sim-seg--ok{flex:0 0 55%;background:var(--ntx-navy);}
+.ntx-why .ntx-sim-seg--over{flex:0 0 45%;background:var(--ntx-alert);}
+.ntx-why .ntx-sim-legend{display:flex;flex-wrap:wrap;gap:18px;font-size:13px;color:#5A6B75;margin-top:8px;}
+.ntx-why .ntx-sim-legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:baseline;}
+.ntx-why .ntx-sim-legend .ntx-lg-ok::before{background:var(--ntx-navy);}
+.ntx-why .ntx-sim-legend .ntx-lg-over::before{background:var(--ntx-alert);}
+.ntx-why .ntx-formula{
+  font-size:13px;background:var(--ntx-mist);border-radius:4px;padding:12px 16px;margin-top:14px;color:#41525C;line-height:1.8;
+}
+
+/* ---------- 帯コールアウト ---------- */
+.ntx-why .ntx-callout{
+  border-left:5px solid var(--ntx-teal);background:var(--ntx-teal-soft);
+  border-radius:0 6px 6px 0;padding:22px 24px;margin:32px 0;
+}
+.ntx-why .ntx-callout--alert{border-left-color:var(--ntx-alert);background:var(--ntx-alert-soft);}
+.ntx-why .ntx-callout h3{margin-bottom:6px;}
+.ntx-why .ntx-callout p{font-size:15px;}
+
+/* ---------- 空白期間タイムライン ---------- */
+.ntx-why .ntx-timeline{margin:36px 0;}
+.ntx-why .ntx-tl-item{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:start;padding:18px 0;border-bottom:1px dashed var(--ntx-line);}
+.ntx-why .ntx-tl-item:last-child{border-bottom:none;}
+.ntx-why .ntx-tl-num{font-family:var(--ntx-serif);font-weight:900;font-size:26px;color:var(--ntx-alert);line-height:1.3;}
+.ntx-why .ntx-tl-num small{font-size:14px;font-weight:700;color:#5A6B75;display:block;letter-spacing:.04em;}
+.ntx-why .ntx-tl-body{font-size:14.5px;}
+
+/* ---------- 93% ---------- */
+.ntx-why .ntx-refuse{display:grid;grid-template-columns:220px 1fr;gap:30px;align-items:center;background:#fff;border:1px solid var(--ntx-line);border-radius:6px;padding:30px 26px;margin:36px 0;}
+.ntx-why .ntx-donut{width:190px;height:190px;margin:0 auto;}
+.ntx-why .ntx-refuse-body p{font-size:15px;}
+
+/* ---------- トリアージフロー ---------- */
+.ntx-why .ntx-flow{display:grid;grid-template-columns:1fr auto 1.2fr auto 1fr;gap:0;align-items:stretch;margin:36px 0;}
+.ntx-why .ntx-flow-card{background:#fff;border:1px solid var(--ntx-line);border-radius:6px;padding:24px 20px;text-align:center;display:flex;flex-direction:column;justify-content:center;}
+.ntx-why .ntx-flow-card--core{border:2px solid var(--ntx-teal);background:var(--ntx-teal-soft);}
+.ntx-why .ntx-flow-card .ntx-flow-tag{font-size:12px;font-weight:700;letter-spacing:.14em;color:#5A6B75;margin-bottom:8px;}
+.ntx-why .ntx-flow-card--core .ntx-flow-tag{color:var(--ntx-teal);}
+.ntx-why .ntx-flow-card h3{font-size:16.5px;margin-bottom:8px;}
+.ntx-why .ntx-flow-card p{font-size:13px;line-height:1.75;}
+.ntx-why .ntx-flow-arrow{display:flex;align-items:center;justify-content:center;color:var(--ntx-teal);font-size:24px;padding:0 10px;font-weight:700;}
+
+/* ---------- 5段階帯 ---------- */
+.ntx-why .ntx-stages{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:30px 0 10px;}
+.ntx-why .ntx-stage{border-radius:4px;padding:14px 8px;text-align:center;color:#fff;font-weight:700;font-size:13px;letter-spacing:.04em;}
+.ntx-why .ntx-stage:nth-child(1){background:#2E8B72;}
+.ntx-why .ntx-stage:nth-child(2){background:#5FA88A;}
+.ntx-why .ntx-stage:nth-child(3){background:#D8A13A;}
+.ntx-why .ntx-stage:nth-child(4){background:#D2703B;}
+.ntx-why .ntx-stage:nth-child(5){background:#C0492F;}
+.ntx-why .ntx-stage-paths{display:grid;grid-template-columns:2fr 2fr 1fr;gap:6px;margin-bottom:36px;}
+.ntx-why .ntx-stage-path{font-size:13px;background:var(--ntx-mist);border-radius:4px;padding:12px 14px;line-height:1.75;}
+.ntx-why .ntx-stage-path strong{display:block;color:var(--ntx-navy);margin-bottom:4px;font-size:13.5px;}
+
+/* ---------- 強み・価値カード ---------- */
+.ntx-why .ntx-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin:36px 0;}
+.ntx-why .ntx-card{background:#fff;border:1px solid var(--ntx-line);border-radius:6px;padding:26px 24px;}
+.ntx-why .ntx-card h3{display:flex;align-items:baseline;gap:10px;font-size:16.5px;}
+.ntx-why .ntx-card h3 .ntx-dot{width:10px;height:10px;border-radius:50%;background:var(--ntx-teal);flex:none;transform:translateY(-1px);}
+.ntx-why .ntx-card p{font-size:14px;margin-top:8px;}
+.ntx-why .ntx-values{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:36px 0;}
+.ntx-why .ntx-value{background:var(--ntx-navy);color:#fff;border-radius:6px;padding:28px 24px;}
+.ntx-why .ntx-value h3{color:#fff;font-family:var(--ntx-serif);font-size:18px;margin-bottom:10px;}
+.ntx-why .ntx-value p{font-size:13.5px;line-height:1.85;color:#DCE7EE;}
+
+/* ---------- 出典 ---------- */
+.ntx-why .ntx-sources{background:var(--ntx-mist);}
+.ntx-why .ntx-sources ol{list-style:none;counter-reset:src;}
+.ntx-why .ntx-sources li{
+  counter-increment:src;position:relative;padding:16px 0 16px 58px;
+  border-bottom:1px solid var(--ntx-line);font-size:13.5px;line-height:1.85;color:#41525C;
+}
+.ntx-why .ntx-sources li::before{
+  content:"※" counter(src);position:absolute;left:0;top:16px;
+  font-family:var(--ntx-serif);font-weight:700;color:var(--ntx-navy);font-size:15px;
+}
+.ntx-why .ntx-sources a{word-break:break-all;}
+
+/* ---------- 免責 ---------- */
+.ntx-why .ntx-disclaimer{
+  border:1px solid var(--ntx-line);border-radius:6px;background:#fff;
+  padding:22px 24px;font-size:13px;color:#5A6B75;line-height:1.9;margin-top:36px;
+}
+.ntx-why .ntx-disclaimer strong{color:var(--ntx-navy);}
+
+/* ---------- 最終CTA ---------- */
+.ntx-why .ntx-final{background:var(--ntx-navy);color:#fff;text-align:center;}
+.ntx-why .ntx-final h2{color:#fff;}
+.ntx-why .ntx-final p{color:#DCE7EE;max-width:40em;margin:14px auto 0;font-size:15px;}
+.ntx-why .ntx-final .ntx-cta-row{justify-content:center;}
+.ntx-why .ntx-final .ntx-btn--ghost{background:transparent;color:#fff;border-color:#fff;}
+
+/* ---------- セクション交互背景 ---------- */
+.ntx-why .ntx-alt{background:var(--ntx-mist);}
+
+/* ---------- reveal（控えめなスクロール表示） ---------- */
+.ntx-why .ntx-reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease;}
+.ntx-why .ntx-reveal.is-in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){
+  .ntx-why .ntx-reveal{opacity:1;transform:none;transition:none;}
+}
+
+/* ---------- レスポンシブ ---------- */
+@media (max-width:860px){
+  .ntx-why .ntx-figures,.ntx-why .ntx-values{grid-template-columns:1fr;}
+  .ntx-why .ntx-cards{grid-template-columns:1fr;}
+  .ntx-why .ntx-flow{grid-template-columns:1fr;}
+  .ntx-why .ntx-flow-arrow{transform:rotate(90deg);padding:6px 0;}
+  .ntx-why .ntx-refuse{grid-template-columns:1fr;text-align:center;}
+  .ntx-why .ntx-stages{grid-template-columns:repeat(5,1fr);gap:3px;}
+  .ntx-why .ntx-stage{font-size:10.5px;padding:10px 2px;}
+  .ntx-why .ntx-stage-paths{grid-template-columns:1fr;}
+  .ntx-why .ntx-tl-item{grid-template-columns:1fr;gap:6px;}
+  .ntx-why section{padding:56px 0;}
+}
+</style>
+</head>
+<body>
+
+<main class="ntx-why">
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="ntx-hero">
+    <div class="ntx-container">
+      <span class="ntx-eyebrow">ONSEI Pro ／ 社会背景を知る</span>
+      <h1>なぜ今、認知機能の<br>早期チェックなのか</h1>
+      <p class="ntx-sub">— 新薬時代の医療体制と、受診までの「空白の9.5ヶ月」—</p>
+      <p class="ntx-intro">
+        認知症の新しい治療薬が登場し、「早く気づくこと」の価値がかつてなく高まっています。
+        一方で、日本の認知症医療は専門医の数に大きな制約を抱え、当事者・ご家族の側にも
+        受診をためらう心理的な壁が存在します。本ページでは、公的統計と研究データをもとに、
+        いま「生活の場での早期検知」が求められる理由を整理します。
+      </p>
+      <span class="ntx-note-chip">
+        ※本ページで紹介する「ONSEI Pro」は、疾病の診断を行う医療機器ではありません。
+        統計データに基づく「認知機能の変化の目安」を提供するセルフチェックツールです。
+      </span>
+      <div class="ntx-cta-row">
+        <a class="ntx-btn ntx-btn--primary" href="https://systems.nippontect.co.jp/onsei-pro/download">資料請求はこちら</a>
+        <a class="ntx-btn ntx-btn--ghost" href="https://systems.nippontect.co.jp/onsei">ONSEI Pro 製品ページへ</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       01 供給側の限界
+  ============================================================ -->
+  <section>
+    <div class="ntx-container">
+      <div class="ntx-chapter ntx-reveal">
+        <span class="ntx-no">第1章</span>
+        <h2>日本の認知症医療が抱える、供給側の構造的な制約</h2>
+      </div>
+      <p class="ntx-lead ntx-reveal">
+        新薬時代の到来により、認知症・MCI（軽度認知障害）を含む約1,000万人が早期スクリーニングの
+        対象となりました。しかし、その受け皿となる専門医の数には、物理的な限界があります。
+      </p>
+
+      <div class="ntx-figures ntx-reveal">
+        <div class="ntx-figure">
+          <div class="ntx-num">3,500<small>人</small></div>
+          <div class="ntx-cap">認知症の専門医（全国）</div>
+          <p class="ntx-desc">日本認知症学会・日本老年精神医学会の専門医は、重複を除くと全国で約3,500人規模。大都市圏への偏在も課題です。なお、かかりつけ医を支える認知症サポート医は累計16,621人（2025年度末時点）。</p>
+          <div class="ntx-src">出典 ※1</div>
+        </div>
+        <div class="ntx-figure ntx-figure--alert">
+          <div class="ntx-num">1,002<small>万人</small></div>
+          <div class="ntx-cap">潜在対象者（認知症＋MCI）</div>
+          <p class="ntx-desc">65歳以上の高齢者のうち、認知症443万人・MCI559万人、計1,002万人（2022年推計）。新薬時代には、この全員が早期スクリーニングの対象となり得ます。</p>
+          <div class="ntx-src">出典 ※2</div>
+        </div>
+        <div class="ntx-figure ntx-figure--alert">
+          <div class="ntx-num">1 対 2,850</div>
+          <div class="ntx-cap">専門医1人あたりの潜在対象者</div>
+          <p class="ntx-desc">単純計算で、専門医1人が背負う潜在対象者は約2,850人。「全員を専門外来で初期診断する」体制は、構造的に成立しません。</p>
+          <div class="ntx-src">出典 ※1・※2より算出</div>
+        </div>
+      </div>
+
+      <div class="ntx-gap ntx-reveal" role="img" aria-label="専門医約3,500人と潜在対象者約1,000万人の規模を比較した図。専門医のバーは潜在対象者のバーに対してごくわずかな幅しかない。">
+        <div class="ntx-gap-title">専門医と潜在対象者：規模の比較</div>
+        <div class="ntx-gap-row">
+          <div class="ntx-gap-label"><span>専門医</span><span class="ntx-val">約 3,500 人</span></div>
+          <div class="ntx-gap-track"><div class="ntx-gap-fill ntx-gap-fill--doctor"></div></div>
+        </div>
+        <div class="ntx-gap-row">
+          <div class="ntx-gap-label"><span>潜在対象者（認知症＋MCI）</span><span class="ntx-val">約 1,002 万人</span></div>
+          <div class="ntx-gap-track"><div class="ntx-gap-fill ntx-gap-fill--people"></div></div>
+        </div>
+        <p class="ntx-gap-foot">上段のわずかな線が、専門医の規模です。この需給ギャップこそが、認知症医療の出発点にある現実です。</p>
+      </div>
+
+      <div class="ntx-sim ntx-reveal">
+        <h3>限界シミュレーション：週6日フル稼働でも届かない45%</h3>
+        <p style="font-size:14.5px;">仮に全国の専門医3,500人が「休みなく週6日、毎日初診5人を診続ける」という極限の仮定を置いても、1年間に対応できるのは約546万人。潜在対象者1,000万人のうち約45%（約450万人）には、専門外来の初期診断が構造的に届きません。</p>
+        <div class="ntx-sim-bar" role="img" aria-label="潜在対象者1,000万人のうち、極限稼働の診療限界546万人（55%）と、それでも届かない約450万人（45%）を示す帯グラフ。">
+          <div class="ntx-sim-seg ntx-sim-seg--ok">診療限界 546万人（55%）</div>
+          <div class="ntx-sim-seg ntx-sim-seg--over">届かない層 約450万人（45%）</div>
+        </div>
+        <div class="ntx-sim-legend">
+          <span class="ntx-lg-ok">週6日フル稼働の年間診療限界</span>
+          <span class="ntx-lg-over">初期診断が届かない潜在対象者</span>
+        </div>
+        <div class="ntx-formula">
+          【試算式】3,500人（専門医）× 5人/日 × 6日/週 × 52週 ＝ 5,460,000人／年
+        </div>
+      </div>
+
+      <div class="ntx-callout ntx-reveal">
+        <h3>目指すべき解決の方向性：医療機関と「生活の場」の役割分担</h3>
+        <p>
+          必要なのは、医療機関の門を叩く前の段階でリスクを早期に検知し、早めの対策（予防・生活習慣の改善）につなげることです。
+          早期検知によって、<strong>①健常・低リスク層</strong>は医療機関に集中させず適切な予防で健康寿命を延ばし（医療逼迫の回避）、
+          <strong>②真に受診が必要な層</strong>は新薬のタイミングを逃さずピンポイントで専門医につなぐ——。
+          この「役割分担」が、これからの認知症医療に不可欠です。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       02 需要側の壁
+  ============================================================ -->
+  <section class="ntx-alt">
+    <div class="ntx-container">
+      <div class="ntx-chapter ntx-reveal">
+        <span class="ntx-no">第2章</span>
+        <h2>受診をためらう心理の壁と、「空白期間」がもたらす困難</h2>
+      </div>
+      <p class="ntx-lead ntx-reveal">
+        課題は医療の供給側だけではありません。多くの当事者が適切な診断を受けないまま地域社会で
+        「未受診」の状態にあり、その間に生活・財産・治療機会のリスクが静かに進行します。
+      </p>
+
+      <div class="ntx-cards ntx-reveal">
+        <div class="ntx-card">
+          <h3><span class="ntx-dot" style="background:var(--ntx-alert);"></span>財産管理のリスク</h3>
+          <p>判断力の低下による資産凍結、悪質な詐欺被害、不要な契約トラブルが、誰にも気づかれないまま進行するおそれがあります。</p>
+        </div>
+        <div class="ntx-card">
+          <h3><span class="ntx-dot" style="background:var(--ntx-alert);"></span>生活環境の悪化</h3>
+          <p>適切なケア・サポートにつながらず、孤立、徘徊による事故、セルフネグレクトの温床となることがあります。</p>
+        </div>
+        <div class="ntx-card" style="grid-column:1 / -1;">
+          <h3><span class="ntx-dot" style="background:var(--ntx-alert);"></span>適切な時期での治療機会の喪失</h3>
+          <p>周囲が異変に気づいて受診に至る段階では、新薬の適応期（MCI〜軽度）を過ぎてしまっているケースが少なくありません。医療の手が届かないまま、生活と人生への影響が大きくなってから発見される——この構造こそが、社会の盲点です。</p>
+        </div>
+      </div>
+
+      <h3 class="ntx-reveal" style="margin-top:48px;">時間の壁：受診までに横たわる「空白期間」</h3>
+      <div class="ntx-timeline ntx-reveal">
+        <div class="ntx-tl-item">
+          <div class="ntx-tl-num">9.5ヶ月<small>異変への気づき → 受診</small></div>
+          <div class="ntx-tl-body">偏見、プライド、恐怖心などにより、当事者が異変に気づいてから受診に至るまで、平均9.5ヶ月の遅延が生じています。<span class="ntx-src">出典 ※3</span></div>
+        </div>
+        <div class="ntx-tl-item">
+          <div class="ntx-tl-num">13.5ヶ月<small>家族が関わる世帯の場合</small></div>
+          <div class="ntx-tl-body">家族が関わる世帯では、診断までの空白期間は平均13.5ヶ月とさらに長期化するとの報告があります。最大の要因は「本人の受診拒否」（遅延リスク4.52倍）。介護者が娘や妻など女性の場合、関係悪化を恐れて説得をためらうことから遅延リスクは4.51倍となり、家庭内での「抱え込み」が空白期間をさらに延ばします。<span class="ntx-src">出典 ※4</span></div>
+        </div>
+        <div class="ntx-tl-item">
+          <div class="ntx-tl-num">16.9ヶ月<small>診断 → 介護サービス利用</small></div>
+          <div class="ntx-tl-body">診断後、実際の介護サービス（生活環境の調整）につながるまでにも、平均16.9ヶ月の空白期間が存在します。<span class="ntx-src">出典 ※4</span></div>
+        </div>
+      </div>
+
+      <div class="ntx-refuse ntx-reveal">
+        <svg class="ntx-donut" viewBox="0 0 120 120" role="img" aria-label="検査で認知症・MCIの疑いを指摘された人のうち、精密検査を受けたのは7%、受診しなかったのは93%であることを示す円グラフ。">
+          <circle cx="60" cy="60" r="48" fill="none" stroke="#EDF2F4" stroke-width="16"/>
+          <circle cx="60" cy="60" r="48" fill="none" stroke="#C0492F" stroke-width="16"
+                  stroke-dasharray="280.4 301.6" stroke-dashoffset="0"
+                  transform="rotate(-90 60 60)" stroke-linecap="butt"/>
+          <text x="60" y="56" text-anchor="middle" font-family="'Zen Old Mincho',serif" font-weight="900" font-size="26" fill="#C0492F">93%</text>
+          <text x="60" y="76" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-weight="700" font-size="9" fill="#5A6B75">受診に至らず</text>
+        </svg>
+        <div class="ntx-refuse-body">
+          <h3>心理の壁：「疑いあり」と告げられても、受診するのは7%</h3>
+          <p>
+            厚生労働省の2025年調査では、検査で「認知症・MCIの疑い」を指摘されても、実際に精密検査を受けた人は
+            わずか7%にとどまりました。背景にあるのは「健康に自信があり、自分は大丈夫」という主観的な思い込み（42%）や、
+            診断への不安・恐怖です。<span class="ntx-src">出典 ※5</span>
+          </p>
+          <p style="margin-top:12px;">
+            単にリスクを告げるだけの受診勧奨には限界があります。「自分は大丈夫」という心理的なボトルネックを、
+            どうすれば納得感をもって解きほぐせるか——それが問われています。
+          </p>
+        </div>
+      </div>
+
+      <div class="ntx-callout ntx-callout--alert ntx-reveal">
+        <h3>遅延の代償：治療効果が最大化される「ゴールデンタイム」の喪失</h3>
+        <p>
+          MCIから認知症への年間移行率は5〜15%（2026年 脳ドックのガイドライン）。9.5ヶ月の空白は、
+          およそ10人に1人が進行してしまいかねない長さです。<span class="ntx-src">出典 ※6</span>
+          新薬（レカネマブ、ドナネマブ）の適応は軽度認知症までとされる一方、受診の遅れにより、
+          来院時には約5割がすでに中等度以上（適応外）に進行しているとの報告もあります。<span class="ntx-src">出典 ※3</span>
+          受診までの遅延は、治療効果がもっとも見込める時期を失う期間にほかなりません。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       03 解決の設計図
+  ============================================================ -->
+  <section>
+    <div class="ntx-container">
+      <div class="ntx-chapter ntx-reveal">
+        <span class="ntx-no">第3章</span>
+        <h2>「自宅」と「専門医」をつなぐ — ONSEI Pro が担う役割</h2>
+      </div>
+      <p class="ntx-lead ntx-reveal">
+        ONSEI Pro は診断を行いません。しかし、認知機能の変化への「気づき」を促し、
+        受診の遅れを防ぐための社会的なインフラとして機能します。最短3分の発話チェックで、
+        日常会話では見えにくい初期の兆候を科学的に捉え、適切なタイミングでの専門医受診を後押しします。
+      </p>
+
+      <div class="ntx-flow ntx-reveal">
+        <div class="ntx-flow-card">
+          <div class="ntx-flow-tag">日常生活の場</div>
+          <h3>認知機能リスクの潜在層</h3>
+          <p>未受診のまま地域で暮らす方々。自治体・施設・企業の日常の場が最初の接点になります。</p>
+        </div>
+        <div class="ntx-flow-arrow" aria-hidden="true">▶</div>
+        <div class="ntx-flow-card ntx-flow-card--core">
+          <div class="ntx-flow-tag">ONSEI Pro</div>
+          <h3>最短3分の発話チェック</h3>
+          <p>診断は行わず、「気づき」と受診のきっかけを提供。<br>5段階の判別結果で、初期の変化を科学的に検知します。</p>
+        </div>
+        <div class="ntx-flow-arrow" aria-hidden="true">▶</div>
+        <div class="ntx-flow-card">
+          <div class="ntx-flow-tag">医療機関（専門医）</div>
+          <h3>適切な診断・治療</h3>
+          <p>真に受診が必要な方を、治療効果が見込めるタイミングで専門医へ。</p>
+        </div>
+      </div>
+
+      <h3 class="ntx-reveal" style="margin-top:44px;">5段階判別による、きめ細かな「次の一歩」の案内</h3>
+      <div class="ntx-stages ntx-reveal" role="img" aria-label="ONSEI Proの判別結果5段階。健常、低リスク、MCIリスク、MCI相当、認知症相当。">
+        <div class="ntx-stage">健常</div>
+        <div class="ntx-stage">低リスク</div>
+        <div class="ntx-stage">MCIリスク</div>
+        <div class="ntx-stage">MCI相当</div>
+        <div class="ntx-stage">認知症相当</div>
+      </div>
+      <div class="ntx-stage-paths ntx-reveal">
+        <div class="ntx-stage-path"><strong>予防・セルフケア</strong>生活習慣の改善アドバイスを提示。定期的な継続チェックで、健康寿命の維持をサポートします。</div>
+        <div class="ntx-stage-path"><strong>早期検知・受診のきっかけ</strong>客観的なデータをもとに、適切な時期に専門医への相談を後押しします。</div>
+        <div class="ntx-stage-path"><strong>専門医への相談</strong>速やかな受診と、適切なケアプランの検討につなげます。</div>
+      </div>
+
+      <h3 class="ntx-reveal">「課題型」チェックだからできること</h3>
+      <p class="ntx-reveal" style="font-size:15px;max-width:46em;margin-top:6px;">
+        ONSEI Pro は、自由な会話ではなく、設計された「課題」への回答音声を解析する課題型のチェックです。
+        この方式には、継続的な見守りに適した4つの特長があります。
+      </p>
+      <div class="ntx-cards ntx-reveal">
+        <div class="ntx-card">
+          <h3><span class="ntx-dot"></span>測定の標準化</h3>
+          <p>毎回同一の認知負荷で測定するため、話題や相手によって結果が揺らぎにくく、精密な比較が可能です。</p>
+        </div>
+        <div class="ntx-card">
+          <h3><span class="ntx-dot"></span>取り繕いへの耐性</h3>
+          <p>表面的な会話の流暢さに左右されず、課題の遂行を通じて潜在的な機能低下の兆候を捉えます。</p>
+        </div>
+        <div class="ntx-card">
+          <h3><span class="ntx-dot"></span>経時変化の追跡</h3>
+          <p>同一条件下での継続チェックにより、日々の「揺らぎ」に隠れた中長期的な変化のトレンドを検知します。</p>
+        </div>
+        <div class="ntx-card">
+          <h3><span class="ntx-dot"></span>5段階の判別解像度</h3>
+          <p>リスクの有無の2択ではなく、健常〜認知症相当までの5段階で判別。一人ひとりに合った次の一歩を案内できます。</p>
+        </div>
+      </div>
+
+      <h3 class="ntx-reveal" style="margin-top:44px;">ONSEI Pro がもたらす3つの社会的価値</h3>
+      <div class="ntx-values ntx-reveal">
+        <div class="ntx-value">
+          <h3>医療逼迫の回避</h3>
+          <p>科学的なトリアージにより、限りある専門医のリソースを「真に必要な層」に集中させます。</p>
+        </div>
+        <div class="ntx-value">
+          <h3>「手遅れ」の最小化</h3>
+          <p>9.5〜13.5ヶ月の受診遅延を乗り越え、治療効果が見込めるMCI期での受診・治療開始を後押しします。</p>
+        </div>
+        <div class="ntx-value">
+          <h3>心理的障壁の解消</h3>
+          <p>診断ではない「チェック」という形と、しっかり認知負荷をかける課題型ならではの納得感が、受診への一歩を支えます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       出典
+  ============================================================ -->
+  <section class="ntx-sources">
+    <div class="ntx-container">
+      <div class="ntx-chapter ntx-reveal">
+        <span class="ntx-no">APPENDIX</span>
+        <h2>数字の根拠（出典一覧）</h2>
+      </div>
+      <ol class="ntx-reveal">
+        <li>
+          <strong>認知症専門医・サポート医の数</strong>：日本老年精神医学会 専門医 1,051名（日本医学会分科会報告、2021年 <a href="https://jams.med.or.jp/activities_digest/doc/127.pdf" target="_blank" rel="noopener">jams.med.or.jp</a>）／日本認知症学会 専門医 約2,500〜2,800名（学会名簿より直近推計 <a href="https://dementia-japan.org/general/list/" target="_blank" rel="noopener">dementia-japan.org</a>）。重複を除く現在の実数は全国で約3,500人規模。認知症サポート医の累計研修修了者数は16,621人（2025年度末現在、<a href="https://www.ncgg.go.jp/hospital/kenshu/kenshu/27-1.html" target="_blank" rel="noopener">国立長寿医療研究センター</a>）。
+        </li>
+        <li>
+          <strong>認知症・MCIの人数</strong>：2022年有病率調査では、65歳以上高齢者3,603万人のうち認知症443万人（12.3%）・MCI559万人（15.5%）、計1,002万人（27.8%）。将来推計では令和22年に計1,197万人（出典：令和5年度 老人保健事業推進費等補助金「認知症及び軽度認知障害の有病率調査並びに将来推計に関する研究」研究代表者 九州大学 二宮利治 <a href="https://www.mhlw.go.jp/content/001279920.pdf" target="_blank" rel="noopener">厚生労働省</a>）。
+        </li>
+        <li>
+          <strong>受診までの遅延 平均9.5ヶ月／初診時すでに中等度以上が約5割</strong>：日本イーライリリー株式会社「MCIまたは認知症当事者・家族および一般生活者を対象に実施した調査結果」2025年9月（<a href="https://mediaroom.lilly.com/PDFFiles/2025/25-38.ref.pdf" target="_blank" rel="noopener">参考資料</a>）。【参考】<a href="https://dementia-japan.org/wp-content/uploads/2024/04/medicalprovision_report.pdf" target="_blank" rel="noopener">認知症の医療提供体制に関する調査研究事業 報告書2024</a>。
+        </li>
+        <li>
+          <strong>家族が関わる世帯の遅延 平均13.5ヶ月／診断後ケア開始まで平均16.9ヶ月</strong>：Tsuyoshi Okamura et al. <em>Factors Related to Delayed Diagnosis and Care Access in Dementia: A Preliminary Descriptive Study of the 'Blank Period' in Japan.</em>（<a href="https://doi.org/10.1111/psyg.70134" target="_blank" rel="noopener">doi.org/10.1111/psyg.70134</a>）。
+        </li>
+        <li>
+          <strong>受診勧奨しても93%は受診しない</strong>：読売新聞オンライン「認知症疑いの受診は7%、『自分は大丈夫』との思い込み・診断への不安背景に…厚労省が初の全国調査」2025年5月22日（<a href="https://www.yomiuri.co.jp/medical/20250522-OYT1T50147/" target="_blank" rel="noopener">yomiuri.co.jp</a>）。
+        </li>
+        <li>
+          <strong>MCIから認知症への年間移行率</strong>：5〜15%／年（病院ベース 9.6%／年）。脳ドックのガイドライン2026改訂委員会編「脳ドックのガイドライン2026」中外医学社。
+        </li>
+      </ol>
+
+      <div class="ntx-disclaimer ntx-reveal">
+        <strong>ご利用にあたっての重要なお願い</strong><br>
+        ・ONSEI Pro は、研究に基づく統計データと回答音声から取得したデータを比較した結果（一般的・統計的な傾向）を提示するものであり、使用者の個別的な状態に対して医学的判断を加え、疾病の診断や発症確率の評価を行うものではありません。<br>
+        ・チェック結果は医師による診断に代わるものではありません。気になる症状がある場合や結果に不安を感じた場合は、かかりつけ医や専門の医療機関（もの忘れ外来など）、またはお住まいの地域の公的な相談窓口にご相談ください。<br>
+        ・本ページに記載の統計・数値は、各出典に基づき当社が整理したものです。試算・シミュレーションは前提を単純化した参考値です。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       最終CTA
+  ============================================================ -->
+  <section class="ntx-final">
+    <div class="ntx-container">
+      <h2 class="ntx-reveal">早期検知の仕組みづくりを、<br>私たちと一緒に始めませんか</h2>
+      <p class="ntx-reveal">
+        自治体・法人・医療関係者の皆さまへ。導入事例、判別の仕組み、運用フローの詳細をまとめた
+        資料をご用意しています。カスタマイズやAPI連携のご相談もお気軽にどうぞ。
+      </p>
+      <div class="ntx-cta-row ntx-reveal">
+        <a class="ntx-btn ntx-btn--primary" href="https://systems.nippontect.co.jp/onsei-pro/download">詳しい資料を請求する</a>
+        <a class="ntx-btn ntx-btn--ghost" href="https://systems.nippontect.co.jp/contact">お問い合わせ</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* 控えめなスクロール表示（reduced motion 対応） */
+(function(){
+  var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = document.querySelectorAll('.ntx-why .ntx-reveal');
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    els.forEach(function(el){ el.classList.add('is-in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }
+    });
+  }, { rootMargin:'0px 0px -8% 0px', threshold:0.05 });
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+</body>
+</html>
