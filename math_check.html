@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学・相似マスターWebアプリ</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #F39C12;
+            --bg: #F5F7FA;
+            --text: #333;
+            --white: #FFF;
+        }
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 { text-align: center; color: var(--primary); }
+        .hidden { display: none !important; }
+        
+        /* ボタン */
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            background-color: var(--primary);
+            color: var(--white);
+            font-weight: bold;
+        }
+        button:hover { opacity: 0.9; transform: translateY(-2px); }
+        .option-btn { background-color: #E8F0FE; color: var(--text); border: 2px solid var(--primary); }
+        .option-btn:hover { background-color: var(--primary); color: var(--white); }
+        
+        /* プログレスバー & タイマー */
+        .header-info { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 10px; }
+        .progress-bar { width: 100%; background-color: #ddd; border-radius: 8px; height: 10px; margin-bottom: 20px; }
+        .progress-fill { height: 100%; background-color: var(--secondary); border-radius: 8px; width: 0%; transition: 0.3s; }
+        
+        /* 問題文 */
+        .question-text { font-size: 18px; line-height: 1.5; margin-bottom: 20px; font-weight: bold; }
+        
+        /* 解説モーダル */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: var(--white); padding: 25px; border-radius: 12px;
+            max-width: 400px; width: 90%; text-align: center;
+        }
+        .modal-content h3 { color: #E74C3C; margin-top: 0; }
+        .explanation-text { text-align: left; margin-bottom: 20px; line-height: 1.6; }
+        
+        /* ダッシュボード */
+        .weak-list { list-style: none; padding: 0; }
+        .weak-list li { background: #FDEBD0; padding: 10px; margin-bottom: 5px; border-radius: 5px; font-size: 14px;}
+    </style>
+</head>
+<body>
+
+<div class="container" id="screen-start">
+    <h1>相似マスター✨</h1>
+    <p style="text-align: center;">10分で基礎反射神経を鍛えよう！<br>目指せ全問正解！</p>
+    <button onclick="startTest()">テストをスタート！</button>
+    <button onclick="showDashboard()" style="background-color: #7F8C8D;">過去の記録を見る</button>
+</div>
+
+<div class="container hidden" id="screen-test">
+    <div class="header-info">
+        <span id="progress-text">1 / 50</span>
+        <span id="timer-text">00:00</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    
+    <div class="question-text" id="question-text">ここに問題が表示されます</div>
+    <div id="options-container"></div>
+</div>
+
+<div class="container hidden" id="screen-result">
+    <h2>お疲れさま！</h2>
+    <h1 id="score-text" style="font-size: 40px; color: var(--secondary);">0 / 50</h1>
+    <p id="time-result" style="text-align: center; font-weight: bold;"></p>
+    <button onclick="showDashboard()">ダッシュボードで成長を見る</button>
+    <button onclick="goStart()" style="background-color: #7F8C8D;">トップへ戻る</button>
+</div>
+
+<div class="container hidden" id="screen-dashboard">
+    <h2>君の成長記録📈</h2>
+    <canvas id="growthChart" width="400" height="250"></canvas>
+    
+    <h3 style="margin-top: 30px;">要注意！3回以上間違えた問題🔥</h3>
+    <ul class="weak-list" id="weak-list"></ul>
+    
+    <button onclick="goStart()">トップへ戻る</button>
+</div>
+
+<!-- 解説ポップアップ -->
+<div class="modal-overlay hidden" id="modal-explanation">
+    <div class="modal-content">
+        <h3>惜しい！解説をチェック💡</h3>
+        <div class="explanation-text" id="explanation-text"></div>
+        <button onclick="nextQuestion()">理解した！次へ</button>
+    </div>
+</div>
+
+<script>
+    // --- 1. 問題データ（まずは動作確認用に5問） ---
+    // ※後からここに追加して50問にします
+    const questions = [
+        {
+            id: "q1",
+            text: "三角形の相似条件として【間違っている】ものはどれ？",
+            options: ["3組の辺の比がすべて等しい", "2組の辺の比とその間の角がそれぞれ等しい", "2組の辺の比が等しい", "2組の角がそれぞれ等しい"],
+            correct: 2,
+            explanation: "【解説】\n「2組の辺の比」だけでは相似になりません！必ず「その間の角」も等しい必要があります。コンパスで2辺を描いたとき、角度が決まらないと三角形の形がグラグラ変わっちゃうのをイメージしてね。"
+        },
+        {
+            id: "q2",
+            text: "2つの図形の相似比が 1 : 2 のとき、面積比はどうなる？",
+            options: ["1 : 2", "1 : 4", "1 : 8", "2 : 4"],
+            correct: 1,
+            explanation: "【解説】\n面積比は「相似比の2乗」です！\n相似比が 1:2 なら、タテも2倍、ヨコも2倍になるので、面積は 2 × 2 = 4倍になります。コピー機で200%に拡大すると、紙が4枚分必要になるイメージ！"
+        },
+        {
+            id: "q3",
+            text: "2つの立体の相似比が 2 : 3 のとき、体積比はどうなる？",
+            options: ["2 : 3", "4 : 9", "6 : 9", "8 : 27"],
+            correct: 3,
+            explanation: "【解説】\n体積比は「相似比の3乗」です！\n(2×2×2) : (3×3×3) = 8 : 27 が正解。\nタテ・ヨコ・タカサの3方向が全部拡大されるから3乗になります。"
+        },
+        {
+            id: "q4",
+            text: "相似比が 3 : 5 の2つの三角形があります。小さい三角形の辺の長さが 6cm のとき、大きい三角形の対応する辺の長さは何cm？",
+            options: ["8cm", "9cm", "10cm", "12cm"],
+            correct: 2,
+            explanation: "【解説】\n比の計算です。「3 : 5 = 6 : ？」と考えましょう。\n3から6へは「2倍」になっていますね。だから、5も「2倍」して10cmです！暗算でパッと出せるようになろう。"
+        },
+        {
+            id: "q5",
+            text: "中点連結定理について。三角形の2辺の中点を結んだ線分は、底辺と平行になり、長さは底辺のどうなる？",
+            options: ["同じ長さ", "2倍", "半分(1/2)", "3分の1"],
+            correct: 2,
+            explanation: "【解説】\n中点連結定理の長さは「底辺の半分（1/2）」になります！\n相似比が 1:2 の小さな三角形が上に乗っかっている状態（ピラミッド型）を思い出してね。"
+        }
+    ];
+
+    // --- 2. 状態管理変数 ---
+    let currentQIndex = 0;
+    let score = 0;
+    let startTime;
+    let timerInterval;
+    let currentWrongAnswers = []; // 今回のテストで間違えた問題のID
+    let chartInstance = null;
+
+    // --- 3. メイン機能 ---
+    function startTest() {
+        currentQIndex = 0;
+        score = 0;
+        currentWrongAnswers = [];
+        document.getElementById('screen-start').classList.add('hidden');
+        document.getElementById('screen-dashboard').classList.add('hidden');
+        document.getElementById('screen-result').classList.add('hidden');
+        document.getElementById('screen-test').classList.remove('hidden');
+        
+        startTime = Date.now();
+        timerInterval = setInterval(updateTimer, 1000);
+        showQuestion();
+    }
+
+    function updateTimer() {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const m = String(Math.floor(elapsed / 60)).padStart(2, '0');
+        const s = String(elapsed % 60).padStart(2, '0');
+        document.getElementById('timer-text').innerText = `${m}:${s}`;
+    }
+
+    function showQuestion() {
+        const q = questions[currentQIndex];
+        document.getElementById('progress-text').innerText = `${currentQIndex + 1} / ${questions.length}`;
+        document.getElementById('progress-fill').style.width = `${((currentQIndex) / questions.length) * 100}%`;
+        document.getElementById('question-text').innerText = q.text;
+        
+        const optsDiv = document.getElementById('options-container');
+        optsDiv.innerHTML = '';
+        q.options.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(idx);
+            optsDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selectedIdx) {
+        const q = questions[currentQIndex];
+        if (selectedIdx === q.correct) {
+            // 正解
+            score++;
+            nextQuestion();
+        } else {
+            // 不正解
+            if (!currentWrongAnswers.includes(q.id)) {
+                currentWrongAnswers.push(q.id);
+            }
+            document.getElementById('explanation-text').innerText = q.explanation;
+            document.getElementById('modal-explanation').classList.remove('hidden');
+        }
+    }
+
+    function nextQuestion() {
+        document.getElementById('modal-explanation').classList.add('hidden');
+        currentQIndex++;
+        if (currentQIndex < questions.length) {
+            showQuestion();
+        } else {
+            endTest();
+        }
+    }
+
+    function endTest() {
+        clearInterval(timerInterval);
+        document.getElementById('progress-fill').style.width = '100%';
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        
+        // データ保存
+        saveResult(score, elapsed, currentWrongAnswers);
+
+        document.getElementById('screen-test').classList.add('hidden');
+        document.getElementById('screen-result').classList.remove('hidden');
+        document.getElementById('score-text').innerText = `${score} / ${questions.length}`;
+        
+        const m = Math.floor(elapsed / 60);
+        const s = elapsed % 60;
+        document.getElementById('time-result').innerText = `タイム: ${m}分${s}秒`;
+    }
+
+    // --- 4. データ保存・読み込み (ローカルストレージ) ---
+    function saveResult(s, timeSec, wrongs) {
+        let history = JSON.parse(localStorage.getItem('soujiHistory')) || [];
+        history.push({
+            date: new Date().toLocaleDateString(),
+            score: s,
+            time: timeSec,
+            total: questions.length
+        });
+        localStorage.setItem('soujiHistory', JSON.stringify(history));
+
+        let weakData = JSON.parse(localStorage.getItem('soujiWeakData')) || {};
+        wrongs.forEach(id => {
+            weakData[id] = (weakData[id] || 0) + 1;
+        });
+        localStorage.setItem('soujiWeakData', JSON.stringify(weakData));
+    }
+
+    function showDashboard() {
+        document.getElementById('screen-start').classList.add('hidden');
+        document.getElementById('screen-result').classList.add('hidden');
+        document.getElementById('screen-dashboard').classList.remove('hidden');
+
+        let history = JSON.parse(localStorage.getItem('soujiHistory')) || [];
+        let weakData = JSON.parse(localStorage.getItem('soujiWeakData')) || {};
+
+        // グラフ描画
+        const labels = history.map((_, i) => `${i + 1}回目`);
+        const dataScores = history.map(h => h.score);
+
+        const ctx = document.getElementById('growthChart').getContext('2d');
+        if (chartInstance) chartInstance.destroy(); // 古いグラフを破棄
+        
+        chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels.length > 0 ? labels : ['まだ記録がないよ'],
+                datasets: [{
+                    label: '正答数',
+                    data: dataScores.length > 0 ? dataScores : [0],
+                    borderColor: '#4A90E2',
+                    backgroundColor: 'rgba(74, 144, 226, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    y: { min: 0, max: questions.length }
+                }
+            }
+        });
+
+        // 弱点リスト表示 (3回以上間違えたもの)
+        const weakListEl = document.getElementById('weak-list');
+        weakListEl.innerHTML = '';
+        let hasWeak = false;
+        
+        for (let qId in weakData) {
+            if (weakData[qId] >= 3) {
+                hasWeak = true;
+                const qObj = questions.find(q => q.id === qId);
+                if (qObj) {
+                    const li = document.createElement('li');
+                    li.innerText = `⚠️ ${weakData[qId]}回ミス：${qObj.text}`;
+                    weakListEl.appendChild(li);
+                }
+            }
+        }
+        if (!hasWeak) {
+            weakListEl.innerHTML = '<li>今のところ目立った弱点はないよ！すごい！👏</li>';
+        }
+    }
+
+    function goStart() {
+        document.getElementById('screen-dashboard').classList.add('hidden');
+        document.getElementById('screen-result').classList.add('hidden');
+        document.getElementById('screen-start').classList.remove('hidden');
+    }
+</script>
+</body>
+</html>
