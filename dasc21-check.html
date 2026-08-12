@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DASC-21 くらしのチェック｜認知機能と生活機能の見立て</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#20437D;
+  --teal:#0B3540;
+  --blue:#4472C4;
+  --orange:#EA5514;
+  --amber:#FFC000;
+  --paper:#EBEFF4;
+  --card:#FFFFFF;
+  --line:#C9D4E0;
+  --ink:#12212E;
+  --mute:#5D7085;
+  --ok-bg:#EAF0F9;
+  --ng-bg:#FDEFE7;
+  --serif:"Zen Old Mincho","Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  --sans:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo","Noto Sans JP",system-ui,sans-serif;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  font-size:17px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 18px 80px}
+
+/* ---------- header ---------- */
+.masthead{
+  background:var(--teal);
+  color:#fff;
+  padding:22px 0 20px;
+  border-bottom:5px solid var(--amber);
+}
+.masthead .wrap{padding-bottom:0}
+.brand{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.brand h1{
+  font-family:var(--serif);
+  font-weight:900;
+  font-size:1.5rem;
+  letter-spacing:.06em;
+  margin:0;
+}
+.brand .sub{font-size:.82rem;color:#A9C4D2;letter-spacing:.08em}
+.masthead p{margin:8px 0 0;font-size:.9rem;color:#C7DAE4}
+
+/* ---------- progress ---------- */
+.progress{
+  position:sticky;top:0;z-index:20;
+  background:rgba(235,239,244,.94);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+  padding:10px 0;
+  margin-bottom:26px;
+}
+.progress .wrap{padding-bottom:0}
+.pbar{height:7px;background:#D5DEE8;border-radius:99px;overflow:hidden}
+.pbar span{display:block;height:100%;background:var(--navy);width:0;transition:width .35s ease}
+.pmeta{display:flex;justify-content:space-between;font-size:.78rem;color:var(--mute);margin-top:7px;letter-spacing:.04em}
+.pmeta b{font-family:var(--serif);color:var(--navy);font-size:.95rem}
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  padding:30px 28px;
+  margin-bottom:20px;
+}
+.card h2{
+  font-family:var(--serif);font-weight:700;font-size:1.28rem;
+  margin:0 0 14px;letter-spacing:.04em;color:var(--teal);
+}
+.card h3{font-size:1rem;font-weight:700;margin:24px 0 8px;color:var(--navy)}
+.lede{color:var(--mute);font-size:.95rem;margin:0 0 22px}
+
+/* ---------- start screen rules ---------- */
+.rules{list-style:none;margin:0;padding:0;counter-reset:r}
+.rules li{
+  counter-increment:r;
+  position:relative;
+  padding:16px 0 16px 62px;
+  border-top:1px solid var(--line);
+}
+.rules li:last-child{border-bottom:1px solid var(--line)}
+.rules li::before{
+  content:counter(r);
+  position:absolute;left:0;top:15px;
+  font-family:var(--serif);font-weight:700;font-size:1.5rem;
+  color:var(--amber);
+  width:42px;text-align:center;
+  line-height:1.2;
+}
+.rules b{display:block;font-size:1.02rem;color:var(--teal)}
+.rules span{display:block;font-size:.9rem;color:var(--mute);margin-top:3px}
+
+/* ---------- form ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+label.f{display:block;font-size:.82rem;font-weight:700;color:var(--mute);letter-spacing:.05em;margin-bottom:5px}
+input[type=text],input[type=date],select,textarea{
+  width:100%;font-family:var(--sans);font-size:1rem;
+  padding:11px 13px;border:1px solid var(--line);border-radius:9px;
+  background:#FBFCFD;color:var(--ink);
+}
+input:focus,select:focus,textarea:focus{outline:3px solid rgba(68,114,196,.35);border-color:var(--blue)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg button{
+  flex:1;min-width:120px;font-family:var(--sans);font-size:.95rem;font-weight:700;
+  padding:12px 10px;border:1px solid var(--line);background:#FBFCFD;color:var(--mute);
+  border-radius:9px;cursor:pointer;
+}
+.seg button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* ---------- question ---------- */
+.qhead{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+.qno{
+  font-family:var(--serif);font-weight:900;font-size:1.05rem;
+  background:var(--navy);color:#fff;border-radius:8px;
+  padding:2px 11px;letter-spacing:.06em;
+}
+.qdomain{font-size:.78rem;font-weight:700;letter-spacing:.12em;color:var(--mute)}
+.qkey{
+  font-size:.7rem;font-weight:700;letter-spacing:.1em;
+  background:var(--amber);color:#4A3300;border-radius:5px;padding:2px 8px;
+}
+.qtext{
+  font-family:var(--serif);font-weight:700;
+  font-size:1.42rem;line-height:1.6;letter-spacing:.02em;
+  margin:6px 0 22px;color:var(--teal);
+}
+
+/* ---------- options + anchor line (signature) ---------- */
+.opts{display:flex;flex-direction:column;gap:9px;margin:0}
+.opt{
+  display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+  font-family:var(--sans);font-size:1.08rem;font-weight:500;
+  background:#FBFCFD;border:1.5px solid var(--line);border-radius:11px;
+  padding:15px 18px;cursor:pointer;color:var(--ink);
+  transition:border-color .12s,background .12s;
+}
+.opt:hover{border-color:var(--blue)}
+.opt:focus-visible{outline:3px solid rgba(68,114,196,.45);outline-offset:2px}
+.opt .num{
+  font-family:var(--serif);font-weight:700;font-size:1.15rem;
+  width:32px;height:32px;flex:none;border-radius:50%;
+  display:grid;place-items:center;
+  border:1.5px solid var(--line);color:var(--mute);background:#fff;
+}
+.opt[data-band="ok"][aria-pressed="true"]{background:var(--ok-bg);border-color:var(--navy)}
+.opt[data-band="ok"][aria-pressed="true"] .num{background:var(--navy);border-color:var(--navy);color:#fff}
+.opt[data-band="ng"][aria-pressed="true"]{background:var(--ng-bg);border-color:var(--orange)}
+.opt[data-band="ng"][aria-pressed="true"] .num{background:var(--orange);border-color:var(--orange);color:#fff}
+
+.anchor{
+  display:flex;align-items:center;gap:12px;
+  margin:14px 2px 5px;
+}
+.anchor::before,.anchor::after{content:"";flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--orange) 0 7px,transparent 7px 13px)}
+.anchor em{
+  font-style:normal;font-size:.74rem;font-weight:700;letter-spacing:.14em;
+  color:var(--orange);white-space:nowrap;
+}
+
+/* ---------- hint panel ---------- */
+.hint{
+  margin-top:26px;border:1px solid var(--line);border-left:5px solid var(--amber);
+  border-radius:10px;background:#FCFAF3;padding:20px 22px;
+}
+.hint > b{
+  display:block;font-family:var(--serif);font-size:.98rem;letter-spacing:.08em;
+  color:#7A5A00;margin-bottom:12px;
+}
+.hint dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:9px 16px}
+.hint dt{
+  font-size:.75rem;font-weight:700;letter-spacing:.08em;color:#8A6A20;
+  white-space:nowrap;padding-top:3px;
+}
+.hint dd{margin:0;font-size:.93rem;line-height:1.72;color:#3E3524}
+.memo{margin-top:16px}
+.memo label.f{color:#8A6A20}
+.memo textarea{background:#fff;min-height:60px;resize:vertical}
+
+/* ---------- nav ---------- */
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:8px}
+.btn{
+  font-family:var(--sans);font-size:1rem;font-weight:700;letter-spacing:.05em;
+  padding:14px 26px;border-radius:10px;border:1.5px solid transparent;cursor:pointer;
+}
+.btn.primary{background:var(--navy);color:#fff}
+.btn.primary:hover{background:#173461}
+.btn.ghost{background:transparent;color:var(--mute);border-color:var(--line)}
+.btn.ghost:hover{color:var(--navy);border-color:var(--navy)}
+.btn.warm{background:var(--orange);color:#fff}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn:focus-visible{outline:3px solid rgba(68,114,196,.45);outline-offset:2px}
+
+/* ---------- review table ---------- */
+table.rev{width:100%;border-collapse:collapse;font-size:.9rem}
+table.rev th,table.rev td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left;vertical-align:top}
+table.rev th{font-size:.74rem;letter-spacing:.08em;color:var(--mute);font-weight:700}
+table.rev td.sc{font-family:var(--serif);font-weight:700;text-align:center;width:44px}
+td.sc.ng{color:var(--orange)}
+td.sc.ok{color:var(--navy)}
+table.rev button{
+  background:none;border:none;color:var(--blue);font-family:var(--sans);
+  font-size:.85rem;cursor:pointer;text-decoration:underline;padding:0;
+}
+tr.unanswered td{background:#FDF6EC}
+
+/* ---------- result ---------- */
+.verdict{
+  border-radius:var(--r);padding:28px;margin-bottom:20px;color:#fff;
+}
+.verdict.normal{background:linear-gradient(135deg,var(--navy),var(--teal))}
+.verdict.alert{background:linear-gradient(135deg,#C2450F,var(--orange))}
+.verdict .eyebrow{font-size:.76rem;letter-spacing:.18em;opacity:.85;font-weight:700}
+.scoreline{display:flex;align-items:flex-end;gap:10px;margin:6px 0 10px}
+.scoreline .big{font-family:var(--serif);font-weight:900;font-size:4.2rem;line-height:.95}
+.scoreline .of{font-size:1.05rem;opacity:.8;padding-bottom:9px}
+.verdict h2{font-family:var(--serif);font-size:1.5rem;margin:0 0 8px;color:#fff;letter-spacing:.04em}
+.verdict p{margin:0;font-size:.95rem;opacity:.94;line-height:1.8}
+.sev{
+  display:inline-block;margin-top:14px;background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:7px 15px;
+  font-size:.92rem;font-weight:700;
+}
+
+/* profile chart */
+.prof{margin-top:6px}
+.prow{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;padding:3px 0}
+.prow .plabel{font-size:.82rem;color:var(--mute);text-align:right;line-height:1.35}
+.prow .plabel b{display:block;color:var(--ink);font-size:.86rem;font-weight:700}
+.cells{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;position:relative}
+.cells i{height:22px;border-radius:4px;background:#EDF1F6;display:block}
+.cells i.on-ok{background:var(--navy)}
+.cells i.on-ng{background:var(--orange)}
+.cells::after{
+  content:"";position:absolute;left:calc(50% - 1.5px);top:-4px;bottom:-4px;
+  width:3px;border-radius:2px;
+  background:repeating-linear-gradient(180deg,var(--orange) 0 5px,transparent 5px 9px);
+}
+.threshold{
+  display:grid;grid-template-columns:130px 1fr;gap:12px;margin-bottom:2px;
+}
+.threshold .t{
+  display:grid;grid-template-columns:1fr 1fr;font-size:.7rem;font-weight:700;
+  letter-spacing:.08em;color:var(--mute);
+}
+.threshold .t span:first-child{text-align:right;padding-right:8px;color:var(--navy)}
+.threshold .t span:last-child{padding-left:8px;color:var(--orange)}
+.gsep{
+  grid-column:1/-1;font-size:.72rem;letter-spacing:.12em;font-weight:700;
+  color:var(--navy);border-top:1px solid var(--line);
+  margin:12px 0 6px;padding-top:8px;
+}
+.axis{display:grid;grid-template-columns:130px 1fr;gap:12px;margin-top:8px}
+.axis .k{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;font-size:.7rem;color:var(--mute);text-align:center}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.8rem;color:var(--mute);margin-top:14px}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:13px;height:13px;border-radius:3px;display:block}
+
+.flags{list-style:none;padding:0;margin:0}
+.flags li{
+  padding:12px 0 12px 16px;border-left:3px solid var(--orange);
+  background:var(--ng-bg);border-radius:0 8px 8px 0;margin-bottom:8px;font-size:.94rem;
+}
+.flags li b{color:#B03D0C}
+.next{list-style:none;padding:0;margin:0}
+.next li{padding:12px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.next li b{display:block;color:var(--navy);font-family:var(--serif);letter-spacing:.03em}
+
+.note{
+  font-size:.82rem;color:var(--mute);line-height:1.8;
+  border-top:1px solid var(--line);margin-top:26px;padding-top:18px;
+}
+.note b{color:var(--teal)}
+.disclaimer{
+  background:#FFF8E6;border:1px solid var(--amber);border-radius:10px;
+  padding:16px 18px;font-size:.88rem;line-height:1.75;margin-bottom:20px;color:#5A4400;
+}
+.disclaimer b{color:#7A5A00}
+.hidden{display:none !important}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+
+@media (max-width:640px){
+  .threshold{grid-template-columns:96px 1fr;gap:8px}
+  .threshold .t{font-size:.62rem}
+  body{font-size:16px}
+  .card{padding:22px 18px}
+  .qtext{font-size:1.2rem}
+  .scoreline .big{font-size:3.2rem}
+  .hint dl{grid-template-columns:1fr;gap:2px 0}
+  .hint dt{padding-top:9px}
+  .prow{grid-template-columns:96px 1fr;gap:8px}
+  .axis{grid-template-columns:96px 1fr;gap:8px}
+  .prow .plabel{font-size:.72rem}
+  .prow .plabel b{font-size:.76rem}
+  .nav .btn{padding:13px 18px;font-size:.94rem}
+}
+@media print{
+  body{background:#fff}
+  .progress,.actions,.no-print{display:none !important}
+  .card,.verdict{break-inside:avoid;border:1px solid #999}
+  .verdict{color:#000 !important;background:#fff !important;border:2px solid #000}
+  .verdict h2,.verdict .eyebrow,.verdict p{color:#000 !important}
+  .sev{background:#eee;color:#000;border-color:#000}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="brand">
+      <h1>くらしのチェック DASC-21</h1>
+      <span class="sub">認知機能 ＋ 生活機能アセスメント</span>
+    </div>
+    <p>ご本人をよく知るご家族・介護者が答える、5〜10分の見立てシートです。</p>
+  </div>
+</header>
+
+<div class="progress" id="progress">
+  <div class="wrap">
+    <div class="pbar"><span id="pfill"></span></div>
+    <div class="pmeta"><span id="pstage">はじめに</span><span><b id="pnum">0</b> / 21 問</span></div>
+  </div>
+</div>
+
+<main class="wrap" id="app"></main>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   1. 設問データ（DASC-21：粟田主一／東京都健康長寿医療センター研究所）
+   ============================================================ */
+var SCALE = {
+  intro:["感じない","少し感じる","感じる","とても感じる"],
+  freq :["まったくない","ときどきある","頻繁にある","いつもそうだ"],
+  able :["問題なくできる","だいたいできる","あまりできない","まったくできない"],
+  adl  :["問題なくできる","見守りや声がけを要する","一部介助を要する","全介助を要する"]
+};
+
+var INTRO = [
+  {id:"A", q:"もの忘れが多いと感じますか", scale:"intro"},
+  {id:"B", q:"1年前と比べて、もの忘れが増えたと感じますか", scale:"intro"}
+];
+
+var ITEMS = [
+{n:1, group:"記憶", domain:"近時記憶", scale:"freq", key:false,
+ q:"財布や鍵など、物を置いた場所がわからなくなることがありますか",
+ h:{see:"置き忘れそのものより、探している時間の長さと頻度。「誰かに盗られた」と言い出すかどうかも重要な手がかりです。",
+    line:"週に1回くらいで、自分で見つけられるなら2。ほぼ毎日で、家族が一緒に探すことになるなら3。",
+    trap:"「歳だから誰にでもある」と軽く見てしまいがちです。加齢によるもの忘れは「置いた場所」を忘れる。認知症では「置いたこと自体」を忘れます。",
+    solo:"冷蔵庫や引き出しの中に鍵や財布が入っていないか、探し物の話が何度も出てこないかを見ます。"}},
+{n:2, group:"記憶", domain:"近時記憶", scale:"freq", key:false,
+ q:"5分前に聞いた話を思い出せないことがありますか",
+ h:{see:"同じ話や同じ質問を繰り返すか。伝えたはずの予定や約束が抜け落ちるか。",
+    line:"たまに聞き返す程度なら2。同じ質問を1日に何度も繰り返し、直前の会話が残らないなら3。",
+    trap:"昔話を上手に語るので「しっかりしている」と判断してしまう。遠い記憶は最後まで残るため、判断材料になりません。",
+    solo:"話の前半で出た話題を、後半でさりげなく尋ね直してみると分かります。"}},
+{n:3, group:"記憶", domain:"遠隔記憶", scale:"freq", key:true,
+ q:"自分の生年月日がわからなくなることがありますか",
+ h:{see:"生年月日・出身地・家族の名前といった、人生の土台になる情報が保たれているか。",
+    line:"少し考えれば正しく言えるなら2。年号や年が出てこない、間違えるなら3。",
+    trap:"ここは通常かなり最後まで保たれる項目です。だからこそ崩れていれば重い変化のサイン。あいまいなまま流さず確認してください。",
+    solo:"保険証や運転免許証と照らし合わせて確認します。"}},
+{n:4, group:"見当識", domain:"時間", scale:"freq", key:false,
+ q:"今日が何月何日かわからないときがありますか",
+ h:{see:"日付・曜日・月・季節。カレンダーを見ずに言えるかどうか。",
+    line:"日にちは曖昧でも月と季節が合っていれば2。月や年を間違える、季節感がずれているなら3。",
+    trap:"退職後に曜日の感覚が薄れるのはよくあることです。日付だけで決めず、月・年・季節まで確かめてください。",
+    solo:"日めくりカレンダーが止まっていないか、新聞や郵便物の日付を意識しているかを見ます。"}},
+{n:5, group:"見当識", domain:"場所", scale:"freq", key:true,
+ q:"自分のいる場所がどこだかわからなくなることはありますか",
+ h:{see:"今いる建物や地名がわかるか。自宅にいることを認識できているか。",
+    line:"初めての場所で戸惑う程度なら2。自宅にいるのに「家に帰る」と言う、通い慣れた場所でわからなくなるなら3。",
+    trap:"場所がわからなくなるのは進んだ段階のサインで、重症度の判定を左右する項目です。慎重に確認してください。",
+    solo:"「ここは何という建物ですか」「お住まいはどちらですか」と直接尋ねます。"}},
+{n:6, group:"見当識", domain:"道順", scale:"freq", key:false,
+ q:"道に迷って家に帰ってこられなくなることはありますか",
+ h:{see:"外出したあと帰ってこられるか。迷うのが初めての道か、いつもの道か。",
+    line:"初めての場所で迷う程度なら2。いつもの散歩道や買い物の道で迷った、警察や近所の人に保護されたことがあるなら3。",
+    trap:"「最近は外に出ないから」と空欄にしないでください。出かけたらどうなりそうか、で判断します。",
+    solo:"近所の方や民生委員、行きつけのお店に様子を聞くと分かることがあります。"}},
+{n:7, group:"問題解決・判断力", domain:"問題解決", scale:"able", key:false,
+ q:"電気やガスや水道が止まってしまったときに、自分で適切に対処できますか",
+ h:{see:"予期しない出来事への対処。ブレーカーを上げる、どこかに電話する、誰かに助けを求める、のいずれかができるか。",
+    line:"手順はあやしくても、誰かに連絡して解決までたどり着けるなら2。何もできずに固まる、放置してしまうなら3。",
+    trap:"もともと機械が苦手な人と混同しないこと。「以前の本人と比べてどうか」で見ます。",
+    solo:"実際に困ったことが起きたとき、どう対処したかを具体的に聞き取ります。"}},
+{n:8, group:"問題解決・判断力", domain:"問題解決", scale:"able", key:false,
+ q:"一日の計画を自分で立てることができますか",
+ h:{see:"段取り。やることの順番を自分で組み立て、実行に移せるか。",
+    line:"大まかな流れを自分で決められるなら2。一日ぼんやり過ごす、促されないと動き出せないなら3。",
+    trap:"うつ状態でも同じように見えます。「気力が出ない」のか「段取りが組めない」のかを聞き分けてください。",
+    solo:"昨日一日の過ごし方を、朝から順に具体的に語ってもらいます。"}},
+{n:9, group:"問題解決・判断力", domain:"社会的判断力", scale:"able", key:true,
+ q:"季節や状況に合った服を自分で選ぶことができますか",
+ h:{see:"その場にふさわしい判断。真夏に厚着していないか、法事や来客の場面で服装を選べるか。",
+    line:"好みの偏りはあっても季節に合っているなら2。真夏にコートを着る、何日も同じ服を着続けるなら3。",
+    trap:"おしゃれの好みやこだわりと混同しないこと。「暑さ寒さに合っているか」で見ます。",
+    solo:"面接した日の気温と、実際の服装を照らし合わせます。同じ服が続いていないかも見ます。"}},
+{n:10, group:"家庭外のIADL", domain:"買い物", scale:"able", key:false,
+ q:"一人で買い物はできますか",
+ h:{see:"店まで行く・選ぶ・支払う・持ち帰る、の一連の流れが完結するか。",
+    line:"買い忘れや買いすぎはあっても一人で完結するなら2。同じ物を大量に買う、支払いでもたつく、付き添いが要るなら3。",
+    trap:"「宅配を頼んでいるから」で空欄にしないこと。頼めばできそうか、で判断します。",
+    solo:"冷蔵庫に同じ食品がいくつも入っていないか、期限切れが溜まっていないかを確認します。"}},
+{n:11, group:"家庭外のIADL", domain:"交通機関", scale:"able", key:false,
+ q:"バスや電車、自家用車などを使って一人で外出できますか",
+ h:{see:"交通手段を使って目的地に行き、帰ってこられるか。乗り換えや運賃の支払いも含みます。",
+    line:"慣れた路線なら一人で行けるなら2。乗り間違える、行き先を忘れる、家族の送迎がないと無理なら3。",
+    trap:"足腰の問題と、判断の問題を分けてください。「体は動くけれど判断で困る」のかを確かめます。",
+    solo:"直近の通院や外出の様子を具体的に。運転しているなら事故やヒヤリの有無も必ず聞きます。"}},
+{n:12, group:"家庭外のIADL", domain:"金銭管理", scale:"able", key:false,
+ q:"貯金の出し入れや、家賃や公共料金の支払いは一人でできますか",
+ h:{see:"ATMの操作、振込、支払い期限の管理。通帳や現金の置き場所が整っているか。",
+    line:"時間はかかっても自分で手続きできるなら2。滞納や二重払いがある、暗証番号を何度も忘れる、現金管理が乱れているなら3。",
+    trap:"認知症でもっとも早く崩れやすい領域です。「お金は家族が管理している」で流さず、任せることになった時期と理由を聞いてください。",
+    solo:"督促状の有無、財布の中の現金の量、訪問販売や電話勧誘の被害がないかを確認します。"}},
+{n:13, group:"家庭内のIADL", domain:"電話", scale:"able", key:false,
+ q:"電話をかけることができますか",
+ h:{see:"番号を調べてかける。用件を相手に伝えられる。かかってきた電話に対応できる。",
+    line:"短縮登録した相手になら自分でかけられるなら2。かけ方がわからない、着信に対応できないなら3。",
+    trap:"スマートフォンの操作に不慣れなだけ、という場合があります。使い慣れた固定電話で判断してください。",
+    solo:"発着信の履歴、電話機のそばのメモの様子を見ます。"}},
+{n:14, group:"家庭内のIADL", domain:"食事の準備", scale:"able", key:false,
+ q:"自分で食事の準備はできますか",
+ h:{see:"献立を決める・火を扱う・後片付けまで。中身が偏っていないかも見ます。",
+    line:"簡単な物なら作る、惣菜と併用してしのげているなら2。火の消し忘れがある、料理をやめてしまった、同じ物ばかりになっているなら3。",
+    trap:"もともと料理をしない人は「習慣がない」だけで、能力の問題ではありません。やろうとしたらできそうか、で判断します。",
+    solo:"鍋の焦げ跡、期限切れの食品、体重の変化を確認。火の不始末があれば緊急性が高い状況です。"}},
+{n:15, group:"家庭内のIADL", domain:"服薬管理", scale:"able", key:false,
+ q:"自分で、薬を決まった時間に決まった分量を飲むことができますか",
+ h:{see:"飲み忘れと飲みすぎ。手元に残っている薬の量。",
+    line:"たまに飲み忘れるが概ね自分で管理できているなら2。残薬が大量にある、重ねて飲んでしまう、家族がセットしないと飲めないなら3。",
+    trap:"お薬カレンダーを家族がセットしている場合は「できている」ではなく、介助を受けている状態と考えます。",
+    solo:"残っている薬を実際に数えます。この項目でもっとも客観的な証拠になります。"}},
+{n:16, group:"身体的ADL①", domain:"入浴", scale:"adl", key:true,
+ q:"入浴は一人でできますか",
+ h:{see:"湯を張る・体を洗う・浴槽を出入りする、の一連。入る頻度も含めて見ます。",
+    line:"声をかければ自分で入るなら2。洗身や洗髪に手を貸す必要があるなら3。",
+    trap:"入浴を嫌がるのは、能力ではなく意欲や手順の問題のこともあります。実際に必要な介助の量で判断してください。",
+    solo:"髪や衣類の清潔さ、においから推し量ります。浴室が使われた形跡があるかも見ます。"}},
+{n:17, group:"身体的ADL①", domain:"着替え", scale:"adl", key:true,
+ q:"着替えは一人でできますか",
+ h:{see:"服を着る動作そのもの。袖を通す、ボタンやファスナーを扱う。",
+    line:"服を出しておけば自分で着られるなら2。袖を通すのを手伝う、前後や裏表が逆になるなら3。",
+    trap:"「服を選べない」（項目9）と「着る動作ができない」を分けてください。ここは動作です。",
+    solo:"面接時の着衣の乱れ、ボタンのかけ違いを観察します。"}},
+{n:18, group:"身体的ADL①", domain:"排泄", scale:"adl", key:true,
+ q:"トイレは一人でできますか",
+ h:{see:"尿意・便意に気づく、トイレの場所がわかる、後始末ができる。失禁の有無。",
+    line:"声かけや誘導があれば間に合うなら2。衣類の上げ下ろしや後始末に手を貸すなら3。",
+    trap:"家族が言い出しにくい領域です。「夜間はいかがですか」と時間帯を分けて尋ねると答えやすくなります。",
+    solo:"パッドの使用状況や汚れた衣類の様子から。繊細な話題なので、聞くなら最後に。"}},
+{n:19, group:"身体的ADL②", domain:"整容", scale:"adl", key:true,
+ q:"身だしなみを整えることは一人でできますか",
+ h:{see:"洗顔・歯磨き・整髪・ひげそり・爪切り。",
+    line:"促せば自分でやるなら2。手を添えたり、仕上げを代わりにやる必要があるなら3。",
+    trap:"一人暮らしだと「見せる相手がいないから」と説明されがちです。以前の本人と比べてどう変わったかで見ます。",
+    solo:"爪・ひげ・髪・口の中の様子を、面接の場で観察します。"}},
+{n:20, group:"身体的ADL②", domain:"食事", scale:"adl", key:true,
+ q:"食事は一人でできますか",
+ h:{see:"箸やスプーンで口まで運ぶ動作。むせやこぼしがないか。",
+    line:"見守りや「こぼしていますよ」の声かけで済むなら2。切り分けや口元への介助が要るなら3。",
+    trap:"食欲や食事量の問題と、食べる動作の問題を混同しないこと。ここは動作です。",
+    solo:"食べ残しの様子、食器やテーブルの汚れ、体重の減少を確認します。"}},
+{n:21, group:"身体的ADL②", domain:"移動", scale:"adl", key:true,
+ q:"家のなかでの移動は一人でできますか",
+ h:{see:"室内の歩行、立ち上がり、伝い歩き。転倒の有無。",
+    line:"見守りがあれば、または杖や手すりを使って移動できるなら2。手を貸す、車いすで介助するなら3。",
+    trap:"外出（項目11）と混同しないこと。ここは家の中だけの話です。",
+    solo:"手すりの設置状況、家具を伝って歩いていないか、転んだことがないかを確認します。"}}
+];
+
+var KEY_ITEMS = [3,5,9,16,17,18,19,20,21];
+var GROUPS = ["記憶","見当識","問題解決・判断力","家庭外のIADL","家庭内のIADL","身体的ADL①","身体的ADL②"];
+
+/* ============================================================
+   2. 状態
+   ============================================================ */
+var state = {
+  screen:"start",          // start | intro | q | review | result
+  idx:0,                   // 質問インデックス (0..20)
+  answers:{},              // n -> 1..4
+  memos:{},                // n -> string
+  introAns:{},             // A/B -> 1..4
+  meta:{name:"",age:"",sex:"",living:"同居",respondent:"家族・介護者",relation:"",rater:"",date:new Date().toISOString().slice(0,10)}
+};
+
+var app = document.getElementById("app");
+var pfill = document.getElementById("pfill");
+var pnum  = document.getElementById("pnum");
+var pstage= document.getElementById("pstage");
+
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+
+function answeredCount(){var c=0;for(var i=1;i<=21;i++){if(state.answers[i])c++;}return c;}
+
+function updateProgress(){
+  var c = answeredCount();
+  pnum.textContent = c;
+  pfill.style.width = (c/21*100)+"%";
+  pstage.textContent = ({start:"はじめに",intro:"導入の質問",q:"質問",review:"回答の確認",result:"結果"})[state.screen];
+}
+
+function go(screen,idx){
+  state.screen = screen;
+  if(typeof idx === "number") state.idx = idx;
+  render();
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+/* ============================================================
+   3. 画面
+   ============================================================ */
+function viewStart(){
+  return '<div class="card">'
+   +'<h2>これは何のシートですか</h2>'
+   +'<p class="lede">DASC-21は、「もの忘れ」といった認知機能と、買い物・着替えといった生活機能の両方を、21の質問でまとめて見立てる評価票です。診断をつけるものではなく、専門職や医療機関につなぐかどうかを判断するための地図です。</p>'
+   +'<h2 style="margin-top:8px">答える前に、この4つだけ</h2>'
+   +'<ol class="rules">'
+   +'<li><b>答えるのは、ご本人ではなく、ご本人をよく知る人</b><span>ご家族や介護者が、ご本人の普段の様子を思い浮かべて答えます。一人暮らしで聞ける人がいない場合は、ご本人に尋ねながら、答えの内容と実際の様子の両方から記入者が判断します。</span></li>'
+   +'<li><b>「今日の調子」ではなく「ここ1か月くらいの、いつもの様子」</b><span>体調の良い日・悪い日で揺れます。平均的な、いつもの姿で答えてください。</span></li>'
+   +'<li><b>1と2は「大丈夫な範囲」、3と4は「支えが要る範囲」</b><span>これがこの評価票の背骨です。2と3の間に境目があります。迷ったら「この人を一人にしておいて心配になるか」で分けてください。心配ならもう3です。</span></li>'
+   +'<li><b>「やっていない」は「できない」ではありません</b><span>もともと料理をしない、買い物は宅配、というのは習慣であって能力ではありません。「やってもらったら、できそうか」で判断します。</span></li>'
+   +'</ol>'
+   +'<h3>ご本人の情報（任意・医療機関に見せるとき役立ちます）</h3>'
+   +'<div class="grid">'
+     +'<div><label class="f" for="m-name">お名前</label><input type="text" id="m-name" value="'+esc(state.meta.name)+'" placeholder="例）山田 花子"></div>'
+     +'<div><label class="f" for="m-age">年齢</label><input type="text" id="m-age" value="'+esc(state.meta.age)+'" placeholder="例）82"></div>'
+     +'<div><label class="f" for="m-date">記入日</label><input type="date" id="m-date" value="'+esc(state.meta.date)+'"></div>'
+   +'</div>'
+   +'<h3>暮らし方</h3>'
+   +'<div class="seg" id="seg-living">'
+     +'<button type="button" data-v="同居" aria-pressed="'+(state.meta.living==="同居")+'">同居している</button>'
+     +'<button type="button" data-v="独居" aria-pressed="'+(state.meta.living==="独居")+'">一人暮らし</button>'
+   +'</div>'
+   +'<h3>回答しているのは</h3>'
+   +'<div class="seg" id="seg-resp">'
+     +'<button type="button" data-v="家族・介護者" aria-pressed="'+(state.meta.respondent==="家族・介護者")+'">家族・介護者</button>'
+     +'<button type="button" data-v="本人" aria-pressed="'+(state.meta.respondent==="本人")+'">ご本人</button>'
+   +'</div>'
+   +(state.meta.respondent==="本人"
+      ? '<div class="disclaimer" style="margin-top:16px"><b>ご本人だけの回答は、見立てが甘く出やすいことが分かっています。</b>特に軽い段階では、ご本人の申告だけでは変化を捉えきれません。ご家族や介護者、日ごろ様子を見ている方に代わって答えてもらうか、一緒に答えることを強くおすすめします。</div>'
+      : '')
+   +'<div class="nav" style="margin-top:26px"><span></span><button class="btn primary" id="go-intro">はじめる</button></div>'
+   +'</div>'
+   +'<div class="card"><div class="note" style="border:none;margin:0;padding:0">'
+   +'<b>出典・権利表示</b><br>地域包括ケアシステムにおける認知症アセスメント（DASC-21）／ⓒ粟田主一・東京都健康長寿医療センター研究所。「DASC」は一般社団法人認知症アセスメント普及・開発センターの登録商標で、判定システムは特許出願中です。本ツールは同センターの正式な研修・許諾を前提としない参考用の実装であり、公的な評価や事業での利用にあたっては <a href="https://dasc.jp/" target="_blank" rel="noopener">dasc.jp</a> をご確認ください。'
+   +'</div></div>';
+}
+
+function viewIntro(){
+  var html = '<div class="card">'
+   +'<div class="qdomain">導入の質問（点数には入りません）</div>'
+   +'<h2 style="margin-top:6px">まず、もの忘れの自覚をうかがいます</h2>'
+   +'<p class="lede">この2問は点数に含めません。ご本人の受け止め方を知り、本題に入りやすくするための質問です。ここで「感じない」と答えても、21の質問はそのまま進めてください。</p>';
+  INTRO.forEach(function(it){
+    html += '<div style="margin-bottom:26px">'
+      +'<div class="qhead"><span class="qno">'+it.id+'</span></div>'
+      +'<div class="qtext" style="font-size:1.2rem;margin-bottom:14px">'+esc(it.q)+'</div>'
+      +'<div class="opts">';
+    SCALE.intro.forEach(function(lab,i){
+      var v=i+1, on = state.introAns[it.id]===v;
+      html += '<button class="opt" type="button" data-intro="'+it.id+'" data-v="'+v+'" data-band="ok" aria-pressed="'+on+'">'
+        +'<span class="num">'+v+'</span><span>'+esc(lab)+'</span></button>';
+    });
+    html += '</div></div>';
+  });
+  html += '<div class="nav"><button class="btn ghost" id="back">もどる</button><button class="btn primary" id="next">21の質問へすすむ</button></div></div>';
+  return html;
+}
+
+function viewQuestion(){
+  var it = ITEMS[state.idx];
+  var labels = SCALE[it.scale];
+  var cur = state.answers[it.n];
+  var html = '<div class="card">'
+   +'<div class="qhead">'
+     +'<span class="qno">問 '+it.n+'</span>'
+     +'<span class="qdomain">'+esc(it.group)+' ／ '+esc(it.domain)+'</span>'
+     +(it.key ? '<span class="qkey">重症度の判定に使う項目</span>' : '')
+   +'</div>'
+   +'<div class="qtext">'+esc(it.q)+'</div>'
+   +'<div class="opts">';
+  for(var i=0;i<4;i++){
+    var v=i+1, band = v<=2 ? "ok":"ng", on = cur===v;
+    html += '<button class="opt" type="button" data-ans="'+v+'" data-band="'+band+'" aria-pressed="'+on+'">'
+      +'<span class="num">'+v+'</span><span>'+esc(labels[i])+'</span></button>';
+    if(v===2) html += '<div class="anchor"><em>ここが境目 ── 下は支えが要る範囲</em></div>';
+  }
+  html += '</div>'
+   +'<div class="hint">'
+     +'<b>判断のしかた</b>'
+     +'<dl>'
+       +'<dt>何を見るか</dt><dd>'+esc(it.h.see)+'</dd>'
+       +'<dt>2と3の分かれ目</dt><dd>'+esc(it.h.line)+'</dd>'
+       +'<dt>間違えやすい点</dt><dd>'+esc(it.h.trap)+'</dd>'
+       +'<dt>一人暮らしなら</dt><dd>'+esc(it.h.solo)+'</dd>'
+     +'</dl>'
+     +'<div class="memo"><label class="f" for="memo">気づいたこと（任意・医療機関に伝えるときに役立ちます）</label>'
+     +'<textarea id="memo" placeholder="例）先月、鍋を焦がしたことが2回あった">'+esc(state.memos[it.n]||"")+'</textarea></div>'
+   +'</div>'
+   +'<div class="nav">'
+     +'<button class="btn ghost" id="back">もどる</button>'
+     +'<button class="btn primary" id="next" '+(cur?"":"disabled")+'>'+(state.idx===20?"回答を確認する":"つぎへ")+'</button>'
+   +'</div>'
+   +'</div>';
+  return html;
+}
+
+function viewReview(){
+  var missing = [];
+  var rows = "";
+  var lastGroup = "";
+  ITEMS.forEach(function(it,i){
+    var v = state.answers[it.n];
+    if(!v) missing.push(it.n);
+    if(it.group !== lastGroup){
+      rows += '<tr><td colspan="4" style="padding-top:16px;font-size:.74rem;letter-spacing:.1em;font-weight:700;color:var(--navy);border-bottom:none">'+esc(it.group)+'</td></tr>';
+      lastGroup = it.group;
+    }
+    rows += '<tr'+(v?"":' class="unanswered"')+'>'
+      +'<td style="width:40px;color:var(--mute)">'+it.n+'</td>'
+      +'<td>'+esc(it.q)+(state.memos[it.n]?'<br><span style="font-size:.8rem;color:var(--mute)">メモ：'+esc(state.memos[it.n])+'</span>':'')+'</td>'
+      +'<td class="sc '+(v? (v<=2?"ok":"ng") : "")+'">'+(v?v:"—")+'</td>'
+      +'<td style="width:60px"><button type="button" data-edit="'+i+'">直す</button></td>'
+      +'</tr>';
+  });
+  return '<div class="card">'
+   +'<h2>回答を確認してください</h2>'
+   +'<p class="lede">'+(missing.length? '<b style="color:var(--orange)">'+missing.length+'問が未回答です。</b>すべて答えると結果を出せます。' : '21問すべて答えました。気になるところがあれば「直す」から戻れます。')+'</p>'
+   +'<table class="rev"><thead><tr><th></th><th>質問</th><th style="text-align:center">点</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>'
+   +'<div class="nav" style="margin-top:24px">'
+     +'<button class="btn ghost" id="back">質問にもどる</button>'
+     +'<button class="btn primary" id="calc" '+(missing.length?"disabled":"")+'>結果を見る</button>'
+   +'</div></div>';
+}
+
+/* ---------- 判定ロジック ---------- */
+function judge(){
+  var total=0;
+  for(var i=1;i<=21;i++) total += state.answers[i]||0;
+  var keyVals = KEY_ITEMS.map(function(n){return state.answers[n];});
+  var allLow  = keyVals.every(function(v){return v<=2;});
+  var allHigh = keyVals.every(function(v){return v>=3;});
+  var anyHigh = keyVals.some(function(v){return v>=3;});
+  var severity = null;
+  if(total>=31){
+    if(allHigh) severity="重度";
+    else if(anyHigh) severity="中等度";
+    else if(allLow) severity="軽度";
+  }
+  return {total:total, positive: total>=31, severity:severity};
+}
+
+function viewResult(){
+  var r = judge();
+  var html = "";
+
+  html += '<div class="verdict '+(r.positive?"alert":"normal")+'">'
+    +'<div class="eyebrow">DASC-21 合計点（1〜21項目）</div>'
+    +'<div class="scoreline"><span class="big">'+r.total+'</span><span class="of">/ 84点　（31点以上でチェック）</span></div>'
+    +'<h2>'+(r.positive ? "認知症の可能性があります" : "現時点では正常の範囲と考えられます")+'</h2>'
+    +'<p>'+(r.positive
+        ? "31点以上でした。これは「認知症です」という診断ではなく、「専門の医療機関で詳しく調べたほうがよい状態です」という合図です。早い段階で相談するほど、使える手立ては多く残っています。"
+        : "31点未満でした。導入の質問で「もの忘れを少し感じる」と答えていた場合でも、21項目の合計が31点未満であれば正常の範囲と判断します。ただし、これは今この時点の見立てです。")
+    +'</p>'
+    +(r.severity ? '<div class="sev">重症度の目安： '+r.severity+'認知症の可能性</div>' : '')
+    +'</div>';
+
+  /* 重症度の説明 */
+  if(r.positive){
+    html += '<div class="card"><h2>重症度の目安について</h2>'
+      +'<p class="lede">合計点が31点以上のとき、遠隔記憶（問3）・場所の見当識（問5）・社会的判断力（問9）・身体的ADL（問16〜21）の9項目の点数で、重さの目安を分けます。</p>'
+      +'<ul class="next">'
+      +'<li'+(r.severity==="軽度"?' style="background:var(--ok-bg);border-radius:8px;padding-left:14px"':'')+'><b>軽度の可能性</b>9項目が<u>すべて</u>1点または2点のとき。生活の細かい部分から支障が出はじめている段階です。</li>'
+      +'<li'+(r.severity==="中等度"?' style="background:var(--ng-bg);border-radius:8px;padding-left:14px"':'')+'><b>中等度の可能性</b>9項目の<u>いずれか</u>が3点または4点のとき。判断や身の回りのことに手助けが要りはじめている段階です。</li>'
+      +'<li'+(r.severity==="重度"?' style="background:var(--ng-bg);border-radius:8px;padding-left:14px"':'')+'><b>重度の可能性</b>9項目が<u>すべて</u>3点または4点のとき。日常生活の広い範囲で介助が必要な段階です。</li>'
+      +'</ul></div>';
+  }
+
+  /* プロファイル */
+  var prof = "", lastG = "";
+  ITEMS.forEach(function(it){
+    if(it.group!==lastG){ prof += '<div class="gsep">'+esc(it.group)+'</div>'; lastG=it.group; }
+    var v = state.answers[it.n];
+    var cells = "";
+    for(var k=1;k<=4;k++){
+      cells += '<i class="'+(k===v ? (v<=2?"on-ok":"on-ng") : "")+'"></i>';
+    }
+    prof += '<div class="prow"><div class="plabel"><b>'+esc(it.domain)+'</b>問'+it.n+(it.key?' ★':'')+'</div><div class="cells">'+cells+'</div></div>';
+  });
+  html += '<div class="card"><h2>どこに支えが要るか</h2>'
+    +'<p class="lede">同じ点数でも、どこが低いかで必要な支援は変わります。オレンジの点線より右に印があるところが、いま手助けが要っている部分です。★は重症度の判定に使う項目です。</p>'
+    +'<div class="threshold"><div></div><div class="t"><span>大丈夫な範囲 ▸</span><span>◂ 支えが要る範囲</span></div></div>'
+    +'<div class="prof">'+prof+'</div>'
+    +'<div class="axis"><div></div><div class="k"><span>1</span><span>2</span><span>3</span><span>4</span></div></div>'
+    +'<div class="legend"><span><i style="background:var(--navy)"></i>1〜2点：大丈夫な範囲</span><span><i style="background:var(--orange)"></i>3〜4点：支えが要る範囲</span></div>'
+    +'</div>';
+
+  /* 気になった項目 */
+  var flagged = ITEMS.filter(function(it){return (state.answers[it.n]||0)>=3;});
+  if(flagged.length){
+    var lis = flagged.map(function(it){
+      var memo = state.memos[it.n];
+      return '<li><b>問'+it.n+'　'+esc(it.domain)+'</b>'+esc(it.q)+'（'+state.answers[it.n]+'点）'
+        + (memo? '<br><span style="font-size:.86rem;color:var(--mute)">メモ：'+esc(memo)+'</span>':'') +'</li>';
+    }).join("");
+    html += '<div class="card"><h2>受診のときに伝えたいこと</h2>'
+      +'<p class="lede">3点以上がついた'+flagged.length+'項目です。「もの忘れが心配です」と伝えるより、この具体的な場面をそのまま話すほうが、医師には正確に伝わります。</p>'
+      +'<ul class="flags">'+lis+'</ul></div>';
+  }
+
+  /* 次にすること */
+  html += '<div class="card"><h2>次にすること</h2><ul class="next">';
+  if(r.positive){
+    html += '<li><b>1. かかりつけ医に、この結果を持って相談する</b>いきなり専門病院に行かなくて構いません。ふだん診てもらっている先生に、この画面を印刷して見せるのがいちばん早い道です。紹介状を書いてもらえます。</li>'
+      +'<li><b>2. 地域包括支援センターに電話する</b>お住まいの市区町村に必ずある、高齢者の相談窓口です。無料で、本人が行かなくても家族だけで相談できます。「認知症かもしれない」と言えば話が通ります。市区町村名と「地域包括支援センター」で検索すれば連絡先が出ます。</li>'
+      +'<li><b>3. 診断がつく前でも、備えは始められます</b>介護保険の申請、お金の管理の見直し、火の元や運転の確認。診断を待たずに動けることのほうが多く、早いほど選べる手立ては多く残ります。</li>';
+  }else{
+    html += '<li><b>1. この結果を保存しておく</b>大切なのは今日の点数そのものより、これからの変化です。半年後、1年後にもう一度チェックして比べられるよう、印刷して残しておいてください。</li>'
+      +'<li><b>2. 3点以上がついた項目があれば、そこだけ気にかける</b>合計が31点未満でも、個別の項目に支障が出ているなら、そこから生活の支えを考えはじめる価値があります。</li>'
+      +'<li><b>3. 気になることが続くなら、点数に関わらず相談してよい</b>この評価票は、特に一人暮らしで、ご本人からの情報だけの場合、ごく軽い段階を捉えきれないことが分かっています。「以前と違う」という家族の感覚のほうが正しいことがあります。</li>';
+  }
+  html += '</ul></div>';
+
+  /* 情報欄と注意 */
+  var m = state.meta;
+  html += '<div class="card">'
+    +'<div class="note" style="border:none;margin:0;padding:0">'
+    +'<b>記入情報</b><br>'
+    +(m.name?'ご本人：'+esc(m.name)+'　':'')+(m.age?'（'+esc(m.age)+'歳）　':'')
+    +'暮らし方：'+esc(m.living)+'　回答者：'+esc(m.respondent)+'　記入日：'+esc(m.date)+'<br>'
+    +'導入の質問A：'+(state.introAns.A?SCALE.intro[state.introAns.A-1]:"未回答")
+    +'／B：'+(state.introAns.B?SCALE.intro[state.introAns.B-1]:"未回答")+'（採点対象外）'
+    +'</div></div>';
+
+  html += '<div class="disclaimer">'
+    +'<b>この結果は診断ではありません。</b>DASC-21は認知症を見つけるためのスクリーニングと重症度の目安であって、診断ツールではありません。認知症の確定診断には、専門医による総合的な判断が欠かせません。また本来は開発者による研修を受けた専門職が実施する評価票です。高い点数が出ても出なくても、心配が続くなら医療機関にご相談ください。'
+    +'</div>';
+
+  html += '<div class="actions no-print">'
+    +'<button class="btn primary" id="print">印刷・PDFで保存</button>'
+    +'<button class="btn ghost" id="copy">結果を文章でコピー</button>'
+    +'<button class="btn ghost" id="restart">はじめからやり直す</button>'
+    +'</div>';
+
+  return html;
+}
+
+/* ============================================================
+   4. 描画とイベント
+   ============================================================ */
+function render(){
+  var v = {start:viewStart,intro:viewIntro,q:viewQuestion,review:viewReview,result:viewResult}[state.screen];
+  app.innerHTML = v();
+  updateProgress();
+}
+
+/* --- 委譲イベント：appは使い回すので、登録は一度きり --- */
+app.addEventListener("click", function(e){
+  var t = e.target;
+  var b;
+
+  /* 開始画面：暮らし方／回答者 */
+  b = t.closest("#seg-living button[data-v], #seg-resp button[data-v]");
+  if(b){
+    state.meta[ b.parentNode.id === "seg-living" ? "living" : "respondent" ] = b.dataset.v;
+    render(); return;
+  }
+  if(t.closest("#go-intro")){ go("intro"); return; }
+
+  /* 導入質問 */
+  b = t.closest("button[data-intro]");
+  if(b){ state.introAns[b.dataset.intro] = Number(b.dataset.v); render(); return; }
+
+  /* 21項目の選択 */
+  b = t.closest("button[data-ans]");
+  if(b && state.screen === "q"){
+    state.answers[ ITEMS[state.idx].n ] = Number(b.dataset.ans);
+    render(); return;
+  }
+
+  /* 確認画面から個別に戻る */
+  b = t.closest("button[data-edit]");
+  if(b){ go("q", Number(b.dataset.edit)); return; }
+
+  /* もどる */
+  if(t.closest("#back")){
+    if(state.screen === "intro") go("start");
+    else if(state.screen === "q") { if(state.idx === 0) go("intro"); else go("q", state.idx-1); }
+    else if(state.screen === "review") go("q", 20);
+    return;
+  }
+
+  /* すすむ */
+  if(t.closest("#next")){
+    if(state.screen === "intro") go("q", 0);
+    else if(state.screen === "q"){ if(state.idx === 20) go("review"); else go("q", state.idx+1); }
+    return;
+  }
+
+  if(t.closest("#calc")){ go("result"); return; }
+  if(t.closest("#print")){ window.print(); return; }
+  if(t.closest("#restart")){
+    if(confirm("回答をすべて消して、はじめからやり直します。よろしいですか。")){
+      state.answers = {}; state.memos = {}; state.introAns = {}; go("start", 0);
+    }
+    return;
+  }
+  if(t.closest("#copy")){ copyResult(); return; }
+});
+
+app.addEventListener("input", function(e){
+  var el = e.target;
+  if(el.id === "m-name") state.meta.name = el.value;
+  else if(el.id === "m-age") state.meta.age = el.value;
+  else if(el.id === "m-date") state.meta.date = el.value;
+  else if(el.id === "memo" && state.screen === "q") state.memos[ ITEMS[state.idx].n ] = el.value;
+});
+
+function copyResult(){
+  var r = judge();
+  var lines = [
+    "【DASC-21 くらしのチェック 結果】",
+    "記入日：" + state.meta.date + (state.meta.name ? "／ご本人：" + state.meta.name : ""),
+    "暮らし方：" + state.meta.living + "／回答者：" + state.meta.respondent,
+    "",
+    "合計 " + r.total + " / 84点　→　" + (r.positive ? "認知症の可能性あり（31点以上）" : "正常の範囲（31点未満）")
+  ];
+  if(r.severity) lines.push("重症度の目安：" + r.severity + "認知症の可能性");
+  lines.push("", "■ 3点以上がついた項目");
+  var f = ITEMS.filter(function(it){ return (state.answers[it.n]||0) >= 3; });
+  if(f.length){
+    f.forEach(function(it){
+      lines.push("・問" + it.n + " " + it.domain + "：" + it.q + " → " + state.answers[it.n] + "点"
+        + (state.memos[it.n] ? "（" + state.memos[it.n] + "）" : ""));
+    });
+  } else {
+    lines.push("・なし");
+  }
+  lines.push("", "※これは診断ではありません。確定診断には専門医の受診が必要です。");
+  var txt = lines.join("\n");
+  var done = function(){
+    var b = document.getElementById("copy");
+    if(!b) return;
+    var o = b.textContent; b.textContent = "コピーしました";
+    setTimeout(function(){ b.textContent = o; }, 1800);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done, function(){ fallbackCopy(txt, done); });
+  } else { fallbackCopy(txt, done); }
+}
+
+function fallbackCopy(txt, done){
+  var ta = document.createElement("textarea");
+  ta.value = txt; ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand("copy"); done(); }
+  catch(err){ alert("コピーできませんでした。画面を選択してコピーしてください。"); }
+  document.body.removeChild(ta);
+}
+
+render();
+})();
+</script>
+</body>
+</html>
