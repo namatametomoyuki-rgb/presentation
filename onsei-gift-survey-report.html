@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>調査レポート｜離れて暮らす親へのギフトと「見守り」に関する調査 ｜ 日本テクトシステムズ株式会社</title>
+<meta name="description" content="全国6,610名を対象としたスクリーニング調査と、離れて暮らす親を持つ220名への本調査から、9月のギフト習慣と「見守り」の関係を読み解きます。日本テクトシステムズ株式会社の調査レポート。">
+<style>
+:root{
+  --sumi:#17211f;
+  --sumi-2:#41504c;
+  --sumi-3:#6d7b76;
+  --washi:#f4f6f3;
+  --paper:#ffffff;
+  --hana:#b3556c;
+  --hana-soft:#e8ccd4;
+  --koke:#4e7a5e;
+  --koke-soft:#cfdfd3;
+  --kin:#a8842a;
+  --rule:#d7ded9;
+  --measure:44rem;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--washi);
+  color:var(--sumi);
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic Medium","Yu Gothic","Noto Sans JP","Meiryo",sans-serif;
+  font-size:16px;
+  line-height:1.9;
+  font-feature-settings:"palt" 1;
+}
+h1,h2,h3,.figure-num,.stat-num,.lede{
+  font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP","Shippori Mincho",serif;
+  font-weight:600;
+}
+p{margin:0 0 1.1em}
+a{color:var(--koke)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--hana);outline-offset:3px}
+
+/* ---------- shell ---------- */
+.wrap{max-width:64rem;margin:0 auto;padding:0 1.5rem}
+.measure{max-width:var(--measure)}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:1px solid var(--rule);background:var(--paper)}
+.masthead .wrap{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;align-items:baseline;padding-top:1.1rem;padding-bottom:1.1rem}
+.brand{font-size:.95rem;letter-spacing:.04em;font-weight:600}
+.brand span{display:block;font-size:.72rem;color:var(--sumi-3);letter-spacing:.12em;font-weight:400}
+.masthead .kind{margin-left:auto;font-size:.8rem;color:var(--sumi-3)}
+
+/* ---------- hero ---------- */
+.hero{background:var(--paper);padding:4rem 0 3rem;border-bottom:1px solid var(--rule)}
+.hero .date{font-size:.82rem;color:var(--sumi-3);margin-bottom:1.6rem}
+h1{
+  font-size:clamp(1.75rem,5.2vw,3rem);
+  line-height:1.45;
+  letter-spacing:.01em;
+  margin:0 0 1.4rem;
+  max-width:24em;
+}
+.lede{font-size:clamp(1rem,2.4vw,1.2rem);line-height:2.05;color:var(--sumi-2);max-width:36em;margin-bottom:2.6rem}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;border-top:1px solid var(--rule);padding-top:1.8rem}
+.hero-stat .stat-num{display:block;font-size:clamp(2rem,7vw,3.1rem);line-height:1.1;color:var(--hana);font-feature-settings:"tnum" 1}
+.hero-stat .stat-num i{font-style:normal;font-size:.42em;margin-left:.12em}
+.hero-stat p{margin:.5rem 0 0;font-size:.88rem;line-height:1.7;color:var(--sumi-2)}
+.hero-stat .base{display:block;font-size:.74rem;color:var(--sumi-3);margin-top:.35rem}
+@media(max-width:640px){.hero-stats{grid-template-columns:1fr;gap:1.6rem}}
+
+/* ---------- narrative stem ---------- */
+.story{position:relative;padding:3.5rem 0 1rem}
+.story::before{
+  content:"";position:absolute;left:calc(50% - 32rem + 1.5rem + .5rem);top:0;bottom:0;width:1px;
+  background:linear-gradient(180deg,transparent,var(--koke-soft) 6%,var(--koke-soft) 94%,transparent);
+}
+section.chapter{position:relative;padding:0 0 3.5rem 3rem}
+section.chapter::before{
+  content:"";position:absolute;left:-.34rem;top:.75rem;width:.7rem;height:.7rem;border-radius:50% 0 50% 50%;
+  background:var(--koke);transform:rotate(45deg);
+}
+section.chapter.bloom::before{background:var(--hana);border-radius:50%;transform:none;width:.8rem;height:.8rem;left:-.4rem}
+@media(max-width:820px){
+  .story::before{left:1.5rem}
+  section.chapter{padding-left:2.2rem}
+}
+@media(max-width:520px){
+  .story::before{display:none}
+  section.chapter{padding-left:0}
+  section.chapter::before{display:none}
+}
+
+h2{font-size:clamp(1.3rem,3.6vw,1.75rem);line-height:1.6;margin:0 0 .9rem;letter-spacing:.01em}
+.chapter > p{max-width:var(--measure);color:var(--sumi-2)}
+h3{font-size:1rem;margin:2.4rem 0 .9rem;letter-spacing:.02em}
+
+/* ---------- figures ---------- */
+figure{margin:1.8rem 0 0;background:var(--paper);border:1px solid var(--rule);padding:1.5rem 1.5rem 1.2rem}
+figcaption{font-size:.85rem;line-height:1.7;color:var(--sumi-2);margin-bottom:1.2rem;border-bottom:1px solid var(--rule);padding-bottom:.7rem}
+.figure-num{color:var(--koke);margin-right:.6em;font-size:.9em}
+.source{font-size:.74rem;color:var(--sumi-3);line-height:1.65;margin:1rem 0 0}
+
+.bars{display:grid;gap:.55rem}
+.bar{display:grid;grid-template-columns:minmax(7rem,13rem) 1fr 3.8rem;align-items:center;gap:.9rem}
+.bar-label{font-size:.86rem;line-height:1.5}
+.bar-track{background:var(--washi);height:1.15rem;position:relative}
+.bar-fill{display:block;height:100%;background:var(--koke-soft)}
+.bar-val{text-align:right;font-size:.92rem;font-variant-numeric:tabular-nums;color:var(--sumi-2)}
+.bar-val i{font-style:normal;font-size:.76em;color:var(--sumi-3);margin-left:.08em}
+.bar.is-key .bar-fill{background:var(--hana)}
+.bar.is-key .bar-label{font-weight:600}
+.bar.is-key .bar-val{color:var(--hana);font-weight:600}
+.bar.is-mute .bar-fill{background:var(--rule)}
+.bar.is-mute .bar-label,.bar.is-mute .bar-val{color:var(--sumi-3)}
+@media(max-width:560px){
+  .bar{grid-template-columns:1fr 3.6rem;grid-template-areas:"label val" "track track";gap:.2rem .6rem;margin-bottom:.5rem}
+  .bar-label{grid-area:label}.bar-val{grid-area:val}.bar-track{grid-area:track;height:.85rem}
+}
+
+/* donut */
+.donut-row{display:flex;gap:2rem;align-items:center;flex-wrap:wrap}
+.donut{flex:0 0 9.5rem}
+.donut svg{width:9.5rem;height:9.5rem;display:block}
+.donut-label{font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;font-size:1.55rem;fill:var(--hana)}
+.donut-sub{font-size:.62rem;fill:var(--sumi-3);font-family:"Hiragino Sans","Noto Sans JP",sans-serif}
+.donut-note{flex:1 1 16rem;font-size:.9rem;line-height:1.85;color:var(--sumi-2)}
+
+/* segmented bar */
+.seg{display:flex;height:2.2rem;overflow:hidden;border:1px solid var(--rule)}
+.seg span{display:flex;align-items:center;justify-content:center;font-size:.76rem;color:#fff;font-variant-numeric:tabular-nums}
+.seg .s1{background:var(--koke)}
+.seg .s2{background:#7fa88c}
+.seg .s3{background:var(--hana)}
+.seg .s4{background:#8d6270}
+.seg-key{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;margin-top:.7rem;font-size:.78rem;color:var(--sumi-2)}
+.seg-key b{display:inline-block;width:.7rem;height:.7rem;margin-right:.35rem;vertical-align:-1px}
+
+/* pull quote / callout */
+.callout{background:var(--paper);border-left:3px solid var(--hana);padding:1.3rem 1.5rem;margin:2rem 0 0;max-width:var(--measure)}
+.callout p{margin:0;font-size:.95rem;line-height:1.9;color:var(--sumi-2)}
+
+/* voices */
+.voices{list-style:none;padding:0;margin:1.4rem 0 0;display:grid;gap:.7rem;max-width:var(--measure)}
+.voices li{background:var(--paper);border:1px solid var(--rule);padding:.85rem 1.1rem;font-size:.88rem;line-height:1.8;color:var(--sumi-2)}
+.voices li::before{content:"「";color:var(--hana)}
+.voices li::after{content:"」";color:var(--hana)}
+
+/* calendar */
+.cal{background:var(--paper);border:1px solid var(--rule);padding:1.4rem;max-width:26rem}
+.cal-head{font-size:.9rem;margin-bottom:.9rem;display:flex;justify-content:space-between;align-items:baseline}
+.cal-head small{color:var(--sumi-3);font-size:.74rem}
+.cal-band{background:var(--koke-soft);color:#33513e;font-size:.74rem;text-align:center;padding:.3rem;margin-bottom:.6rem}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:.8rem;font-variant-numeric:tabular-nums}
+.cal-grid div{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;background:var(--washi);color:var(--sumi-2)}
+.cal-grid .dow{background:transparent;color:var(--sumi-3);font-size:.7rem;aspect-ratio:auto;padding:.2rem 0}
+.cal-grid .empty{background:transparent}
+.cal-grid .mark{background:var(--hana);color:#fff;font-weight:700;position:relative}
+.cal-legend{margin-top:.8rem;font-size:.78rem;line-height:1.75;color:var(--sumi-2)}
+.cal-legend b{color:var(--hana)}
+
+/* takeaways */
+.takeaways{background:var(--paper);border:1px solid var(--rule);padding:2rem;margin-top:1rem}
+.takeaways ol{margin:0;padding-left:1.3em}
+.takeaways li{margin-bottom:1.1rem;font-size:.95rem;line-height:1.9;color:var(--sumi-2)}
+.takeaways li:last-child{margin-bottom:0}
+.takeaways li strong{color:var(--sumi);font-weight:600}
+
+/* ---------- appendix ---------- */
+.appendix{background:var(--paper);border-top:1px solid var(--rule);padding:3.5rem 0 4rem;margin-top:2rem}
+.appendix h2{font-size:1.25rem;margin-bottom:1.4rem}
+.appendix h3{font-size:.95rem;margin-top:2.6rem}
+table.spec{width:100%;border-collapse:collapse;font-size:.86rem;line-height:1.8}
+table.spec th,table.spec td{border-bottom:1px solid var(--rule);padding:.75rem .6rem;text-align:left;vertical-align:top}
+table.spec th{width:9.5rem;font-weight:600;color:var(--sumi);white-space:nowrap;background:var(--washi)}
+@media(max-width:560px){
+  table.spec th,table.spec td{display:block;width:auto;border-bottom:none}
+  table.spec td{border-bottom:1px solid var(--rule);padding-top:.2rem}
+  table.spec th{padding-bottom:.1rem}
+}
+.tbd{background:#fdf3d6;color:#7a5c05;padding:0 .35em;border-bottom:1px dashed #c9a227}
+.notes{font-size:.82rem;line-height:1.9;color:var(--sumi-2);padding-left:1.2em;margin:0}
+.notes li{margin-bottom:.55rem}
+.cite-box{background:var(--washi);border:1px solid var(--rule);padding:1.1rem 1.3rem;font-size:.85rem;line-height:1.85;margin-top:.8rem}
+.cite-box code{font-family:inherit;background:var(--paper);border:1px solid var(--rule);padding:.15em .5em;display:inline-block;margin-top:.3rem}
+
+footer.site{background:var(--washi);border-top:1px solid var(--rule);padding:2.5rem 0 4rem;font-size:.82rem;color:var(--sumi-2);line-height:1.9}
+footer.site .cols{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+@media(max-width:640px){footer.site .cols{grid-template-columns:1fr}}
+footer.site h3{font-size:.85rem;margin:0 0 .5rem}
+.copyright{margin-top:2.5rem;font-size:.75rem;color:var(--sumi-3)}
+
+@media print{
+  body{background:#fff}
+  .story::before,section.chapter::before{display:none}
+  section.chapter{padding-left:0;page-break-inside:avoid}
+  figure{page-break-inside:avoid;border-color:#bbb}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="brand">日本テクトシステムズ株式会社<span>NIPPON TECT SYSTEMS</span></div>
+    <div class="kind">調査レポート</div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="date">2026年<span class="tbd">9月●日</span>公開</p>
+    <h1>親へのギフトは、<br>「元気でいてね」を確かめる<br>機会にもなっている。</h1>
+    <p class="lede">9月は世界アルツハイマー月間。2026年は、世界アルツハイマーデーと敬老の日がともに9月21日に重なります。当社は、離れて暮らす親を持つ子世代を対象に、贈り物の習慣と、親の様子をどう見守っているかを調査しました。全国6,610名のスクリーニング調査と、条件に該当する220名への本調査の結果を公開します。</p>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="stat-num">60.3<i>%</i></span>
+        <p>義理の親を含め、離れて暮らす親がいる<span class="base">全回答者 N＝6,610</span></p>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">58.8<i>%</i></span>
+        <p>この1年で、その親に何かを贈った<span class="base">離れて暮らす親がいる人 n＝3,986</span></p>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">36.3<i>%</i></span>
+        <p>親の認知機能の変化を心配している<span class="base">離れて暮らす親がいる人 n＝3,986</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="story">
+<div class="wrap">
+
+<!-- 1 -->
+<section class="chapter">
+  <h2>離れて暮らす親がいる人は、6割</h2>
+  <p>全国6,610名に、離れて暮らす親の有無を尋ねました。実の親・義理の親を合わせると、6割が「いる」と回答しています。最も多いのは自身の母親でした。</p>
+
+  <figure>
+    <figcaption><span class="figure-num">図1</span>離れて暮らす親の有無と続柄</figcaption>
+    <div class="donut-row">
+      <div class="donut">
+        <svg viewBox="0 0 120 120" role="img" aria-label="離れて暮らす親がいる人は60.3パーセント">
+          <circle cx="60" cy="60" r="48" fill="none" stroke="#e3e9e4" stroke-width="16"></circle>
+          <circle cx="60" cy="60" r="48" fill="none" stroke="#b3556c" stroke-width="16"
+                  stroke-dasharray="181.8 301.6" transform="rotate(-90 60 60)"></circle>
+          <text class="donut-label" x="60" y="59" text-anchor="middle">60.3%</text>
+          <text class="donut-sub" x="60" y="74" text-anchor="middle">離れて暮らす親がいる</text>
+        </svg>
+      </div>
+      <div class="donut-note">
+        <div class="bars">
+          <div class="bar is-key"><span class="bar-label">自身の母親</span><span class="bar-track"><span class="bar-fill" style="width:48.7%"></span></span><span class="bar-val">48.7<i>%</i></span></div>
+          <div class="bar"><span class="bar-label">自身の父親</span><span class="bar-track"><span class="bar-fill" style="width:36.6%"></span></span><span class="bar-val">36.6<i>%</i></span></div>
+          <div class="bar"><span class="bar-label">義理の母親</span><span class="bar-track"><span class="bar-fill" style="width:28.5%"></span></span><span class="bar-val">28.5<i>%</i></span></div>
+          <div class="bar"><span class="bar-label">義理の父親</span><span class="bar-track"><span class="bar-fill" style="width:21.0%"></span></span><span class="bar-val">21.0<i>%</i></span></div>
+          <div class="bar is-mute"><span class="bar-label">いない</span><span class="bar-track"><span class="bar-fill" style="width:39.7%"></span></span><span class="bar-val">39.7<i>%</i></span></div>
+        </div>
+      </div>
+    </div>
+    <p class="source">全回答者 N＝6,610／複数回答のため合計は100%を超えます。</p>
+  </figure>
+
+  <h3>そのうち、7割の親は75歳以上</h3>
+  <figure>
+    <figcaption><span class="figure-num">図2</span>最も気にかけている親の年齢</figcaption>
+    <div class="bars">
+      <div class="bar"><span class="bar-label">64歳以下</span><span class="bar-track"><span class="bar-fill" style="width:6.1%"></span></span><span class="bar-val">6.1<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">65〜74歳</span><span class="bar-track"><span class="bar-fill" style="width:23.5%"></span></span><span class="bar-val">23.5<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">75〜84歳</span><span class="bar-track"><span class="bar-fill" style="width:50.6%"></span></span><span class="bar-val">50.6<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">85歳以上</span><span class="bar-track"><span class="bar-fill" style="width:19.8%"></span></span><span class="bar-val">19.8<i>%</i></span></div>
+    </div>
+    <p class="source">離れて暮らす親がいる人 n＝3,986／単一回答。75歳以上が合計70.4%。</p>
+  </figure>
+</section>
+
+<!-- 2 -->
+<section class="chapter">
+  <h2>心配していることの2番目が、認知機能の変化</h2>
+  <p>体力や持病に次いで多く挙がったのが、もの忘れなど認知機能の変化でした。3人に1人以上が挙げています。転倒や詐欺被害への心配も、認知機能と地続きの不安として並びます。</p>
+
+  <figure>
+    <figcaption><span class="figure-num">図3</span>離れて暮らす親について心配なこと</figcaption>
+    <div class="bars">
+      <div class="bar"><span class="bar-label">持病や病気、体力の低下</span><span class="bar-track"><span class="bar-fill" style="width:56.5%"></span></span><span class="bar-val">56.5<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">認知機能の変化（もの忘れなど）</span><span class="bar-track"><span class="bar-fill" style="width:36.3%"></span></span><span class="bar-val">36.3<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">転倒・家庭内の事故</span><span class="bar-track"><span class="bar-fill" style="width:31.9%"></span></span><span class="bar-val">31.9<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">詐欺・悪質商法などの被害</span><span class="bar-track"><span class="bar-fill" style="width:20.1%"></span></span><span class="bar-val">20.1<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">食生活・栄養の偏り</span><span class="bar-track"><span class="bar-fill" style="width:16.5%"></span></span><span class="bar-val">16.5<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">孤独・社会的な孤立</span><span class="bar-track"><span class="bar-fill" style="width:12.0%"></span></span><span class="bar-val">12.0<i>%</i></span></div>
+      <div class="bar is-mute"><span class="bar-label">当てはまるものはない</span><span class="bar-track"><span class="bar-fill" style="width:24.1%"></span></span><span class="bar-val">24.1<i>%</i></span></div>
+    </div>
+    <p class="source">離れて暮らす親がいる人 n＝3,986／複数回答のため合計は100%を超えます。</p>
+  </figure>
+
+  <h3>会う機会は、思うより少ない</h3>
+  <figure>
+    <figcaption><span class="figure-num">図4</span>親と連絡を取る頻度</figcaption>
+    <div class="bars">
+      <div class="bar"><span class="bar-label">週1回以上</span><span class="bar-track"><span class="bar-fill" style="width:30.2%"></span></span><span class="bar-val">30.2<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">月1〜3回程度</span><span class="bar-track"><span class="bar-fill" style="width:32.1%"></span></span><span class="bar-val">32.1<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">年に数回程度</span><span class="bar-track"><span class="bar-fill" style="width:23.7%"></span></span><span class="bar-val">23.7<i>%</i></span></div>
+      <div class="bar is-mute"><span class="bar-label">当てはまるものはない</span><span class="bar-track"><span class="bar-fill" style="width:14.1%"></span></span><span class="bar-val">14.1<i>%</i></span></div>
+    </div>
+    <p class="source">離れて暮らす親がいる人 n＝3,986／単一回答。連絡が「年に数回程度」以下は37.8%。</p>
+  </figure>
+
+  <div class="callout">
+    <p>連絡が年に数回という人が4割近くいます。変化が起きても、気づける機会そのものが限られている——これが、離れて暮らす家族の前提条件です。</p>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="chapter bloom">
+  <h2>それでも、6割近くが1年のうちに何かを贈っている</h2>
+  <p>離れて暮らす親に対して、この1年で何らかの贈り物をした人は58.8%。花・フラワーギフトを贈った人も14.7%にのぼります。日常的に会えないからこそ、贈り物が接点として機能していることがうかがえます。</p>
+
+  <figure>
+    <figcaption><span class="figure-num">図5</span>過去1年に親へ贈ったもの</figcaption>
+    <div class="bars">
+      <div class="bar"><span class="bar-label">花以外の品物</span><span class="bar-track"><span class="bar-fill" style="width:28.5%"></span></span><span class="bar-val">28.5<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">その他のプレゼント</span><span class="bar-track"><span class="bar-fill" style="width:19.6%"></span></span><span class="bar-val">19.6<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">花・フラワーギフト</span><span class="bar-track"><span class="bar-fill" style="width:14.7%"></span></span><span class="bar-val">14.7<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">旅行や食事などのイベント</span><span class="bar-track"><span class="bar-fill" style="width:14.3%"></span></span><span class="bar-val">14.3<i>%</i></span></div>
+      <div class="bar is-mute"><span class="bar-label">贈っていない</span><span class="bar-track"><span class="bar-fill" style="width:41.2%"></span></span><span class="bar-val">41.2<i>%</i></span></div>
+    </div>
+    <p class="source">離れて暮らす親がいる人 n＝3,986／複数回答のため合計は100%を超えます。「贈っていない」41.2%の裏返しとして、何らかを贈った人は58.8%。</p>
+  </figure>
+
+  <h3>贈るなら、いつか</h3>
+  <p>ここからは、離れて暮らす親を持つ220名への本調査の結果です。ギフトを贈りたいタイミングとして最も多いのは母の日・父の日、次いで親の誕生日。敬老の日も3割近くが挙げました。</p>
+
+  <figure>
+    <figcaption><span class="figure-num">図6</span>ギフトを利用したいタイミング</figcaption>
+    <div class="bars">
+      <div class="bar"><span class="bar-label">母の日・父の日</span><span class="bar-track"><span class="bar-fill" style="width:45.5%"></span></span><span class="bar-val">45.5<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">親の誕生日</span><span class="bar-track"><span class="bar-fill" style="width:40.9%"></span></span><span class="bar-val">40.9<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">敬老の日</span><span class="bar-track"><span class="bar-fill" style="width:28.2%"></span></span><span class="bar-val">28.2<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">特別な日でなくても</span><span class="bar-track"><span class="bar-fill" style="width:15.0%"></span></span><span class="bar-val">15.0<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">年末年始など帰省できないとき</span><span class="bar-track"><span class="bar-fill" style="width:11.4%"></span></span><span class="bar-val">11.4<i>%</i></span></div>
+    </div>
+    <p class="source">本調査 n＝220／複数回答。ほかに「利用しない」25.0%。</p>
+  </figure>
+</section>
+
+<!-- 4 -->
+<section class="chapter">
+  <h2>贈り物と並んで、日常の連絡が「見守り」になっている</h2>
+  <p>いま実際にしている見守り・健康管理を尋ねると、上位は定期的な電話・ビデオ通話と、家族のLINEグループでの連絡でした。カメラやセンサーといった機器の設置は13.2%にとどまります。多くの家庭で、見守りは特別な仕組みではなく、声とメッセージのやりとりとして行われています。</p>
+
+  <figure>
+    <figcaption><span class="figure-num">図7</span>現在おこなっている見守り・健康管理</figcaption>
+    <div class="bars">
+      <div class="bar is-key"><span class="bar-label">定期的な電話・ビデオ通話</span><span class="bar-track"><span class="bar-fill" style="width:55.5%"></span></span><span class="bar-val">55.5<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">家族のLINEグループなどでの連絡</span><span class="bar-track"><span class="bar-fill" style="width:49.5%"></span></span><span class="bar-val">49.5<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">認知症検査や健康診断を受けてもらった</span><span class="bar-track"><span class="bar-fill" style="width:15.5%"></span></span><span class="bar-val">15.5<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">見守りカメラ・センサー・家電の設置</span><span class="bar-track"><span class="bar-fill" style="width:13.2%"></span></span><span class="bar-val">13.2<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">介護・見守りサービスの利用</span><span class="bar-track"><span class="bar-fill" style="width:12.3%"></span></span><span class="bar-val">12.3<i>%</i></span></div>
+      <div class="bar is-mute"><span class="bar-label">当てはまるものはない</span><span class="bar-track"><span class="bar-fill" style="width:17.3%"></span></span><span class="bar-val">17.3<i>%</i></span></div>
+    </div>
+    <p class="source">本調査 n＝220／複数回答のため合計は100%を超えます。</p>
+  </figure>
+
+  <h3>すでに、半数以上が変化に気づいている</h3>
+  <figure>
+    <figcaption><span class="figure-num">図8</span>親の認知機能について「気になった」経験</figcaption>
+    <div class="bars">
+      <div class="bar is-key"><span class="bar-label">物忘れが増えた</span><span class="bar-track"><span class="bar-fill" style="width:53.2%"></span></span><span class="bar-val">53.2<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">同じ話を何度も繰り返す</span><span class="bar-track"><span class="bar-fill" style="width:45.5%"></span></span><span class="bar-val">45.5<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">約束や予定を忘れる</span><span class="bar-track"><span class="bar-fill" style="width:29.1%"></span></span><span class="bar-val">29.1<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">電話や会話の反応が以前と違う</span><span class="bar-track"><span class="bar-fill" style="width:20.5%"></span></span><span class="bar-val">20.5<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">お金の管理が心配になる出来事</span><span class="bar-track"><span class="bar-fill" style="width:16.4%"></span></span><span class="bar-val">16.4<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">料理の味付けや家事の様子が変わった</span><span class="bar-track"><span class="bar-fill" style="width:15.0%"></span></span><span class="bar-val">15.0<i>%</i></span></div>
+      <div class="bar is-mute"><span class="bar-label">特にない</span><span class="bar-track"><span class="bar-fill" style="width:26.8%"></span></span><span class="bar-val">26.8<i>%</i></span></div>
+    </div>
+    <p class="source">本調査 n＝220／複数回答のため合計は100%を超えます。何らかの気づきがある人は73.2%。</p>
+  </figure>
+
+  <div class="callout">
+    <p>気づきの多くは、電話越しの「同じ話を何度も繰り返す」「会話の反応が以前と違う」——つまり、声のなかで起きています。</p>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="chapter">
+  <h2>気づいていても、切り出せない</h2>
+  <p>認知機能について親と話せるかを尋ねると、「抵抗なく話せる」は42.7%。残りの約6割は、話しにくさを感じています。</p>
+
+  <figure>
+    <figcaption><span class="figure-num">図9</span>認知機能について親と話すこと</figcaption>
+    <div class="seg" role="img" aria-label="抵抗なく話せる42.7%、話しにくいが必要なら話す43.2%、気になっているが切り出せない9.5%、話すつもりはない4.5%">
+      <span class="s1" style="width:42.7%">42.7%</span>
+      <span class="s2" style="width:43.2%">43.2%</span>
+      <span class="s3" style="width:9.5%">9.5%</span>
+      <span class="s4" style="width:4.5%">4.5%</span>
+    </div>
+    <div class="seg-key">
+      <span><b style="background:#4e7a5e"></b>抵抗なく話せる</span>
+      <span><b style="background:#7fa88c"></b>話しにくいが、必要であれば話す</span>
+      <span><b style="background:#b3556c"></b>気になっているが、切り出せない</span>
+      <span><b style="background:#8d6270"></b>話すつもりはない</span>
+    </div>
+    <p class="source">本調査 n＝220／単一回答。</p>
+  </figure>
+
+  <figure>
+    <figcaption><span class="figure-num">図10</span>話しにくいと感じる理由</figcaption>
+    <div class="bars">
+      <div class="bar is-key"><span class="bar-label">親が傷つきそうだから</span><span class="bar-track"><span class="bar-fill" style="width:43.7%"></span></span><span class="bar-val">43.7<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">親が怒ったり否定したりしそうだから</span><span class="bar-track"><span class="bar-fill" style="width:43.7%"></span></span><span class="bar-val">43.7<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">自分自身も認めたくない気持ちがあるから</span><span class="bar-track"><span class="bar-fill" style="width:39.7%"></span></span><span class="bar-val">39.7<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">話すきっかけがないから</span><span class="bar-track"><span class="bar-fill" style="width:26.2%"></span></span><span class="bar-val">26.2<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">話した後の対応に自信がないから</span><span class="bar-track"><span class="bar-fill" style="width:17.5%"></span></span><span class="bar-val">17.5<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">遠方であらたまって話す機会がないから</span><span class="bar-track"><span class="bar-fill" style="width:16.7%"></span></span><span class="bar-val">16.7<i>%</i></span></div>
+    </div>
+    <p class="source">話しにくさを感じている人 n＝126／複数回答のため合計は100%を超えます。</p>
+  </figure>
+
+  <div class="callout">
+    <p>障害になっているのは知識や手段ではなく、傷つけたくない・否定されたくない・自分も認めたくないという感情でした。話しにくさの上位3つは、いずれも気持ちの問題です。</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="chapter bloom">
+  <h2>だから、贈り物という形が選ばれる</h2>
+  <p>当社は、花のギフトに音声による認知機能チェックを組み合わせたサービス「ONSEI Gift」のコンセプトを提示し、受容性を尋ねました。魅力を感じた点として最も多く選ばれたのは、検査の精度や機能ではなく、花とともにメッセージを届けられることでした。</p>
+
+  <figure>
+    <figcaption><span class="figure-num">図11</span>コンセプトに魅力を感じた点</figcaption>
+    <div class="bars">
+      <div class="bar is-key"><span class="bar-label">花と一緒にメッセージを届けられる</span><span class="bar-track"><span class="bar-fill" style="width:65.5%"></span></span><span class="bar-val">65.5<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">「検査」と感じさせない自然な流れ</span><span class="bar-track"><span class="bar-fill" style="width:55.2%"></span></span><span class="bar-val">55.2<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">結果を共有してもらえ、見守りにつながる</span><span class="bar-track"><span class="bar-fill" style="width:53.4%"></span></span><span class="bar-val">53.4<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">離れていても認知機能をチェックできる</span><span class="bar-track"><span class="bar-fill" style="width:39.7%"></span></span><span class="bar-val">39.7<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">結果共有の有無を親自身が選べる</span><span class="bar-track"><span class="bar-fill" style="width:31.9%"></span></span><span class="bar-val">31.9<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">3ヶ月間、何回でもチェックできる</span><span class="bar-track"><span class="bar-fill" style="width:25.0%"></span></span><span class="bar-val">25.0<i>%</i></span></div>
+    </div>
+    <p class="source">コンセプトに魅力を感じた人 n＝116／複数回答のため合計は100%を超えます。</p>
+  </figure>
+
+  <p>愛情を伝えることと、様子を確かめること。この2つは対立せず、ひとつの贈り物のなかに同居しうる——調査結果はそう示しています。一方で、実装上の不安も明確でした。最も多いのは、親がスマートフォンやQRコードを操作できるかという懸念で、ちょうど半数が挙げています。</p>
+
+  <figure>
+    <figcaption><span class="figure-num">図12</span>不安な点・気になる点</figcaption>
+    <div class="bars">
+      <div class="bar is-key"><span class="bar-label">親がスマホやQRコードを操作できるか</span><span class="bar-track"><span class="bar-fill" style="width:50.0%"></span></span><span class="bar-val">50.0<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">音声チェックの精度が信頼できるか</span><span class="bar-track"><span class="bar-fill" style="width:25.0%"></span></span><span class="bar-val">25.0<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">親が結果を共有してくれない可能性</span><span class="bar-track"><span class="bar-fill" style="width:22.7%"></span></span><span class="bar-val">22.7<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">親があまり花に興味がない</span><span class="bar-track"><span class="bar-fill" style="width:19.1%"></span></span><span class="bar-val">19.1<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">親がスマホを持っていない</span><span class="bar-track"><span class="bar-fill" style="width:18.6%"></span></span><span class="bar-val">18.6<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">結果が悪かった場合の対応がわからない</span><span class="bar-track"><span class="bar-fill" style="width:18.6%"></span></span><span class="bar-val">18.6<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">意図が伝わり親に嫌がられそう</span><span class="bar-track"><span class="bar-fill" style="width:15.5%"></span></span><span class="bar-val">15.5<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">個人情報の取り扱いが心配</span><span class="bar-track"><span class="bar-fill" style="width:15.5%"></span></span><span class="bar-val">15.5<i>%</i></span></div>
+    </div>
+    <p class="source">本調査 n＝220／複数回答のため合計は100%を超えます。ほかに「特にない」11.4%。</p>
+  </figure>
+
+  <h3>自由回答から</h3>
+  <ul class="voices">
+    <li>医療行為っぽさがないのでよい</li>
+    <li>サービス名が認知機能チェックを感じさせず、普通にありそうなものなのでちょうどいい</li>
+    <li>花と一緒というのは素敵なアイデアだと思う。ただ、どこまでデータに信憑性があるのか</li>
+    <li>父親には花ではなく鉢植えのほうが良いと思った</li>
+    <li>操作できる状態なら、そもそも心配していない</li>
+  </ul>
+  <p class="source">Q15自由回答（原文を一部要約）。有効コメント約160件のうち、サービスへの好意的な反応が約43件、名称が伝わりにくいという指摘が約22件、親のスマホ・QR操作への懸念が約11件でした。</p>
+</section>
+
+<!-- 7 -->
+<section class="chapter">
+  <h2>求められているのは、気づいた「あと」の道筋</h2>
+  <p>もし低下の傾向がみられた場合に欲しいサポートとして、最も多く挙がったのは医療機関・専門医の紹介でした。チェックして終わりではなく、その先につながることが期待されています。</p>
+
+  <figure>
+    <figcaption><span class="figure-num">図13</span>低下傾向がみられた場合に欲しいサポート</figcaption>
+    <div class="bars">
+      <div class="bar is-key"><span class="bar-label">医療機関・専門医の紹介</span><span class="bar-track"><span class="bar-fill" style="width:51.8%"></span></span><span class="bar-val">51.8<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">継続的なモニタリング（定期チェック）</span><span class="bar-track"><span class="bar-fill" style="width:40.0%"></span></span><span class="bar-val">40.0<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">電話・チャットでの相談窓口</span><span class="bar-track"><span class="bar-fill" style="width:35.0%"></span></span><span class="bar-val">35.0<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">親への伝え方のガイド・アドバイス</span><span class="bar-track"><span class="bar-fill" style="width:33.2%"></span></span><span class="bar-val">33.2<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">自治体・地域の支援サービスの情報</span><span class="bar-track"><span class="bar-fill" style="width:30.9%"></span></span><span class="bar-val">30.9<i>%</i></span></div>
+      <div class="bar is-mute"><span class="bar-label">特にない</span><span class="bar-track"><span class="bar-fill" style="width:17.3%"></span></span><span class="bar-val">17.3<i>%</i></span></div>
+    </div>
+    <p class="source">本調査 n＝220／複数回答のため合計は100%を超えます。</p>
+  </figure>
+
+  <h3>こうした情報を知りたい場所</h3>
+  <figure>
+    <figcaption><span class="figure-num">図14</span>サービスを知りたい情報接点</figcaption>
+    <div class="bars">
+      <div class="bar"><span class="bar-label">テレビ・新聞などのメディア</span><span class="bar-track"><span class="bar-fill" style="width:46.8%"></span></span><span class="bar-val">46.8<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">SNS（Instagram・X・LINEなど）</span><span class="bar-track"><span class="bar-fill" style="width:40.5%"></span></span><span class="bar-val">40.5<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">自治体・病院・地域包括支援センター</span><span class="bar-track"><span class="bar-fill" style="width:37.7%"></span></span><span class="bar-val">37.7<i>%</i></span></div>
+      <div class="bar is-key"><span class="bar-label">花屋の店頭・フラワーギフトのECサイト</span><span class="bar-track"><span class="bar-fill" style="width:30.0%"></span></span><span class="bar-val">30.0<i>%</i></span></div>
+      <div class="bar"><span class="bar-label">職場・知人からの紹介</span><span class="bar-track"><span class="bar-fill" style="width:14.5%"></span></span><span class="bar-val">14.5<i>%</i></span></div>
+    </div>
+    <p class="source">本調査 n＝220／複数回答のため合計は100%を超えます。</p>
+  </figure>
+</section>
+
+<!-- 8 -->
+<section class="chapter bloom">
+  <h2>2026年9月21日、二つの日が重なる</h2>
+  <p>9月は世界アルツハイマー月間です。世界アルツハイマーデーは毎年9月21日。2026年は、敬老の日（9月の第3月曜日）が同じ9月21日にあたります。親へ贈り物をする日と、認知症について社会全体で考える日が、この年は同じ一日になります。</p>
+
+  <div class="cal">
+    <div class="cal-head"><span>2026年9月</span><small>世界アルツハイマー月間</small></div>
+    <div class="cal-band">認知症を知り、考える1か月</div>
+    <div class="cal-grid">
+      <div class="dow">日</div><div class="dow">月</div><div class="dow">火</div><div class="dow">水</div><div class="dow">木</div><div class="dow">金</div><div class="dow">土</div>
+      <div class="empty"></div><div class="empty"></div>
+      <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div>
+      <div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div>
+      <div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div>
+      <div>20</div><div class="mark">21</div><div>22</div><div>23</div><div>24</div><div>25</div><div>26</div>
+      <div>27</div><div>28</div><div>29</div><div>30</div>
+    </div>
+    <p class="cal-legend"><b>9月21日</b>　世界アルツハイマーデー ／ 敬老の日</p>
+  </div>
+
+  <div class="takeaways">
+    <ol>
+      <li><strong>接点は、すでにある。</strong>離れて暮らす親を持つ人の6割近くが、この1年に何かを贈っています。花を贈った人も14.7%。年に数回しか連絡を取らない人が4割近くいるなかで、贈り物は数少ない確かな接点になっています。</li>
+      <li><strong>見守りは、声のなかで起きている。</strong>実際の見守り行動の上位は電話とLINE。認知機能の変化に気づいたきっかけも、もの忘れや会話の反応の違いなど、やりとりのなかで生じています。機器の設置は13.2%にとどまります。</li>
+      <li><strong>心配していても、切り出せない。</strong>認知機能について話しにくいと感じる人は約6割。理由の上位は「親が傷つきそう」「否定されそう」「自分も認めたくない」で、いずれも感情によるものです。だからこそ、あらたまった検査ではなく、贈り物という自然な形が求められています。</li>
+      <li><strong>必要なのは、その先。</strong>変化に気づいた場合に欲しいものの1位は医療機関・専門医の紹介（51.8%）。気づきを、相談や受診につなげる導線が期待されています。</li>
+    </ol>
+  </div>
+</section>
+
+</div>
+</div>
+
+<!-- ---------- appendix ---------- -->
+<div class="appendix">
+  <div class="wrap">
+    <h2>調査概要</h2>
+
+    <h3 style="margin-top:0">スクリーニング調査</h3>
+    <table class="spec">
+      <tbody>
+        <tr><th>調査名</th><td>離れて暮らす親に関するスクリーニング調査</td></tr>
+        <tr><th>調査主体</th><td>日本テクトシステムズ株式会社</td></tr>
+        <tr><th>調査方法</th><td>インターネットリサーチ（Questant）</td></tr>
+        <tr><th>調査対象</th><td>全国の30〜59歳の男女</td></tr>
+        <tr><th>調査期間</th><td><span class="tbd">2026年●月●日〜●月●日</span></td></tr>
+        <tr><th>有効回答数</th><td>6,610名（うち、義理の親を含め離れて暮らす親がいる人 3,986名）</td></tr>
+        <tr><th>集計方法</th><td>ローデータの取得ができない設問については、集計グラフに表示された割合（小数第1位まで）に母数を乗じて回答人数を推計しています。本ページの図表は割合を主として掲載しています。</td></tr>
+      </tbody>
+    </table>
+
+    <h3>本調査</h3>
+    <table class="spec">
+      <tbody>
+        <tr><th>調査名</th><td>ONSEI Gift コンセプト受容性調査</td></tr>
+        <tr><th>調査主体</th><td>日本テクトシステムズ株式会社</td></tr>
+        <tr><th>調査方法</th><td>インターネットリサーチ（Questant）</td></tr>
+        <tr><th>調査対象</th><td>スクリーニング調査の回答者のうち、離れて暮らす親がいると回答した30〜59歳の男女<span class="tbd">（抽出条件の詳細を記載）</span></td></tr>
+        <tr><th>調査期間</th><td><span class="tbd">2026年●月●日〜●月●日</span></td></tr>
+        <tr><th>有効回答数</th><td>220名（配信対象371名、回答率59.3%）<br>男性115名／女性105名、30〜59歳</td></tr>
+        <tr><th>備考</th><td>回答数200件を目標に配信し、達成時点で締め切る方式のため、母集団構成に厳密な割付は行っていません。</td></tr>
+      </tbody>
+    </table>
+
+    <h3>ご利用にあたっての注記</h3>
+    <ul class="notes">
+      <li>本ページに掲載した割合は、各設問の母数（n）に対する回答比率です。複数回答の設問は、合計が100%を超えます。</li>
+      <li>数値は小数第2位を四捨五入しているため、内訳の合計が全体と一致しない場合があります。</li>
+      <li>本調査では、贈り物をした「目的」を直接尋ねてはいません。本ページにおける贈り物と見守りの関係についての記述は、贈り物の実態、見守り行動、コンセプト評価の各結果をあわせて解釈したものです。</li>
+      <li>本調査は生活者の意識・実態を把握することを目的としたものであり、認知症の有病率や、個人の認知機能の状態を医学的に評価するものではありません。ご自身やご家族の状態が気になる場合は、医療機関や地域包括支援センターにご相談ください。</li>
+      <li>本ページで紹介した「ONSEI Gift」はコンセプト検証段階のものであり、記載の内容・価格・提供時期は確定したものではありません。</li>
+      <li>本調査の対象者は、離れて暮らす親がいる方に限定しています。日本の30〜59歳全体を代表する結果ではありません。</li>
+    </ul>
+
+    <h3>調査結果の引用について</h3>
+    <p style="font-size:.86rem;color:var(--sumi-2);max-width:var(--measure)">本調査結果は、出典を明記いただければ、報道・研究・事業検討の目的でご自由に引用いただけます。図表を転載される場合も、下記のクレジットを併記してください。改変を伴う引用や、調査結果の趣旨と異なる文脈でのご利用はご遠慮ください。</p>
+    <div class="cite-box">
+      引用時のクレジット表記<br>
+      <code>出典：日本テクトシステムズ株式会社「離れて暮らす親へのギフトと見守りに関する調査」（2026年）</code>
+    </div>
+  </div>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h3>会社概要</h3>
+        日本テクトシステムズ株式会社（DeNAグループ）<br>
+        所在地：東京都渋谷区 渋谷スクランブルスクエア<span class="tbd">（正式表記・階数を記載）</span><br>
+        事業内容：認知機能に関する検査・スクリーニング技術の研究開発および提供<br>
+        Webサイト：<a href="https://systems.nippontect.co.jp/">systems.nippontect.co.jp</a>
+      </div>
+      <div>
+        <h3>本件に関するお問い合わせ</h3>
+        日本テクトシステムズ株式会社 広報担当<span class="tbd">（部署名を記載）</span><br>
+        メール：<span class="tbd">●●●@nippontect.co.jp</span><br>
+        電話：<span class="tbd">03-●●●●-●●●●</span><br>
+        <span style="color:var(--sumi-3)">取材・データのご提供についても、こちらへご連絡ください。</span>
+      </div>
+    </div>
+    <p class="copyright">© 2026 Nippon Tect Systems Inc.</p>
+  </div>
+</footer>
+
+</body>
+</html>
